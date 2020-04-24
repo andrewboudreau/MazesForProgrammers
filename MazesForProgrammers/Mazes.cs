@@ -23,12 +23,6 @@ namespace MazesForProgrammers
 
             logger.LogCritical($"Maze: {builder.Build()}");
 
-            var maze = new Grid<FourWalls>(5);
-            foreach (var cell in maze)
-            {
-
-            }
-
             Console.ReadKey();
         }
 

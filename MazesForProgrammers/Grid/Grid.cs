@@ -1,71 +1,61 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices.ComTypes;
+using System.Runtime.CompilerServices;
+using System.Security.Cryptography.X509Certificates;
 
 namespace MazesForProgrammers.Grid
 {
     public class Grid<T>
     {
+        private static readonly Random Random = new Random();
+
         private readonly ICell<T>[,] map;
 
-        public Grid(int dimension)
+        public Grid(int dimension, Func<(int X, int Y), ICell<T>> create = null)
         {
-
             Dimension = dimension;
-            map = new ICell<T>[dimension, dimension];
-            Prepare();
+            // map = Prepare(createCell ?? ((x, y)) => new Cell(x, y));
             Configure();
 
         }
 
-        private void Configure()
-        {
-            throw new NotImplementedException();
-        }
+        public int Dimension { get; }
 
-        private void Prepare()
-        {
-            int i = 0, x, y;
-            foreach (var cell in map)
-            {
-                y = i / Dimension;
-                x = i % Dimension;
-                map[y, x] = new DefaultCell<T>(x, y);
-                i++;
-            }
+        public int Size => Dimension * Dimension;
 
-        }
-
-        ICell<T> RandomCell { get; }
+        ICell<T> RandomCell => map[Random.Next(0, Dimension - 1), Random.Next(0, Dimension - 1)];
 
         public IEnumerator<(int X, int Y, T Data)> GetEnumerator()
         {
             throw new NotImplementedException();
         }
 
-    }
-
-    public class DefaultCell<T> : ICell<T>
-    {
-        public DefaultCell(int x, int y)
+        protected virtual ICell<T>[,] Prepare(Func<(int X, int Y), ICell<T>> create)
         {
-            X = x;
-            Y = y;
-            Data = default;
+            if (create is null)
+            {
+                throw new ArgumentNullException(nameof(create));
+            }
+
+            var map = new ICell<T>[Dimension, Dimension];
+
+            for (var y = 0; y < Dimension; y++)
+            {
+                for (var x = 0; x < Dimension; x++)
+                {
+                    map[y, x] = create((x, y));
+                }
+            }
+
+            return map;
         }
 
-        public int X { get; protected set; }
-
-        public int Y { get; protected set; }
-
-        public T Data { get; }
-    }
-
-    public class FourWalls
-    {
-        public bool Up;
-        public bool Down;
-        public bool Left;
-        public bool Right;
+        protected virtual void Configure()
+        {
+            foreach (var cell in map)
+            {
+                Console.WriteLine($"Cell X={cell.X} Y={cell.Y}");
+            }
+        }
     }
 }

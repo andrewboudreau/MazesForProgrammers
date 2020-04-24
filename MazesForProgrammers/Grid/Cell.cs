@@ -1,46 +1,57 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Runtime.ConstrainedExecution;
-using System.Text;
 
 namespace MazesForProgrammers.Grid
 {
     public class Cell<T> : ICell<T>
     {
+        private readonly HashSet<ICell<T>> links;
+
         public Cell(int x, int y)
         {
             X = x;
             Y = y;
+            links = new HashSet<ICell<T>>(X * Y);
         }
 
         public int X { get; }
 
         public int Y { get; }
 
-        public T Data => throw new NotImplementedException();
+        public T Data { get; set; }
 
-        public (ICell<T> Top, ICell<T> Right, ICell<T> Bottom, ICell<T> Left) Neighbors => throw new NotImplementedException();
+        public (ICell<T> Top, ICell<T> Right, ICell<T> Bottom, ICell<T> Left) Neighbors { get; set; }
 
-        public IEnumerable<ICell<T>> Links => throw new NotImplementedException();
+        public IEnumerable<ICell<T>> Links => links;
+
+        public bool Linked(ICell<T> cell)
+        {
+            return links.Contains(cell);
+        }
 
         public void AddLink(ICell<T> cell, bool bidirectional = true)
         {
-            throw new NotImplementedException();
+            links.Add(cell);
+            if (bidirectional)
+            {
+                cell.AddLink(this, false);
+            }
         }
 
         public void RemoveLink(ICell<T> cell, bool bidirectional = true)
         {
-            throw new NotImplementedException();
+            links.Remove(cell);
+            if (bidirectional)
+            {
+                cell.RemoveLink(this, false);
+            }
         }
 
-        protected virtual void Prepare()
+        public bool Find(ICell<T> cell)
         {
-
+            return links.Contains(cell);
         }
 
-        protected virtual void Configure()
-        {
-        }
+        
     }
 }
