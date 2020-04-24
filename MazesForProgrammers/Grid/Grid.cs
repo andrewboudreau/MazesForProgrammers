@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.ComTypes;
 
 namespace MazesForProgrammers.Grid
 {
@@ -21,10 +22,13 @@ namespace MazesForProgrammers.Grid
             }
         }
 
+        ICell<T> RandomCell { get; }
+
         public IEnumerator<(int X, int Y, T Data)> GetEnumerator()
         {
             throw new NotImplementedException();
         }
+
     }
 
     public class DefaultCell<T> : ICell<T>

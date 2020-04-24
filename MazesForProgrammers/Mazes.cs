@@ -19,11 +19,9 @@ namespace MazesForProgrammers
             var serviceProvider = scope.ServiceProvider;
 
             var logger = serviceProvider.GetRequiredService<ILogger<Mazes>>();
-
             var builder = serviceProvider.GetRequiredService<IMazeBuilder>();
 
             logger.LogCritical($"Maze: {builder.Build()}");
-
 
             var maze = new Grid<FourWalls>(5);
             foreach (var cell in maze)
