@@ -10,16 +10,30 @@ namespace MazesForProgrammers.Grid
 
         public Grid(int dimension)
         {
-            int i = 0, x, y;
-            map = new ICell<T>[dimension, dimension];
 
+            Dimension = dimension;
+            map = new ICell<T>[dimension, dimension];
+            Prepare();
+            Configure();
+
+        }
+
+        private void Configure()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void Prepare()
+        {
+            int i = 0, x, y;
             foreach (var cell in map)
             {
-                y = i / dimension;
-                x = i % dimension;
+                y = i / Dimension;
+                x = i % Dimension;
                 map[y, x] = new DefaultCell<T>(x, y);
                 i++;
             }
+
         }
 
         ICell<T> RandomCell { get; }
