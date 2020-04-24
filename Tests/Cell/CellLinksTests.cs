@@ -110,5 +110,35 @@ namespace MazesForProgrammers.Tests.Cell
             CollectionAssert.DoesNotContain(other.Links.ToList(), missing);
             Assert.AreEqual(missing.Links.Any(), false, "The missing cell's link collection should remain empty.");
         }
+
+        [TestMethod]
+        public void Linked_ReturnsTrueAfterAddLink()
+        {
+            // Arrange
+            var cell = new Cell<int>(0, 0);
+            var other = new Cell<int>(1, 1);
+
+            cell.AddLink(other);
+
+            // Assert
+            Assert.IsTrue(cell.Linked(other));
+            Assert.IsTrue(other.Linked(cell));
+        }
+
+        [TestMethod]
+        public void Linked_ReturnsFalseAfterRemoveLink()
+        {
+            // Arrange
+            var cell = new Cell<int>(0, 0);
+            var other = new Cell<int>(1, 1);
+
+            cell.AddLink(other);
+
+            // Act
+            cell.RemoveLink(other);
+
+            Assert.IsFalse(cell.Linked(other));
+            Assert.IsFalse(other.Linked(cell));
+        }
     }
 }

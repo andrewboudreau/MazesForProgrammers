@@ -5,32 +5,51 @@ using System.Security.Cryptography.X509Certificates;
 
 namespace MazesForProgrammers.Grid
 {
+    /// <summary>
+    /// Manages a collection of <see cref="ICell{T}"/>.
+    /// </summary>
+    /// <typeparam name="T">The type of data for each cell in the grid.</typeparam>
     public class Grid<T>
     {
         private static readonly Random Random = new Random();
 
         private readonly ICell<T>[,] map;
 
-        public Grid(int dimension, Func<(int X, int Y), ICell<T>> create = null)
+        public Grid(int dimension)
+            : this(dimension, dimension, Cell<T>.DefaultCreate<T>)
         {
-            Dimension = dimension;
-            // map = Prepare(createCell ?? ((x, y)) => new Cell(x, y));
-            Configure();
-
         }
 
-        public int Dimension { get; }
+        public Grid(int dimension, Func<int, int, ICell<T>> create)
+            : this(dimension, dimension, create)
+        {
+        }
 
-        public int Size => Dimension * Dimension;
+        public Grid(int rows, int columns, Func<int, int, ICell<T>> create)
+        {
+            if (create is null)
+            {
+                throw new ArgumentNullException(nameof(create));
+            }
+            create ??= Cell<T>.DefaultCreate<T>;
+            map = Prepare(create);
+            Configure();
+        }
 
-        ICell<T> RandomCell => map[Random.Next(0, Dimension - 1), Random.Next(0, Dimension - 1)];
+        public int Rows { get; }
+
+        public int Columns { get; }
+
+        public int Size => Rows * Columns;
+
+        ICell<T> RandomCell => map[Random.Next(0, Rows - 1), Random.Next(0, Columns - 1)];
 
         public IEnumerator<(int X, int Y, T Data)> GetEnumerator()
         {
             throw new NotImplementedException();
         }
 
-        protected virtual ICell<T>[,] Prepare(Func<(int X, int Y), ICell<T>> create)
+        protected virtual ICell<T>[,] Prepare(Func<int, int, ICell<T>> create)
         {
             if (create is null)
             {
@@ -43,7 +62,7 @@ namespace MazesForProgrammers.Grid
             {
                 for (var x = 0; x < Dimension; x++)
                 {
-                    map[y, x] = create((x, y));
+                    map[y, x] = create(x, y);
                 }
             }
 

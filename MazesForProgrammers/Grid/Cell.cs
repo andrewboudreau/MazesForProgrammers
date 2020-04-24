@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace MazesForProgrammers.Grid
 {
@@ -52,6 +51,9 @@ namespace MazesForProgrammers.Grid
             return links.Contains(cell);
         }
 
-        
+        public static ICell<TCell> DefaultCreate<TCell>(int x, int y)
+        {
+            return new Cell<TCell>(x, y);
+        }
     }
 }

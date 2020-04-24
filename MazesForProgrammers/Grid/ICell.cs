@@ -1,8 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace MazesForProgrammers.Grid
 {
+    /// <summary>
+    ///  A cell in the grid, aware of it's local neighbors as well as other linked cells.
+    /// </summary>
+    /// <typeparam name="T">The type of data to store in each cell.</typeparam>
+    /// <remarks>These cells know about their location, can manage being linked to other cells and neighbors.</remarks>
     public interface ICell<T>
     {
         /// <summary>
