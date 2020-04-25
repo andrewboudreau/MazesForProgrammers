@@ -1,6 +1,4 @@
 ﻿using System;
-
-using MazesForProgrammers.Grid;
 using MazesForProgrammers.Logging;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;

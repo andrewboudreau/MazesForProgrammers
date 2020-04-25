@@ -9,13 +9,13 @@ namespace MazesForProgrammers.Grid
     /// Manages a collection of <see cref="ICell{T}"/>.
     /// </summary>
     /// <typeparam name="T">The type of data for each cell in the grid.</typeparam>
-    public class Grid<T>
+    public class Grid<T> : IGrid<T>
     {
         private static readonly Random Random = new Random();
 
         private readonly ICell<T>[,] map;
 
-        public Grid(int dimension)
+        public Grid(int dimension = 3)
             : this(dimension, dimension, Cell<T>.DefaultCreate<T>)
         {
         }
@@ -31,8 +31,23 @@ namespace MazesForProgrammers.Grid
             {
                 throw new ArgumentNullException(nameof(create));
             }
+
+            if (rows < 2)
+            {
+                throw new ArgumentOutOfRangeException("Grid must contain 2 or more rows.");
+            }
+
+            if (columns < 2)
+            {
+                throw new ArgumentOutOfRangeException("Grid must contain 2 or more columns.");
+            }
+
+            Rows = rows;
+            Columns = columns;
+
             create ??= Cell<T>.DefaultCreate<T>;
             map = Prepare(create);
+
             Configure();
         }
 
@@ -42,7 +57,7 @@ namespace MazesForProgrammers.Grid
 
         public int Size => Rows * Columns;
 
-        ICell<T> RandomCell => map[Random.Next(0, Rows - 1), Random.Next(0, Columns - 1)];
+        public ICell<T> RandomCell => map[Random.Next(0, Rows), Random.Next(0, Columns)];
 
         public IEnumerator<(int X, int Y, T Data)> GetEnumerator()
         {
@@ -56,13 +71,13 @@ namespace MazesForProgrammers.Grid
                 throw new ArgumentNullException(nameof(create));
             }
 
-            var map = new ICell<T>[Dimension, Dimension];
+            var map = new ICell<T>[Rows, Columns];
 
-            for (var y = 0; y < Dimension; y++)
+            for (var row = 0; row < Rows; row++)
             {
-                for (var x = 0; x < Dimension; x++)
+                for (var col = 0; col < Columns; col++)
                 {
-                    map[y, x] = create(x, y);
+                    map[row, col] = create(col, row);
                 }
             }
 
