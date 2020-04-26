@@ -14,6 +14,8 @@ namespace MazesForProgrammers.Grid
 
         ICell<T> RandomCell { get; }
 
-        IEnumerable<ICell<T>> ForEach(Action<ICell<T>> action);
+        IEnumerable<ICell<T>> EachCell();
+
+        IEnumerable<(int Row, IEnumerable<ICell<T>> Cells)> EachRow();
     }
 }

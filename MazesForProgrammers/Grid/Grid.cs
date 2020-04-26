@@ -1,7 +1,6 @@
-﻿using System;
+﻿using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Security.Cryptography.X509Certificates;
 
 namespace MazesForProgrammers.Grid
 {
@@ -59,9 +58,22 @@ namespace MazesForProgrammers.Grid
 
         public ICell<T> RandomCell => map[Random.Next(0, Rows), Random.Next(0, Columns)];
 
-        public IEnumerator<(int X, int Y, T Data)> GetEnumerator()
+        public ICell<T> this[int row, int column]   // Indexer declaration  
         {
-            throw new NotImplementedException();
+            get
+            {
+                if (row < 0 || row >= Rows)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(row), $"'{row}' is invalid row, value must be between 0 and {Rows - 1}");
+                }
+
+                if (column < 0 || column >= Columns)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(column), $"'{column}' is invalid column, value must be between 0 and {Columns - 1}");
+                }
+
+                return map[row, column];
+            }
         }
 
         protected virtual ICell<T>[,] Prepare(Func<int, int, ICell<T>> create)
@@ -77,7 +89,7 @@ namespace MazesForProgrammers.Grid
             {
                 for (var col = 0; col < Columns; col++)
                 {
-                    map[row, col] = create(col, row);
+                    map[row, col] = create(row, col);
                 }
             }
 
@@ -88,7 +100,39 @@ namespace MazesForProgrammers.Grid
         {
             foreach (var cell in map)
             {
-                Console.WriteLine($"Cell X={cell.X} Y={cell.Y}");
+                Console.WriteLine($"Cell X={cell.Column} Y={cell.Row}");
+            }
+        }
+
+        public IEnumerable<ICell<T>> EachCell()
+        {
+            for (var row = 0; row < map.GetLength(0); row++)
+            {
+                foreach (var cell in IterateRow(row))
+                {
+                    yield return cell;
+                }
+            }
+        }
+
+        public IEnumerable<(int Row, IEnumerable<ICell<T>> Cells)> EachRow()
+        {
+            for (var row = 0; row < map.GetLength(0); row++)
+            {
+                yield return (row, IterateRow(row));
+            }
+        }
+
+        private IEnumerable<ICell<T>> IterateRow(int row)
+        {
+            if (row < 0 || row > Rows - 1)
+            {
+                throw new ArgumentOutOfRangeException(nameof(row), $"'{row}' is invalid row, value must be between 0 and {Rows - 1}");
+            }
+
+            for (var col = 0; col < map.GetLength(1); col++)
+            {
+                yield return map[row, col];
             }
         }
     }

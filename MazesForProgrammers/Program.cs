@@ -5,7 +5,7 @@ using Microsoft.Extensions.Logging;
 
 namespace MazesForProgrammers
 {
-    class Mazes
+    class Program
     {
         public const LogLevel LoggingLevel = LogLevel.Debug;
 
@@ -16,8 +16,9 @@ namespace MazesForProgrammers
             using var scope = ConfigureServices().CreateScope();
             var serviceProvider = scope.ServiceProvider;
 
-            var logger = serviceProvider.GetRequiredService<ILogger<Mazes>>();
+            var logger = serviceProvider.GetRequiredService<ILogger<Program>>();
             var builder = serviceProvider.GetRequiredService<IMazeBuilder>();
+
 
             logger.LogCritical($"Maze: {builder.Build()}");
 
@@ -32,7 +33,7 @@ namespace MazesForProgrammers
             var serviceProvider = services.BuildServiceProvider();
 
             LogFactory = serviceProvider.GetRequiredService<ILoggerFactory>();
-            var logger = serviceProvider.GetRequiredService<ILogger<Mazes>>();
+            var logger = serviceProvider.GetRequiredService<ILogger<Program>>();
             services.AddSingleton(typeof(ILogger), logger);
 
             return services.BuildServiceProvider();

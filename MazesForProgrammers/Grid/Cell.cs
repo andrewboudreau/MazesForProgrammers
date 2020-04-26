@@ -6,16 +6,16 @@ namespace MazesForProgrammers.Grid
     {
         private readonly HashSet<ICell<T>> links;
 
-        public Cell(int x, int y)
+        public Cell(int row, int column)
         {
-            X = x;
-            Y = y;
-            links = new HashSet<ICell<T>>(X * Y);
+            Column = column;
+            Row = row;
+            links = new HashSet<ICell<T>>(Column * Row);
         }
 
-        public int X { get; }
+        public int Column { get; }
 
-        public int Y { get; }
+        public int Row { get; }
 
         public T Data { get; set; }
 
@@ -51,9 +51,9 @@ namespace MazesForProgrammers.Grid
             return links.Contains(cell);
         }
 
-        public static ICell<TCell> DefaultCreate<TCell>(int x, int y)
+        public static ICell<TCell> DefaultCreate<TCell>(int row, int column)
         {
-            return new Cell<TCell>(x, y);
+            return new Cell<TCell>(row, column);
         }
     }
 }

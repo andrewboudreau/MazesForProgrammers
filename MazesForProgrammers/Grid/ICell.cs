@@ -12,17 +12,17 @@ namespace MazesForProgrammers.Grid
         /// <summary>
         /// Gets the X-Coordinate of this cell in the grid.
         /// </summary>
-        int X { get; }
+        int Column { get; }
 
         /// <summary>
         /// Gets the Y-Coordinate of this cell in the grid.
         /// </summary>
-        int Y { get; }
+        int Row { get; }
 
         /// <summary>
         /// Gets the X,Y Tuple of this cell's location in the grid.
         /// </summary>
-        (int X, int Y) Location => (X, Y);
+        (int Row, int Column) Location => (Row, Column);
 
         /// <summary>
         /// Gets the cells data.
@@ -32,8 +32,8 @@ namespace MazesForProgrammers.Grid
         /// <summary>
         /// Gets a tuple of the x,y coordinates with the cell data.
         /// </summary>
-        (int X, int Y, T Data) Item => (X, Y, Data);
-        
+        (int Row, int Column, T Data) Item => (Row, Column, Data);
+
         /// <summary>
         /// Gets a tuple of the 4-way neighbors.
         /// </summary>
