@@ -1,10 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace MazesForProgrammers.Extensions
 {
     public static partial class EnumerableExtensions
     {
+        private readonly static Random Random = new Random();
+
         public static int[] IntegersFromCsv(this string csv)
         {
             return csv.Split(",").Select(x => int.Parse(x.Trim())).ToArray();
@@ -44,6 +47,11 @@ namespace MazesForProgrammers.Extensions
                     yield return (item, other);
                 }
             }
+        }
+
+        public static T Sample<T>(this ICollection<T> collection)
+        {
+            return collection.ElementAt(Random.Next(collection.Count));
         }
     }
 }

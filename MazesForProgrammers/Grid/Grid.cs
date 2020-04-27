@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using MazesForProgrammers.Grid.Configuration;
 using System;
 using System.Collections.Generic;
 
@@ -15,20 +15,25 @@ namespace MazesForProgrammers.Grid
         private readonly ICell<T>[,] map;
 
         public Grid(int dimension = 3)
-            : this(dimension, dimension, Cell<T>.DefaultCreate<T>)
+            : this(dimension, dimension, Cell<T>.DefaultCreate<T>, LinkNorthEastSouthWestNeighbors.ConfigureCell<T>)
         {
         }
 
         public Grid(int dimension, Func<int, int, ICell<T>> create)
-            : this(dimension, dimension, create)
+            : this(dimension, dimension, create, LinkNorthEastSouthWestNeighbors.Configure<T>)
         {
         }
 
-        public Grid(int rows, int columns, Func<int, int, ICell<T>> create)
+        public Grid(int rows, int columns, Func<int, int, ICell<T>> create, Action<ICell<T>, IGrid<T>> configure)
         {
             if (create is null)
             {
                 throw new ArgumentNullException(nameof(create));
+            }
+
+            if (configure is null)
+            {
+                throw new ArgumentNullException(nameof(configure));
             }
 
             if (rows < 2)
@@ -44,10 +49,8 @@ namespace MazesForProgrammers.Grid
             Rows = rows;
             Columns = columns;
 
-            create ??= Cell<T>.DefaultCreate<T>;
             map = Prepare(create);
-
-            Configure();
+            Configure(configure);
         }
 
         public int Rows { get; }
@@ -58,7 +61,7 @@ namespace MazesForProgrammers.Grid
 
         public ICell<T> RandomCell => map[Random.Next(0, Rows), Random.Next(0, Columns)];
 
-        public ICell<T> this[int row, int column]   // Indexer declaration  
+        public ICell<T> this[int row, int column]
         {
             get
             {
@@ -67,6 +70,26 @@ namespace MazesForProgrammers.Grid
                     throw new ArgumentOutOfRangeException(nameof(row), $"'{row}' is invalid row, value must be between 0 and {Rows - 1}");
                 }
 
+                if (column < 0 || column >= Columns)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(column), $"'{column}' is invalid column, value must be between 0 and {Columns - 1}");
+                }
+
+                return map[row, column];
+            }
+        }
+
+        public ICell<T> this[(int Row, int Column) location]
+        {
+            get
+            {
+                var row = location.Row;
+                if (row < 0 || row >= Rows)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(row), $"'{row}' is invalid row, value must be between 0 and {Rows - 1}");
+                }
+
+                var column = location.Column;
                 if (column < 0 || column >= Columns)
                 {
                     throw new ArgumentOutOfRangeException(nameof(column), $"'{column}' is invalid column, value must be between 0 and {Columns - 1}");
@@ -96,11 +119,11 @@ namespace MazesForProgrammers.Grid
             return map;
         }
 
-        protected virtual void Configure()
+        protected virtual void Configure(Action<ICell<T>, IGrid<T>> configure)
         {
-            foreach (var cell in map)
+            foreach (var cell in EachCell())
             {
-                Console.WriteLine($"Cell X={cell.Column} Y={cell.Row}");
+                configure(cell, this);
             }
         }
 
@@ -121,6 +144,22 @@ namespace MazesForProgrammers.Grid
             {
                 yield return (row, IterateRow(row));
             }
+        }
+
+        public bool InBounds((int Row, int Column) location)
+        {
+            if (location.Row < 0 || location.Row >= Rows)
+            {
+                return false;
+
+            }
+
+            if (location.Column < 0 || location.Column >= Columns)
+            {
+                return false;
+            }
+
+            return true;
         }
 
         private IEnumerable<ICell<T>> IterateRow(int row)

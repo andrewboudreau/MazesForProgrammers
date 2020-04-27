@@ -11,6 +11,7 @@ namespace MazesForProgrammers.Grid
             Column = column;
             Row = row;
             links = new HashSet<ICell<T>>(Column * Row);
+            Neighbors = new List<ICell<T>>(4);
         }
 
         public int Column { get; }
@@ -19,7 +20,7 @@ namespace MazesForProgrammers.Grid
 
         public T Data { get; set; }
 
-        public (ICell<T> Top, ICell<T> Right, ICell<T> Bottom, ICell<T> Left) Neighbors { get; set; }
+        public ICollection<ICell<T>> Neighbors { get; set; }
 
         public IEnumerable<ICell<T>> Links => links;
 

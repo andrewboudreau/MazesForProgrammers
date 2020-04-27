@@ -35,9 +35,9 @@ namespace MazesForProgrammers.Grid
         (int Row, int Column, T Data) Item => (Row, Column, Data);
 
         /// <summary>
-        /// Gets a tuple of the 4-way neighbors.
+        /// Gets a tuple of the named neighbors.
         /// </summary>
-        (ICell<T> Top, ICell<T> Right, ICell<T> Bottom, ICell<T> Left) Neighbors { get; }
+        ICollection<ICell<T>> Neighbors { get; set; }
 
         /// <summary>
         /// Connects the current cell with the given cell.
