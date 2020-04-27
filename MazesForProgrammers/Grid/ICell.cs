@@ -35,9 +35,9 @@ namespace MazesForProgrammers.Grid
         (int Row, int Column, T Data) Item => (Row, Column, Data);
 
         /// <summary>
-        /// Gets a tuple of the named neighbors.
+        /// Gets a collection of the named neighbors.
         /// </summary>
-        ICollection<ICell<T>> Neighbors { get; set; }
+        ICollection<ICell<T>> Neighbors { get; }
 
         /// <summary>
         /// Connects the current cell with the given cell.

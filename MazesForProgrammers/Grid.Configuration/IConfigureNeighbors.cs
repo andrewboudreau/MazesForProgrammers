@@ -1,7 +1,9 @@
-﻿namespace MazesForProgrammers.Grid.Configuration
+﻿using System.Collections.Generic;
+
+namespace MazesForProgrammers.Grid.Configuration
 {
     public interface IConfigureNeighbors
     {
-        public HashSet<Configure
+        void ConfigureNeighbors<T>(ICell<T> cell, IGrid<T> grid);
     }
 }

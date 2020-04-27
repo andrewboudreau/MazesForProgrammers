@@ -1,6 +1,7 @@
-﻿using MazesForProgrammers.Grid.Configuration;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using MazesForProgrammers.Extensions;
+using MazesForProgrammers.Grid.Configuration;
 
 namespace MazesForProgrammers.Grid
 {
@@ -15,25 +16,25 @@ namespace MazesForProgrammers.Grid
         private readonly ICell<T>[,] map;
 
         public Grid(int dimension = 3)
-            : this(dimension, dimension, Cell<T>.DefaultCreate<T>, LinkNorthEastSouthWestNeighbors.ConfigureCell<T>)
+            : this(dimension, dimension, (row, col) => new Cell<T>(row, col), new LinkNorthEastSouthWestNeighbors())
         {
         }
 
-        public Grid(int dimension, Func<int, int, ICell<T>> create)
-            : this(dimension, dimension, create, LinkNorthEastSouthWestNeighbors.Configure<T>)
+        public Grid(int rows, int columns, Func<int, int, ICell<T>> create)
+            : this(rows, columns, create, new LinkNorthEastSouthWestNeighbors())
         {
         }
 
-        public Grid(int rows, int columns, Func<int, int, ICell<T>> create, Action<ICell<T>, IGrid<T>> configure)
+        public Grid(int rows, int columns, Func<int, int, ICell<T>> create, params IConfigureNeighbors[] configurations)
         {
             if (create is null)
             {
                 throw new ArgumentNullException(nameof(create));
             }
 
-            if (configure is null)
+            if (configurations is null || configurations.IsEmpty())
             {
-                throw new ArgumentNullException(nameof(configure));
+                throw new ArgumentNullException(nameof(configurations));
             }
 
             if (rows < 2)
@@ -50,7 +51,11 @@ namespace MazesForProgrammers.Grid
             Columns = columns;
 
             map = Prepare(create);
-            Configure(configure);
+
+            foreach (var configuration in configurations)
+            {
+                ConfigureNeighbors(configuration);
+            }
         }
 
         public int Rows { get; }
@@ -61,69 +66,12 @@ namespace MazesForProgrammers.Grid
 
         public ICell<T> RandomCell => map[Random.Next(0, Rows), Random.Next(0, Columns)];
 
-        public ICell<T> this[int row, int column]
-        {
-            get
-            {
-                if (row < 0 || row >= Rows)
-                {
-                    throw new ArgumentOutOfRangeException(nameof(row), $"'{row}' is invalid row, value must be between 0 and {Rows - 1}");
-                }
-
-                if (column < 0 || column >= Columns)
-                {
-                    throw new ArgumentOutOfRangeException(nameof(column), $"'{column}' is invalid column, value must be between 0 and {Columns - 1}");
-                }
-
-                return map[row, column];
-            }
-        }
-
         public ICell<T> this[(int Row, int Column) location]
         {
             get
             {
-                var row = location.Row;
-                if (row < 0 || row >= Rows)
-                {
-                    throw new ArgumentOutOfRangeException(nameof(row), $"'{row}' is invalid row, value must be between 0 and {Rows - 1}");
-                }
-
-                var column = location.Column;
-                if (column < 0 || column >= Columns)
-                {
-                    throw new ArgumentOutOfRangeException(nameof(column), $"'{column}' is invalid column, value must be between 0 and {Columns - 1}");
-                }
-
-                return map[row, column];
-            }
-        }
-
-        protected virtual ICell<T>[,] Prepare(Func<int, int, ICell<T>> create)
-        {
-            if (create is null)
-            {
-                throw new ArgumentNullException(nameof(create));
-            }
-
-            var map = new ICell<T>[Rows, Columns];
-
-            for (var row = 0; row < Rows; row++)
-            {
-                for (var col = 0; col < Columns; col++)
-                {
-                    map[row, col] = create(row, col);
-                }
-            }
-
-            return map;
-        }
-
-        protected virtual void Configure(Action<ICell<T>, IGrid<T>> configure)
-        {
-            foreach (var cell in EachCell())
-            {
-                configure(cell, this);
+                AssertInBounds(location.Row, location.Column);
+                return map[location.Row, location.Column];
             }
         }
 
@@ -148,18 +96,52 @@ namespace MazesForProgrammers.Grid
 
         public bool InBounds((int Row, int Column) location)
         {
-            if (location.Row < 0 || location.Row >= Rows)
+            var row = location.Row;
+            if (row < 0 || row >= Rows)
             {
                 return false;
-
             }
 
-            if (location.Column < 0 || location.Column >= Columns)
+            var column = location.Column;
+            if (column < 0 || column >= Columns)
             {
                 return false;
             }
 
             return true;
+        }
+
+        protected virtual ICell<T>[,] Prepare(Func<int, int, ICell<T>> create)
+        {
+            if (create is null)
+            {
+                throw new ArgumentNullException(nameof(create));
+            }
+
+            var map = new ICell<T>[Rows, Columns];
+
+            for (var row = 0; row < Rows; row++)
+            {
+                for (var col = 0; col < Columns; col++)
+                {
+                    map[row, col] = create(row, col);
+                }
+            }
+
+            return map;
+        }
+
+        protected virtual void ConfigureNeighbors(IConfigureNeighbors configure)
+        {
+            if (configure is null)
+            {
+                throw new ArgumentNullException(nameof(configure));
+            }
+
+            foreach (var cell in EachCell())
+            {
+                configure.ConfigureNeighbors(cell, this);
+            }
         }
 
         private IEnumerable<ICell<T>> IterateRow(int row)
@@ -172,6 +154,19 @@ namespace MazesForProgrammers.Grid
             for (var col = 0; col < map.GetLength(1); col++)
             {
                 yield return map[row, col];
+            }
+        }
+
+        private void AssertInBounds(int row, int column)
+        {
+            if (row < 0 || row >= Rows)
+            {
+                throw new ArgumentOutOfRangeException(nameof(row), $"'{row}' is invalid row, value must be between 0 and {Rows - 1}");
+            }
+
+            if (column < 0 || column >= Columns)
+            {
+                throw new ArgumentOutOfRangeException(nameof(column), $"'{column}' is invalid column, value must be between 0 and {Columns - 1}");
             }
         }
     }

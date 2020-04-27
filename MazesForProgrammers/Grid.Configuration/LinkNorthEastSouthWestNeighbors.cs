@@ -1,42 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
-
-using MazesForProgrammers.Extensions;
+﻿using MazesForProgrammers.Extensions;
 
 namespace MazesForProgrammers.Grid.Configuration
 {
     public class LinkNorthEastSouthWestNeighbors : IConfigureNeighbors
     {
-        public static Action<ICell<T>, Grid<T>> Configure<T>()
+        public void ConfigureNeighbors<T>(ICell<T> cell, IGrid<T> grid)
         {
-            return (cell, grid) =>
+            var north = cell.North();
+            if (grid.InBounds(north))
             {
-                var neighbors = new List<ICell<T>>();
+                cell.Neighbors.Add(grid[north]);
+            }
 
-                var north = cell.North();
-                if (grid.InBounds(north))
-                {
-                    neighbors.Add(grid[north]);
-                }
+            var east = cell.East();
+            if (grid.InBounds(east))
+            {
+                cell.Neighbors.Add(grid[east]);
+            }
 
-                var east = cell.East();
-                if (grid.InBounds(east))
-                {
-                    neighbors.Add(grid[east]);
-                }
+            var south = cell.South();
+            if (grid.InBounds(south))
+            {
+                cell.Neighbors.Add(grid[south]);
+            }
 
-                var south = cell.South();
-                if (grid.InBounds(south))
-                {
-                    neighbors.Add(grid[south]);
-                }
-
-                var west = cell.West();
-                if (grid.InBounds(west))
-                {
-                    neighbors.Add(grid[west]);
-                }
-            };
+            var west = cell.West();
+            if (grid.InBounds(west))
+            {
+                cell.Neighbors.Add(grid[west]);
+            }
         }
     }
 }
