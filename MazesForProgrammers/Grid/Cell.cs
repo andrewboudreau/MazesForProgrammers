@@ -52,10 +52,5 @@ namespace MazesForProgrammers.Grid
         {
             return links.Contains(cell);
         }
-
-        public static ICell<TCell> DefaultCreate<TCell>(int row, int column)
-        {
-            return new Cell<TCell>(row, column);
-        }
     }
 }
