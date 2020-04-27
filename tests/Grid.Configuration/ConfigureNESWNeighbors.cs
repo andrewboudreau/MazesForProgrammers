@@ -30,7 +30,7 @@ namespace MazesForProgrammers.Tests.Grid.Configuration
         public void AllNeighborsAreDefined()
         {
             var grid = new Grid<int>(3);
-            CollectionAssert.AreEqual(grid[(1, 1)].Neighbors.ToList(), new[] { grid[(2, 1)], grid[(1, 2)], grid[(0, 1)], grid[(0, 1)] });
+            CollectionAssert.AreEqual(grid[(1, 1)].Neighbors.ToList(), new[] { grid[(2, 1)], grid[(1, 2)], grid[(0, 1)], grid[(1, 0)] });
         }
     }
 }
