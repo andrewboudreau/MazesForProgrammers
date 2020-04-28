@@ -1,8 +1,7 @@
-﻿using MazesForProgrammers.Grid.Configuration;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using MazesForProgrammers.Grid.Configuration;
 
-namespace MazesForProgrammers.Grid
+namespace MazesForProgrammers.Grid.Interfaces
 {
     public interface IGrid<T>
     {

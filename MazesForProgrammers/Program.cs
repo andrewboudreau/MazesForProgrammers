@@ -1,5 +1,8 @@
 ﻿using System;
+using MazesForProgrammers.Grid;
+using MazesForProgrammers.Grid.Render;
 using MazesForProgrammers.Logging;
+using MazesForProgrammers.Mazes;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
@@ -15,12 +18,16 @@ namespace MazesForProgrammers
         {
             using var scope = ConfigureServices().CreateScope();
             var serviceProvider = scope.ServiceProvider;
-
             var logger = serviceProvider.GetRequiredService<ILogger<Program>>();
-            var builder = serviceProvider.GetRequiredService<IMazeBuilder>();
 
+            var grid = new Grid<int>(3);
+            var algorithm = new BinaryTree();
+            var render = new ConsoleRender();
 
-            logger.LogCritical($"Maze: {builder.Build()}");
+            algorithm
+                .SetupNeighbors(grid)
+                .ApplyTo(grid)
+                .RenderToConsole();
 
             Console.ReadKey();
         }

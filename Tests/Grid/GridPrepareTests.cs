@@ -1,6 +1,6 @@
 ﻿using MazesForProgrammers.Grid;
+using MazesForProgrammers.Grid.Interfaces;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 using System.Collections.Generic;
 
 namespace MazesForProgrammers.Tests.Grid

@@ -1,5 +1,5 @@
-﻿using MazesForProgrammers.Grid.Configuration;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using MazesForProgrammers.Grid.Interfaces;
 
 namespace MazesForProgrammers.Grid
 {
@@ -46,11 +46,6 @@ namespace MazesForProgrammers.Grid
             {
                 cell.RemoveLink(this, false);
             }
-        }
-
-        public bool Find(ICell<T> cell)
-        {
-            return links.Contains(cell);
         }
     }
 }

@@ -1,9 +1,12 @@
 ﻿using MazesForProgrammers.Extensions;
+using MazesForProgrammers.Grid.Interfaces;
 
 namespace MazesForProgrammers.Grid.Configuration
 {
     public class LinkNorthEastSouthWestNeighbors : IConfigureNeighbors
     {
+        public bool Clear => true;
+
         public void ConfigureNeighbors<T>(ICell<T> cell, IGrid<T> grid)
         {
             var north = cell.North();

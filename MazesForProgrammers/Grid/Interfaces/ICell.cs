@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace MazesForProgrammers.Grid
+namespace MazesForProgrammers.Grid.Interfaces
 {
     /// <summary>
     ///  A cell in the grid, aware of it's local neighbors as well as other linked cells.
@@ -63,6 +63,6 @@ namespace MazesForProgrammers.Grid
         /// </summary>
         /// <param name="cell">The given cell</param>
         /// <returns>True if the given cell is in this cell's links collection.</returns>
-        bool Find(ICell<T> cell);
+        bool Linked(ICell<T> cell);
     }
 }

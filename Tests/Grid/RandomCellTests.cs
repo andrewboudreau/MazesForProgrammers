@@ -1,4 +1,5 @@
 ﻿using MazesForProgrammers.Grid;
+using MazesForProgrammers.Grid.Interfaces;
 using MazesForProgrammers.Tests.Cell;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;

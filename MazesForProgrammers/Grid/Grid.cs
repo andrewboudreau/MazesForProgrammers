@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using MazesForProgrammers.Extensions;
 using MazesForProgrammers.Grid.Configuration;
+using MazesForProgrammers.Grid.Interfaces;
 
 namespace MazesForProgrammers.Grid
 {

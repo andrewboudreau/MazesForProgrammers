@@ -1,4 +1,5 @@
 ﻿using MazesForProgrammers.Extensions;
+using MazesForProgrammers.Grid.Interfaces;
 
 namespace MazesForProgrammers.Grid.Configuration
 {

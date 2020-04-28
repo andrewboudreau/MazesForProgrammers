@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using MazesForProgrammers.Grid.Interfaces;
 
 namespace MazesForProgrammers.Grid.Configuration
 {
