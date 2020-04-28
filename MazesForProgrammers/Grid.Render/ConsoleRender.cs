@@ -10,7 +10,7 @@ namespace MazesForProgrammers.Grid.Render
         public string Render<T>(IGrid<T> grid)
         {
             var output = "+" + string.Concat(Enumerable.Repeat("---+", grid.Columns)) + "\r\n";
-            foreach (var row in grid.EachRow())
+            foreach (var row in grid.EachRow().Reverse())
             {
                 var top = "|";
                 var bottom = "+";
@@ -41,7 +41,7 @@ namespace MazesForProgrammers.Grid.Render
                 output += bottom + "\r\n";
             }
 
-            return output.Reverse();
+            return output;
         }
     }
 }

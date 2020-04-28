@@ -1,7 +1,7 @@
-﻿using MazesForProgrammers.Grid;
-using Microsoft.VisualBasic;
+﻿using System.Linq;
+
+using MazesForProgrammers.Grid;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Linq;
 
 namespace MazesForProgrammers.Tests.Grid.Configuration
 {
