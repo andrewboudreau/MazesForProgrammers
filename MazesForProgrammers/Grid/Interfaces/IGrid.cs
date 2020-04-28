@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using MazesForProgrammers.Grid.Configuration;
+using System;
+using System.Collections.Generic;
 
 namespace MazesForProgrammers.Grid
 {
@@ -49,5 +51,11 @@ namespace MazesForProgrammers.Grid
         /// <param name="row">0-based row and column index.</param>
         /// <returns>True if the row and column indexes are valid for the grid.</returns>
         bool InBounds((int Row, int Column) location);
+
+        /// <summary>
+        /// Runs a configuration process for each cell in this grid.
+        /// </summary>
+        /// <param name="configure">The configuration steps for each cell.</param>
+        void ConfigureNeighbors(IConfigureNeighbors configure);
     }
 }

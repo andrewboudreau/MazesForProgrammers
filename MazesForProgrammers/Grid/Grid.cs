@@ -64,13 +64,13 @@ namespace MazesForProgrammers.Grid
 
         public int Size => Rows * Columns;
 
-        public ICell<T> RandomCell => map[Random.Next(0, Rows), Random.Next(0, Columns)];
+        public ICell<T> RandomCell => this[(Random.Next(0, Rows), Random.Next(0, Columns))];
 
         public ICell<T> this[(int Row, int Column) location]
         {
             get
             {
-                AssertInBounds(location.Row, location.Column);
+                GuardBounds(location.Row, location.Column);
                 return map[location.Row, location.Column];
             }
         }
@@ -131,7 +131,7 @@ namespace MazesForProgrammers.Grid
             return map;
         }
 
-        protected virtual void ConfigureNeighbors(IConfigureNeighbors configure)
+        public void ConfigureNeighbors(IConfigureNeighbors configure)
         {
             if (configure is null)
             {
@@ -140,24 +140,24 @@ namespace MazesForProgrammers.Grid
 
             foreach (var cell in EachCell())
             {
+                if (configure.Clear)
+                {
+                    cell.Neighbors.Clear();
+                }
+
                 configure.ConfigureNeighbors(cell, this);
             }
         }
 
         private IEnumerable<ICell<T>> IterateRow(int row)
         {
-            if (row < 0 || row > Rows - 1)
-            {
-                throw new ArgumentOutOfRangeException(nameof(row), $"'{row}' is invalid row, value must be between 0 and {Rows - 1}");
-            }
-
             for (var col = 0; col < map.GetLength(1); col++)
             {
-                yield return map[row, col];
+                yield return this[(row, col)];
             }
         }
 
-        private void AssertInBounds(int row, int column)
+        private void GuardBounds(int row, int column)
         {
             if (row < 0 || row >= Rows)
             {

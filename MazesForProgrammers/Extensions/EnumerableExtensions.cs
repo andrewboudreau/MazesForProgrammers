@@ -51,6 +51,11 @@ namespace MazesForProgrammers.Extensions
 
         public static T Sample<T>(this ICollection<T> collection)
         {
+            if (collection is null || collection.IsEmpty())
+            {
+                return default;
+            }
+
             return collection.ElementAt(Random.Next(collection.Count));
         }
     }
