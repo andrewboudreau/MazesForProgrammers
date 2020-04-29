@@ -20,14 +20,16 @@ namespace MazesForProgrammers
             var serviceProvider = scope.ServiceProvider;
             var logger = serviceProvider.GetRequiredService<ILogger<Program>>();
 
-            var grid = new Grid<int>(3);
-            var algorithm = new BinaryTree();
-            var render = new ConsoleRender();
+            for (var i = 0; i < 10; i++)
+            {
+                var grid = new Grid<int>(4);
+                var algorithm = new BinaryTree();
 
-            algorithm
-                .SetupNeighbors(grid)
-                .ApplyTo(grid)
-                .RenderToConsole();
+                algorithm
+                    .SetupNeighbors(grid)
+                    .ApplyTo(grid)
+                    .RenderToConsole();
+            }
 
             Console.ReadKey();
         }

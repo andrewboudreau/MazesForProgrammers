@@ -11,7 +11,7 @@ namespace MazesForProgrammers.Mazes
     {
         public ICreateMazes SetupNeighbors<T>(IGrid<T> grid)
         {
-            grid.ConfigureNeighbors(new LinkNorthEastNeighbors());
+            grid.ConfigureNeighbors(new LinkNorthEastNeighbors(true));
             return this;
         }
 

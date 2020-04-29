@@ -17,7 +17,8 @@ namespace MazesForProgrammers.Grid.Render
 
                 foreach (var cell in row.Cells)
                 {
-                    var body = string.Concat(Enumerable.Repeat(" ", 3));
+                    //// var body = $"{row.Row},{cell.Column}";
+                    var body = $"   ";
                     var east = "|";
 
                     if (grid.InBounds(cell.East()) && cell.Linked(grid[cell.East()]))

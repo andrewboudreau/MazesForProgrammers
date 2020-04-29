@@ -47,5 +47,10 @@ namespace MazesForProgrammers.Grid
                 cell.RemoveLink(this, false);
             }
         }
+
+        public override string ToString()
+        {
+            return $"[Row:{Row}, Col:{Column}]";
+        }
     }
 }

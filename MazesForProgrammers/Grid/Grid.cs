@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using MazesForProgrammers.Extensions;
+using System.Linq;
 using MazesForProgrammers.Grid.Configuration;
 using MazesForProgrammers.Grid.Interfaces;
 
@@ -17,23 +17,24 @@ namespace MazesForProgrammers.Grid
         private readonly ICell<T>[,] map;
 
         public Grid(int dimension = 3)
-            : this(dimension, dimension, (row, col) => new Cell<T>(row, col), new LinkNorthEastSouthWestNeighbors())
+            : this(dimension, dimension, (row, col) => new Cell<T>(row, col))
         {
         }
 
         public Grid(int rows, int columns, Func<int, int, ICell<T>> create)
-            : this(rows, columns, create, new LinkNorthEastSouthWestNeighbors())
+            : this(rows, columns, create, null)
         {
         }
 
         public Grid(int rows, int columns, Func<int, int, ICell<T>> create, params IConfigureNeighbors[] configurations)
         {
+            configurations ??= new IConfigureNeighbors[0];
             if (create is null)
             {
                 throw new ArgumentNullException(nameof(create));
             }
 
-            if (configurations is null || configurations.IsEmpty())
+            if (configurations is null)
             {
                 throw new ArgumentNullException(nameof(configurations));
             }
