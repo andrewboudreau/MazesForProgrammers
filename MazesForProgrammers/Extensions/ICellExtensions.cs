@@ -1,4 +1,7 @@
-﻿using MazesForProgrammers.Grid.Interfaces;
+﻿using System;
+using System.Collections.Generic;
+
+using MazesForProgrammers.Grid.Interfaces;
 
 namespace MazesForProgrammers.Extensions
 {
@@ -42,6 +45,21 @@ namespace MazesForProgrammers.Extensions
         public static (int Row, int Column) NorthWest<T>(this ICell<T> cell)
         {
             return (cell.Row - 1, cell.Column + 1);
+        }
+
+        public static IEnumerable<ICell<T>> Perform<T>(this IEnumerable<ICell<T>> cells, Action<ICell<T>> action)
+        {
+            if (action is null)
+            {
+                throw new ArgumentNullException(nameof(action));
+            }
+
+            foreach (var cell in cells)
+            {
+                action.Invoke(cell);
+            }
+
+            return cells;
         }
     }
 }

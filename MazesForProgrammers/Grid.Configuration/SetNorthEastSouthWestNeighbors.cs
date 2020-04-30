@@ -3,15 +3,8 @@ using MazesForProgrammers.Grid.Interfaces;
 
 namespace MazesForProgrammers.Grid.Configuration
 {
-    public class LinkNorthEastNeighbors : IConfigureNeighbors
+    public class SetNorthEastSouthWestNeighbors : IConfigureNeighbors
     {
-        public LinkNorthEastNeighbors(bool clear = false)
-        {
-            Clear = clear;
-        }
-
-        public bool Clear { get; }
-
         public void ConfigureNeighbors<T>(ICell<T> cell, IGrid<T> grid)
         {
             var north = cell.North();
@@ -24,6 +17,18 @@ namespace MazesForProgrammers.Grid.Configuration
             if (grid.InBounds(east))
             {
                 cell.Neighbors.Add(grid[east]);
+            }
+
+            var south = cell.South();
+            if (grid.InBounds(south))
+            {
+                cell.Neighbors.Add(grid[south]);
+            }
+
+            var west = cell.West();
+            if (grid.InBounds(west))
+            {
+                cell.Neighbors.Add(grid[west]);
             }
         }
     }

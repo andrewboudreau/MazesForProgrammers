@@ -3,7 +3,7 @@ using MazesForProgrammers.Grid;
 using MazesForProgrammers.Grid.Render;
 using MazesForProgrammers.Logging;
 using MazesForProgrammers.Mazes;
-using Microsoft.Extensions.DependencyInjection;
+
 using Microsoft.Extensions.Logging;
 
 namespace MazesForProgrammers
@@ -12,46 +12,23 @@ namespace MazesForProgrammers
     {
         public const LogLevel LoggingLevel = LogLevel.Debug;
 
-        public static ILoggerFactory LogFactory;
+        public static ILoggerFactory LogFactory = ApplicationLogging.LoggerFactory;
 
         static void Main(string[] args)
         {
-            using var scope = ConfigureServices().CreateScope();
-            var serviceProvider = scope.ServiceProvider;
-            var logger = serviceProvider.GetRequiredService<ILogger<Program>>();
+            var grid = new Grid<int>(20);
+            var algorithm = new SideWinder();
 
-            for (var i = 0; i < 10; i++)
+            for (var i = 0; i < 1; i++)
             {
-                var grid = new Grid<int>(4);
-                var algorithm = new BinaryTree();
-
                 algorithm
                     .SetupNeighbors(grid)
                     .ApplyTo(grid)
-                    .RenderToConsole();
+                    .RenderToConsole()
+                    .ClearLinksAndNeighbors();
             }
 
             Console.ReadKey();
-        }
-
-        private static ServiceProvider ConfigureServices(IServiceCollection services)
-        {
-            var singleLineConsoleLoggerProvider = new SingleLineConsoleLogger();
-            services.AddLogging(configure => configure.ClearProviders().AddProvider(singleLineConsoleLoggerProvider).SetMinimumLevel(LoggingLevel));
-
-            var serviceProvider = services.BuildServiceProvider();
-
-            LogFactory = serviceProvider.GetRequiredService<ILoggerFactory>();
-            var logger = serviceProvider.GetRequiredService<ILogger<Program>>();
-            services.AddSingleton(typeof(ILogger), logger);
-
-            return services.BuildServiceProvider();
-        }
-
-        private static ServiceProvider ConfigureServices()
-        {
-            var services = new ServiceCollection();
-            return ConfigureServices(services);
         }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using MazesForProgrammers.Grid.Configuration;
 using MazesForProgrammers.Grid.Interfaces;
 
@@ -22,21 +21,10 @@ namespace MazesForProgrammers.Grid
         }
 
         public Grid(int rows, int columns, Func<int, int, ICell<T>> create)
-            : this(rows, columns, create, null)
         {
-        }
-
-        public Grid(int rows, int columns, Func<int, int, ICell<T>> create, params IConfigureNeighbors[] configurations)
-        {
-            configurations ??= new IConfigureNeighbors[0];
             if (create is null)
             {
                 throw new ArgumentNullException(nameof(create));
-            }
-
-            if (configurations is null)
-            {
-                throw new ArgumentNullException(nameof(configurations));
             }
 
             if (rows < 2)
@@ -53,11 +41,6 @@ namespace MazesForProgrammers.Grid
             Columns = columns;
 
             map = Prepare(create);
-
-            foreach (var configuration in configurations)
-            {
-                ConfigureNeighbors(configuration);
-            }
         }
 
         public int Rows { get; }
@@ -142,12 +125,14 @@ namespace MazesForProgrammers.Grid
 
             foreach (var cell in EachCell())
             {
-                if (configure.Clear)
-                {
-                    cell.Neighbors.Clear();
-                }
-
                 configure.ConfigureNeighbors(cell, this);
+            }
+        }
+        public void ClearLinksAndNeighbors()
+        {
+            foreach (var cell in EachCell())
+            {
+                cell.Clear();
             }
         }
 

@@ -48,6 +48,12 @@ namespace MazesForProgrammers.Grid
             }
         }
 
+        public void Clear()
+        {
+            links.Clear();
+            Neighbors.Clear();
+        }
+
         public override string ToString()
         {
             return $"[Row:{Row}, Col:{Column}]";

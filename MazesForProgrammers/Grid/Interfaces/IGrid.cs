@@ -56,5 +56,10 @@ namespace MazesForProgrammers.Grid.Interfaces
         /// </summary>
         /// <param name="configure">The configuration steps for each cell.</param>
         void ConfigureNeighbors(IConfigureNeighbors configure);
+
+        /// <summary>
+        /// Resets the cell's links and neighbors.
+        /// </summary>
+        void ClearLinksAndNeighbors();
     }
 }

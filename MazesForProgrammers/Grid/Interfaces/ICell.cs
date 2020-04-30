@@ -64,5 +64,10 @@ namespace MazesForProgrammers.Grid.Interfaces
         /// <param name="cell">The given cell</param>
         /// <returns>True if the given cell is in this cell's links collection.</returns>
         bool Linked(ICell<T> cell);
+
+        /// <summary>
+        /// Clears the cell's <see cref="ICell{T}.Neighbors"/> and <see cref="ICell{T}.Links"/> collections.
+        /// </summary>
+        void Clear();
     }
 }
