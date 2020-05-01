@@ -7,7 +7,9 @@ namespace MazesForProgrammers.Grid.Render
 {
     public class ConsoleRender
     {
-        public string Render<T>(IGrid<T> grid, bool debug = false)
+        private const bool Debug = false;
+
+        public string Render<T>(IGrid<T> grid)
         {
             var output = "+" + string.Concat(Enumerable.Repeat("---+", grid.Columns)) + "\r\n";
             foreach (var row in grid.EachRow().Reverse())
@@ -17,7 +19,7 @@ namespace MazesForProgrammers.Grid.Render
 
                 foreach (var cell in row.Cells)
                 {
-                    var body = debug ? $"{row.Row},{cell.Column}" : "   ";
+                    var body = Debug ? $"{row.Row},{cell.Column}" : "   ";
                     var east = "|";
 
                     if (grid.InBounds(cell.East()) && cell.Linked(grid[cell.East()]))

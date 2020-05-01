@@ -25,6 +25,7 @@ namespace MazesForProgrammers
                     .SetupNeighbors(grid)
                     .ApplyTo(grid)
                     .RenderToConsole()
+                    .RenderToImage($"output_{DateTime.Now.Ticks}.png")
                     .ClearLinksAndNeighbors();
             }
 
