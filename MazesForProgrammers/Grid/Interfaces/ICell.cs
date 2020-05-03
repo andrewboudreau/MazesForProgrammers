@@ -27,6 +27,7 @@ namespace MazesForProgrammers.Grid.Interfaces
         /// <summary>
         /// Gets the cells data.
         /// </summary>
+        
         T Data { get; }
 
         /// <summary>
@@ -38,6 +39,11 @@ namespace MazesForProgrammers.Grid.Interfaces
         /// Gets a collection of the named neighbors.
         /// </summary>
         ICollection<ICell<T>> Neighbors { get; }
+        
+        /// <summary>
+        /// Gets the distances from this cell to all other cells.
+        /// </summary>
+        Distances<ICell<T>> Distances { get; }
 
         /// <summary>
         /// Connects the current cell with the given cell.
@@ -69,5 +75,7 @@ namespace MazesForProgrammers.Grid.Interfaces
         /// Clears the cell's <see cref="ICell{T}.Neighbors"/> and <see cref="ICell{T}.Links"/> collections.
         /// </summary>
         void Clear();
+
+        
     }
 }
