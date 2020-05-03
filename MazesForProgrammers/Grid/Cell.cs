@@ -13,7 +13,7 @@ namespace MazesForProgrammers.Grid
             Row = row;
             links = new HashSet<ICell<T>>(Column * Row);
             Neighbors = new List<ICell<T>>(4);
-            Distances = new Distances<ICell<T>>(this);
+            Distances = new Distances<T>(this);
         }
 
         public int Column { get; }
@@ -26,7 +26,7 @@ namespace MazesForProgrammers.Grid
 
         public IEnumerable<ICell<T>> Links => links;
 
-        public Distances<ICell<T>> Distances { get; set; }
+        public Distances<T> Distances { get; set; }
 
         public bool Linked(ICell<T> cell)
         {

@@ -43,7 +43,7 @@ namespace MazesForProgrammers.Grid.Interfaces
         /// <summary>
         /// Gets the distances from this cell to all other cells.
         /// </summary>
-        Distances<ICell<T>> Distances { get; }
+        Distances<T> Distances { get; }
 
         /// <summary>
         /// Connects the current cell with the given cell.
