@@ -1,16 +1,26 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using MazesForProgrammers.DataStructures;
-using MazesForProgrammers.Extensions;
 
 namespace MazesForProgrammers.Render
 {
     public class ConsoleRender
     {
-        private const bool Debug = false;
+        private readonly Func<Cell, string> cellRender;
+
+        public ConsoleRender(bool debug = false)
+            : this(cell => debug ? $"{cell.Row},{cell.Column}" : "   ")
+        {
+        }
+
+        public ConsoleRender(Func<Cell, string> cellRender)
+        {
+            this.cellRender = cellRender;
+        }
 
         public string Render(Grid grid)
         {
-            var output = "+" + string.Concat(Enumerable.Repeat("---+", grid.Columns)) + "\r\n";
+            var output = "+" + string.Concat(Enumerable.Repeat("---+", grid.Columns)) + Environment.NewLine;
 
             foreach (var row in grid.EachRow())
             {
@@ -19,7 +29,7 @@ namespace MazesForProgrammers.Render
 
                 foreach (var cell in row)
                 {
-                    var body = Debug ? $"{cell.Row},{cell.Column}" : "   ";
+                    var body = cellRender.Invoke(cell);
                     var east = "|";
 
                     if (cell.Linked(cell.East))
@@ -39,8 +49,8 @@ namespace MazesForProgrammers.Render
                     bottom += south + corner;
                 }
 
-                output += top + "\r\n";
-                output += bottom + "\r\n";
+                output += top + Environment.NewLine;
+                output += bottom + Environment.NewLine;
             }
 
             return output;

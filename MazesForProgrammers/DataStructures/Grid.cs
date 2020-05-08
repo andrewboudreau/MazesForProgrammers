@@ -11,9 +11,16 @@ namespace MazesForProgrammers.DataStructures
     {
         public static Random Random = new Random(0);
 
-        public static void SetRandom(int seed)
+        public static void SetRandom(int? seed = null)
         {
-            Random = new Random(seed);
+            if (seed.HasValue)
+            {
+                Random = new Random(seed.Value);
+            }
+            else
+            {
+                Random = new Random();
+            }
         }
 
         private readonly Cell[,] map;

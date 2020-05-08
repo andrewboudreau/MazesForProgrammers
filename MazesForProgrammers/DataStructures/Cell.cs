@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using MazesForProgrammers.Algorithms;
 using MazesForProgrammers.Extensions;
 
 namespace MazesForProgrammers.DataStructures
@@ -7,12 +8,14 @@ namespace MazesForProgrammers.DataStructures
     public class Cell
     {
         private readonly HashSet<Cell> links;
+        private readonly Lazy<Dijkstra> dijkstra;
 
         public Cell(int row, int column)
         {
             Column = column;
             Row = row;
             links = new HashSet<Cell>();
+            dijkstra = new Lazy<Dijkstra>(() => new Dijkstra(this));
         }
 
         public int Column { get; }
@@ -25,6 +28,19 @@ namespace MazesForProgrammers.DataStructures
         public Cell East;
         public Cell South;
         public Cell West;
+
+        public Distances Distances
+        {
+            get
+            {
+                return dijkstra.Value.Distances;
+            }
+        }
+
+        public Distances PathTo(Cell goal)
+        {
+            return dijkstra.Value.PathToGoal(goal);
+        }
 
         public bool Linked(Cell cell)
         {

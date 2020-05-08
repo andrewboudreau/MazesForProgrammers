@@ -1,4 +1,5 @@
 ﻿using System;
+using MazesForProgrammers.Algorithms;
 using MazesForProgrammers.DataStructures;
 using MazesForProgrammers.Logging;
 using MazesForProgrammers.Mazes;
@@ -15,17 +16,39 @@ namespace MazesForProgrammers
 
         static void Main(string[] args)
         {
-            var grid = new Grid(3);
+            Grid.SetRandom();
+            var grid = new Grid(9);
+            var algorithm = new SideWinder();
+
+            algorithm.ApplyTo(grid);
+
+            var pass1 = new Dijkstra(grid[0, 0]);
+            var start = pass1.Max();
+
+            var pass2 = new Dijkstra(start);
+            var goal = pass2.Max();
+
+            grid
+                .RenderToConsole(start.PathTo(goal))
+                .RenderToImage($"output_{DateTime.Now.Ticks}.png");
+
+            Console.ReadKey();
+        }
+
+        static void Main2(string[] args)
+        {
+            Grid.SetRandom();
+            var grid = new Grid(9);
             var algorithm = new SideWinder();
 
             for (var i = 0; i < 1; i++)
             {
                 algorithm
                     .ApplyTo(grid)
-                    .RenderToConsole()
+                    .RenderToConsole(grid[0, 0].PathTo(grid[8, 8]))
                     .RenderToImage($"output_{DateTime.Now.Ticks}.png");
 
-                grid.DebugToConsole();
+                // grid.DebugToConsole();
             }
 
             Console.ReadKey();
