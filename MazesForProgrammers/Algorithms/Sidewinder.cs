@@ -1,55 +1,44 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 using MazesForProgrammers.Algorithms;
+using MazesForProgrammers.DataStructures;
 using MazesForProgrammers.Extensions;
-using MazesForProgrammers.Grid.Configuration;
-using MazesForProgrammers.Grid.Interfaces;
 
 namespace MazesForProgrammers.Mazes
 {
-    public class SideWinder : ICreateMazes
+    public class SideWinder : IBuildMaze
     {
-        private static readonly Random Random = new Random();
-
-        public ICreateMazes SetupNeighbors<T>(IGrid<T> grid)
+        public Grid ApplyTo(Grid grid)
         {
-            grid.ClearLinksAndNeighbors();
-            grid.ConfigureNeighbors(new SetNorthEastNeighbors());
-            return this;
-        }
+            var run = new List<Cell>(10);
 
-        public IGrid<T> ApplyTo<T>(IGrid<T> grid)
-        {
-            var run = new List<ICell<T>>(10);
-
-            foreach (var (Row, Cells) in grid.EachRow())
+            foreach (var cells in grid.EachRow())
             {
                 run.Clear();
-                foreach (var cell in Cells)
+                foreach (var cell in cells)
                 {
                     run.Add(cell);
                     var isNorthernBoundary = cell.Row == grid.Rows - 1;
                     var isEasternBoundary = cell.Column == grid.Columns - 1;
 
-                    var rand = Random.Next(2) == 0;
+                    var rand = Grid.Random.Next(2) == 0;
                     var shouldCloseRun = isEasternBoundary || (!isNorthernBoundary && rand);
                     //// Console.WriteLine($"Cell:{cell} - {(isNorthernBoundary ? "North, " : "")} {(isEasternBoundary ? "East, " : "")} {(shouldCloseRun ? "Close, " : "")} Random:{rand}");
 
                     if (shouldCloseRun)
                     {
                         var passage = run.Sample();
-                        if (grid.InBounds(passage.North()))
-                        {
-                            //// Console.WriteLine($"\t Adding North Passage Link to {grid[passage.North()]}");
-                            passage.AddLink(grid[passage.North()]);
+                        if (passage.North is Cell)
+                        {  //// Console.WriteLine($"\t Adding North Passage Link to {passage.North}");
+                            passage.AddLink(passage.North);
                             run.Clear();
+                        
                         }
                     }
                     else
                     {
-                        //// Console.WriteLine($"\t Extending east to {grid[cell.East()]}");
-                        cell.AddLink(grid[cell.East()]);
+                        //// Console.WriteLine($"\t Extending east to {cell.East}");
+                        cell.AddLink(cell.East);
                     }
 
                     //// Console.WriteLine();

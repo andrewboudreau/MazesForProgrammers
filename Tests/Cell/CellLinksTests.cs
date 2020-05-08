@@ -1,8 +1,10 @@
-using MazesForProgrammers.Grid;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 
-namespace MazesForProgrammers.Tests.Cell
+using MazesForProgrammers.DataStructures;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+
+namespace MazesForProgrammers.Tests.DataStructures
 {
     [TestClass]
     public class CellLinksTests
@@ -10,8 +12,8 @@ namespace MazesForProgrammers.Tests.Cell
         [TestMethod]
         public void DefaultAddLink_AddsToBothCells()
         {
-            var cell = new Cell<int>(0, 0);
-            var other = new Cell<int>(1, 1);
+            var cell = new Cell(0, 0);
+            var other = new Cell(1, 1);
 
             cell.AddLink(other);
 
@@ -22,8 +24,8 @@ namespace MazesForProgrammers.Tests.Cell
         [TestMethod]
         public void UnidirectionalAdd_OnlyAddsToSelf()
         {
-            var cell = new Cell<int>(0, 0);
-            var other = new Cell<int>(1, 1);
+            var cell = new Cell(0, 0);
+            var other = new Cell(1, 1);
 
             cell.AddLink(other, false);
 
@@ -34,8 +36,8 @@ namespace MazesForProgrammers.Tests.Cell
         [TestMethod]
         public void DefaultRemoveLink_RemovesFromBothCells()
         {
-            var cell = new Cell<int>(0, 0);
-            var other = new Cell<int>(1, 1);
+            var cell = new Cell(0, 0);
+            var other = new Cell(1, 1);
             
             cell.AddLink(other);
             CollectionAssert.Contains(cell.Links.ToList(), other);
@@ -49,8 +51,8 @@ namespace MazesForProgrammers.Tests.Cell
         [TestMethod]
         public void UnidirectionalRemove_OnlyRemovesFromSelf()
         {
-            var cell = new Cell<int>(0, 0);
-            var other = new Cell<int>(1, 1);
+            var cell = new Cell(0, 0);
+            var other = new Cell(1, 1);
 
             cell.AddLink(other);
             CollectionAssert.Contains(cell.Links.ToList(), other);
@@ -64,8 +66,8 @@ namespace MazesForProgrammers.Tests.Cell
         [TestMethod]
         public void LinkingSameCell_MaintainsSingleEntry()
         {
-            var cell = new Cell<int>(0, 0);
-            var other = new Cell<int>(1, 1);
+            var cell = new Cell(0, 0);
+            var other = new Cell(1, 1);
 
             cell.AddLink(other);
             cell.AddLink(other);
@@ -78,8 +80,8 @@ namespace MazesForProgrammers.Tests.Cell
         public void RemoveLink_FromEmptyCollection()
         {
             // Arrange
-            var cell = new Cell<int>(0, 0);
-            var other = new Cell<int>(1, 1);
+            var cell = new Cell(0, 0);
+            var other = new Cell(1, 1);
 
             // Act
             cell.RemoveLink(other);
@@ -93,9 +95,9 @@ namespace MazesForProgrammers.Tests.Cell
         public void RemoveLink_WhichDoesNotExists()
         {
             // Arrange
-            var cell = new Cell<int>(0, 0);
-            var other = new Cell<int>(1, 1);
-            var missing = new Cell<int>(2, 2);
+            var cell = new Cell(0, 0);
+            var other = new Cell(1, 1);
+            var missing = new Cell(2, 2);
 
             cell.AddLink(other);
 
@@ -115,8 +117,8 @@ namespace MazesForProgrammers.Tests.Cell
         public void Linked_ReturnsTrueAfterAddLink()
         {
             // Arrange
-            var cell = new Cell<int>(0, 0);
-            var other = new Cell<int>(1, 1);
+            var cell = new Cell(0, 0);
+            var other = new Cell(1, 1);
 
             cell.AddLink(other);
 
@@ -129,8 +131,8 @@ namespace MazesForProgrammers.Tests.Cell
         public void Linked_ReturnsFalseAfterRemoveLink()
         {
             // Arrange
-            var cell = new Cell<int>(0, 0);
-            var other = new Cell<int>(1, 1);
+            var cell = new Cell(0, 0);
+            var other = new Cell(1, 1);
 
             cell.AddLink(other);
 

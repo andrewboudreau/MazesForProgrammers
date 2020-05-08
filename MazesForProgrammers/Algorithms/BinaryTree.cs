@@ -1,29 +1,21 @@
 ﻿using System.Linq;
 
 using MazesForProgrammers.Algorithms;
+using MazesForProgrammers.DataStructures;
 using MazesForProgrammers.Extensions;
-using MazesForProgrammers.Grid.Configuration;
-using MazesForProgrammers.Grid.Interfaces;
 
 namespace MazesForProgrammers.Mazes
 {
-    public class BinaryTree : ICreateMazes
+    public class BinarySearchTree : IBuildMaze
     {
-        public ICreateMazes SetupNeighbors<T>(IGrid<T> grid)
-        {
-            grid.ClearLinksAndNeighbors();
-            grid.ConfigureNeighbors(new SetNorthEastNeighbors());
-
-            return this;
-        }
-
-        public IGrid<T> ApplyTo<T>(IGrid<T> grid)
+        public Grid ApplyTo(Grid grid)
         {
             foreach (var cell in grid.EachCell())
             {
-                if (cell.Neighbors.Any())
+                var options = new Cell[] { cell.North, cell.East }.RemoveNulls();
+                if (options.Any())
                 {
-                    cell.AddLink(cell.Neighbors.Sample());
+                    cell.AddLink(options.Sample());
                 }
             }
 

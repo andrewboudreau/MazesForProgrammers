@@ -1,26 +1,26 @@
-﻿using System;
+﻿using MazesForProgrammers.DataStructures;
+using System;
 using System.Diagnostics;
 using System.Drawing.Imaging;
-using MazesForProgrammers.Grid.Interfaces;
 
-namespace MazesForProgrammers.Grid.Render
+namespace MazesForProgrammers.Render
 {
     public static class GridExtensions
     {
-        public static IGrid<T> RenderToConsole<T>(this IGrid<T> grid)
+        public static Grid RenderToConsole(this Grid grid)
         {
             var renderer = new ConsoleRender();
             Console.WriteLine(renderer.Render(grid));
             return grid;
         }
 
-        public static void DebugToConsole<T>(this IGrid<T> grid)
+        public static void DebugToConsole(this Grid grid)
         {
             var renderer = new CellDebugger();
             Console.WriteLine(renderer.Render(grid));
         }
 
-        public static IGrid<T> RenderToImage<T>(this IGrid<T> grid, string outputFile)
+        public static Grid RenderToImage(this Grid grid, string outputFile)
         {
             var renderer = new ImageRender();
             using var bitmap = renderer.Render(grid);

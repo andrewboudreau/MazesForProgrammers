@@ -1,10 +1,9 @@
-﻿using MazesForProgrammers.Grid;
-using MazesForProgrammers.Grid.Interfaces;
-using MazesForProgrammers.Tests.Cell;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace MazesForProgrammers.Tests.Grid
+using MazesForProgrammers.DataStructures;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+namespace MazesForProgrammers.Tests.DataStructures
 {
     [TestClass]
     public class RandomCellTests
@@ -12,8 +11,8 @@ namespace MazesForProgrammers.Tests.Grid
         [TestMethod]
         public void ReturnsCell()
         {
-            var seen = new HashSet<ICell<int>>();
-            var grid = new Grid<int>(2);
+            var seen = new HashSet<Cell>();
+            var grid = new Grid(2);
 
             for (var i = 0; i < 100_000; i++)
             {

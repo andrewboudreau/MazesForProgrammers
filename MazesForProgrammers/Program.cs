@@ -1,9 +1,8 @@
 ﻿using System;
-using MazesForProgrammers.Grid;
-using MazesForProgrammers.Grid.Render;
+using MazesForProgrammers.DataStructures;
 using MazesForProgrammers.Logging;
 using MazesForProgrammers.Mazes;
-
+using MazesForProgrammers.Render;
 using Microsoft.Extensions.Logging;
 
 namespace MazesForProgrammers
@@ -16,17 +15,17 @@ namespace MazesForProgrammers
 
         static void Main(string[] args)
         {
-            var grid = new Grid<int>(20);
+            var grid = new Grid(3);
             var algorithm = new SideWinder();
 
             for (var i = 0; i < 1; i++)
             {
                 algorithm
-                    .SetupNeighbors(grid)
                     .ApplyTo(grid)
                     .RenderToConsole()
-                    .RenderToImage($"output_{DateTime.Now.Ticks}.png")
-                    .ClearLinksAndNeighbors();
+                    .RenderToImage($"output_{DateTime.Now.Ticks}.png");
+
+                grid.DebugToConsole();
             }
 
             Console.ReadKey();

@@ -6,11 +6,9 @@ namespace MazesForProgrammers.Extensions
 {
     public static partial class EnumerableExtensions
     {
-        private readonly static Random Random = new Random();
-
         public static int[] IntegersFromCsv(this string csv)
         {
-            return csv.Split(",").Select(x => int.Parse(x.Trim())).ToArray();
+            return csv.Split(',').Select(x => int.Parse(x.Trim())).ToArray();
         }
 
         public static bool IsEmpty<T>(this ICollection<T> collection)
@@ -23,40 +21,15 @@ namespace MazesForProgrammers.Extensions
             return enumerable.Any() == false;
         }
 
-        public static IEnumerable<(T, T)> MakePairs<T>(this IEnumerable<T> set)
+
+        public static T Sample<T>(this IEnumerable<T> collection)
         {
-            var i = 0;
-            foreach (var item in set)
-            {
-                foreach (var other in set.Skip(i++))
-                {
-                    if (!other.Equals(item))
-                    {
-                        yield return (item, other);
-                    }
-                }
-            }
+            return collection.ElementAt(DataStructures.Grid.Random.Next(collection.Count()));
         }
 
-        public static IEnumerable<(T Yours, T Other)> MakePairs<T>(this IEnumerable<T> set, T item)
+        public static IEnumerable<T> RemoveNulls<T>(this IEnumerable<T> items)
         {
-            foreach (var other in set)
-            {
-                if (!other.Equals(item))
-                {
-                    yield return (item, other);
-                }
-            }
-        }
-
-        public static T Sample<T>(this ICollection<T> collection)
-        {
-            if (collection is null || collection.IsEmpty())
-            {
-                return default;
-            }
-
-            return collection.ElementAt(Random.Next(collection.Count));
+            return items.Where(x => x != null);
         }
     }
 }

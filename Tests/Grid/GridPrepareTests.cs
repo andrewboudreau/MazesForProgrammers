@@ -1,9 +1,9 @@
-﻿using MazesForProgrammers.Grid;
-using MazesForProgrammers.Grid.Interfaces;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace MazesForProgrammers.Tests.Grid
+using MazesForProgrammers.DataStructures;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+namespace MazesForProgrammers.Tests.DataStructures
 {
     [TestClass]
     public class GridPrepareTests
@@ -12,13 +12,13 @@ namespace MazesForProgrammers.Tests.Grid
         public void ProvidesRowAndColumnInputs()
         {
             var seen = new List<(int, int)>();
-            ICell<int> create(int row, int col)
+            Cell create(int row, int col)
             {
                 seen.Add((row, col));
-                return new Cell<int>(row, col);
+                return new Cell(row, col);
             }
 
-            var grid = new Grid<int>(2, 2, create);
+            var grid = new Grid(2, 2, create);
 
             Assert.AreEqual(4, seen.Count);
             Assert.AreEqual(seen[0], (0, 0));
@@ -30,19 +30,16 @@ namespace MazesForProgrammers.Tests.Grid
         [TestMethod]
         public void UsesProvidedCells()
         {
-            var seen = new List<ICell<int>>();
-            ICell<int> create(int row, int col)
+            var seen = new List<Cell>();
+            Cell create(int row, int col)
             {
-                var cell = new Cell<int>(row, col)
-                {
-                    Data = col * row + col
-                };
+                var cell = new Cell(row, col);
 
                 seen.Add(cell);
                 return cell;
             }
 
-            var grid = new Grid<int>(2, 2, create);
+            var grid = new Grid(2, 2, create);
 
             Assert.AreEqual(4, seen.Count);
 

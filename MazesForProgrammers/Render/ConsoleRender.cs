@@ -1,28 +1,28 @@
 ﻿using System.Linq;
-
+using MazesForProgrammers.DataStructures;
 using MazesForProgrammers.Extensions;
-using MazesForProgrammers.Grid.Interfaces;
 
-namespace MazesForProgrammers.Grid.Render
+namespace MazesForProgrammers.Render
 {
     public class ConsoleRender
     {
         private const bool Debug = false;
 
-        public string Render<T>(IGrid<T> grid)
+        public string Render(Grid grid)
         {
             var output = "+" + string.Concat(Enumerable.Repeat("---+", grid.Columns)) + "\r\n";
-            foreach (var row in grid.EachRow().Reverse())
+
+            foreach (var row in grid.EachRow())
             {
                 var top = "|";
                 var bottom = "+";
 
-                foreach (var cell in row.Cells)
+                foreach (var cell in row)
                 {
-                    var body = Debug ? $"{row.Row},{cell.Column}" : "   ";
+                    var body = Debug ? $"{cell.Row},{cell.Column}" : "   ";
                     var east = "|";
 
-                    if (grid.InBounds(cell.East()) && cell.Linked(grid[cell.East()]))
+                    if (cell.Linked(cell.East))
                     {
                         east = " ";
                     }
@@ -30,7 +30,7 @@ namespace MazesForProgrammers.Grid.Render
                     top += body + east;
 
                     var south = string.Concat(Enumerable.Repeat("-", 3));
-                    if (grid.InBounds(cell.South()) && cell.Linked(grid[cell.South()]))
+                    if (cell.Linked(cell.South))
                     {
                         south = string.Concat(Enumerable.Repeat(" ", 3));
                     }
