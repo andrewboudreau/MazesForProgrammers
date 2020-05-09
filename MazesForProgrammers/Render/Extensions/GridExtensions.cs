@@ -2,6 +2,7 @@
 using MazesForProgrammers.Extensions;
 using System;
 using System.Diagnostics;
+using System.Drawing;
 using System.Drawing.Imaging;
 
 namespace MazesForProgrammers.Render
@@ -38,16 +39,21 @@ namespace MazesForProgrammers.Render
             Console.WriteLine(renderer.Render(grid));
         }
 
-        public static Grid RenderToImage(this Grid grid, string outputFile)
+        public static Grid RenderToImage(this Grid grid, string outputFile, Distances distances)
         {
             var renderer = new ImageRender();
-            using var bitmap = renderer.Render(grid);
+            using var bitmap = renderer.Render(grid, distances);
             bitmap.Save(outputFile, ImageFormat.Png);
 
             var path = System.IO.Path.GetFullPath(outputFile);
             Process.Start(@"cmd.exe ", $@"/c {path}");
 
             return grid;
+        }
+
+        public static Color ColorForDistance()
+        {
+            return Color.IndianRed;
         }
     }
 }

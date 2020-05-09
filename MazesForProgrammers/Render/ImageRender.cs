@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Drawing.Drawing2D;
 
 using MazesForProgrammers.DataStructures;
@@ -7,7 +8,8 @@ namespace MazesForProgrammers.Render
 {
     public class ImageRender
     {
-        public Image Render(Grid grid, int pixelsPerCell = 100)
+
+        public Image Render(Grid grid, Distances distances, int pixelsPerCell = 100)
         {
             var width = pixelsPerCell * grid.Columns;
             var height = pixelsPerCell * grid.Rows;
@@ -32,6 +34,8 @@ namespace MazesForProgrammers.Render
                 var x2 = ((cell.Column + 1) * pixelsPerCell) - 1;
                 var y2 = ((cell.Row + 1) * pixelsPerCell) - 1;
 
+                graphics.FillRectangle(new Pen(distances.BackgroundColor(cell), 2f).Brush, x1, y1, pixelsPerCell - 1, pixelsPerCell - 1);
+
                 if (!cell.Linked(cell.East))
                 {
                     graphics.DrawLine(pen, x2, y1, x2, y2);
@@ -41,6 +45,8 @@ namespace MazesForProgrammers.Render
                 {
                     graphics.DrawLine(pen, x1, y2, x2, y2);
                 }
+
+                //cellRenderer.Invoke(cell);
             }
 
             graphics.EndContainer(containerState);

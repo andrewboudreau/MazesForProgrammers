@@ -23,14 +23,14 @@ namespace MazesForProgrammers
             algorithm.ApplyTo(grid);
 
             var pass1 = new Dijkstra(grid[0, 0]);
-            var start = pass1.Max();
+            var start = pass1.Max.Cell;
 
             var pass2 = new Dijkstra(start);
-            var goal = pass2.Max();
+            var goal = pass2.Max.Cell;
 
             grid
                 .RenderToConsole(start.PathTo(goal))
-                .RenderToImage($"output_{DateTime.Now.Ticks}.png");
+                .RenderToImage($"output_{DateTime.Now.Ticks}.png", pass2.Distances);
 
             Console.ReadKey();
         }
@@ -46,7 +46,7 @@ namespace MazesForProgrammers
                 algorithm
                     .ApplyTo(grid)
                     .RenderToConsole(grid[0, 0].PathTo(grid[8, 8]))
-                    .RenderToImage($"output_{DateTime.Now.Ticks}.png");
+                    .RenderToImage($"output_{DateTime.Now.Ticks}.png", null);
 
                 // grid.DebugToConsole();
             }

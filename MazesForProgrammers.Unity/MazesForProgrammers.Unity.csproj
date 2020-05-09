@@ -33,6 +33,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -44,8 +45,14 @@
     <Compile Include="..\MazesForProgrammers\Algorithms\BinaryTree.cs">
       <Link>Algorithms\BinaryTree.cs</Link>
     </Compile>
+    <Compile Include="..\MazesForProgrammers\Algorithms\Dijkstra.cs">
+      <Link>Dijkstra.cs</Link>
+    </Compile>
     <Compile Include="..\MazesForProgrammers\Algorithms\Interfaces\IBuildMaze.cs">
       <Link>Algorithms\IBuildMaze.cs</Link>
+    </Compile>
+    <Compile Include="..\MazesForProgrammers\Algorithms\Interfaces\ISovleMaze.cs">
+      <Link>Algorithms\ISovleMaze.cs</Link>
     </Compile>
     <Compile Include="..\MazesForProgrammers\Algorithms\Sidewinder.cs">
       <Link>Algorithms\Sidewinder.cs</Link>

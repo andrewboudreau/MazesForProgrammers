@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using MazesForProgrammers.DataStructures;
 
@@ -24,6 +25,30 @@ namespace MazesForProgrammers.Algorithms
             }
         }
 
+        public CellDistance Max => Distances.Max;
+
+        public Distances PathToGoal(Cell goal)
+        {
+            var current = goal;
+            var breadcrumbs = new Distances(goal);
+            breadcrumbs.SetValue(goal, Distances[goal].Value);
+
+            do
+            {
+                foreach (var neighbor in current.Links)
+                {
+                    if (Distances[neighbor] < Distances[current])
+                    {
+                        breadcrumbs.SetValue(neighbor, Distances[neighbor].Value + 1);
+                        current = neighbor;
+                        break;
+                    }
+                }
+            } while (current != root);
+
+            return breadcrumbs;
+        }
+
         private Distances GenerateDistances()
         {
             var distances = new Distances(root);
@@ -39,7 +64,7 @@ namespace MazesForProgrammers.Algorithms
                     {
                         if (distances[linked] is null)
                         {
-                            distances[linked] = distances[cell] + 1;
+                            distances.SetValue(linked, distances[cell].Value + 1);
                             nextFrontier.Add(linked);
                         }
                     }
@@ -50,42 +75,6 @@ namespace MazesForProgrammers.Algorithms
             }
 
             return distances;
-        }
-
-        public Distances PathToGoal(Cell goal)
-        {
-            var current = goal;
-            var breadcrumbs = new Distances(goal);
-            breadcrumbs.SetValue(goal, Distances[goal].Value);
-
-            do
-            {
-                foreach (var neighbor in current.Links)
-                {
-                    if (Distances[neighbor] < Distances[current])
-                    {
-                        breadcrumbs[neighbor] = Distances[neighbor];
-                        current = neighbor;
-                        break;
-                    }
-                }
-            } while (current != root);
-
-            return breadcrumbs;
-        }
-
-        public Cell Max()
-        {
-            CellDistance max = new CellDistance(root, 0);
-            foreach (var cell in Distances)
-            {
-                if (max.Distance < cell.Distance)
-                {
-                    max = cell;
-                }
-            }
-
-            return max.Cell;
         }
     }
 }

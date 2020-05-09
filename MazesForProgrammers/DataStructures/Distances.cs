@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 
 namespace MazesForProgrammers.DataStructures
@@ -8,6 +9,7 @@ namespace MazesForProgrammers.DataStructures
     public class Distances : IEnumerable<CellDistance>
     {
         private readonly Dictionary<Cell, int> cells;
+        private CellDistance max;
 
         public Distances(Cell start)
         {
@@ -15,6 +17,8 @@ namespace MazesForProgrammers.DataStructures
             {
                 { start, 0 }
             };
+
+            max = new CellDistance(start, 0);
         }
 
         public int? this[Cell cell]
@@ -33,11 +37,11 @@ namespace MazesForProgrammers.DataStructures
 
                 return null;
             }
-            set
+            protected set
             {
                 if (cells.ContainsKey(cell))
                 {
-                    throw new InvalidOperationException($"{cell} already has a distance '{cells[cell]}' set. Cannot reassign to '{value}'.");
+                    throw new InvalidOperationException($"{cell} already has a distance '{cells[cell]}' set. Cannot reassign to '{value.GetValueOrDefault()}'.");
                 }
 
                 if (!value.HasValue)
@@ -46,8 +50,14 @@ namespace MazesForProgrammers.DataStructures
                 }
 
                 cells.Add(cell, value.Value);
+                if (value.Value > max.Distance)
+                {
+                    max = new CellDistance(cell, value.Value);
+                }
             }
         }
+
+        public CellDistance Max => max;
 
         public void SetValue(Cell cell, int value)
         {
@@ -57,6 +67,20 @@ namespace MazesForProgrammers.DataStructures
         public IEnumerator<CellDistance> GetEnumerator()
         {
             return cells.Select(ToCellDistance).GetEnumerator();
+        }
+
+        public Color BackgroundColor(Cell cell)
+        {
+            if (cell is null)
+            {
+                throw new ArgumentNullException(nameof(cell));
+            }
+
+            var intesity = (max.Distance - this[cell].GetValueOrDefault()) / max.Distance;
+            var dark = (255 * intesity);
+            var bright = 128 + (127 * intesity);
+
+            return Color.FromArgb(255, dark, bright, dark);
         }
 
         IEnumerator IEnumerable.GetEnumerator()

@@ -92,22 +92,7 @@ namespace MazesForProgrammers.DataStructures
             }
         }
 
-        private bool IsOutOfBounds(int row, int column)
-        {
-            if (row < 0 || row >= Rows)
-            {
-                return true;
-            }
-
-            if (column < 0 || column >= Columns)
-            {
-                return true;
-            }
-
-            return false;
-        }
-
-        public void ConfigureNeighbors(IConfigureNeighbors configure)
+        protected void ConfigureNeighbors(IConfigureNeighbors configure)
         {
             if (configure is null)
             {
@@ -146,6 +131,21 @@ namespace MazesForProgrammers.DataStructures
             {
                 yield return this[row, col];
             }
+        }
+
+        private bool IsOutOfBounds(int row, int column)
+        {
+            if (row < 0 || row >= Rows)
+            {
+                return true;
+            }
+
+            if (column < 0 || column >= Columns)
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }
