@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using MazesForProgrammers.DataStructures;
 
@@ -31,7 +30,7 @@ namespace MazesForProgrammers.Algorithms
         {
             var current = goal;
             var breadcrumbs = new Distances(goal);
-            breadcrumbs.SetValue(goal, Distances[goal].Value);
+            breadcrumbs.UpdateValue(goal, Distances[goal].Value);
 
             do
             {
@@ -39,7 +38,7 @@ namespace MazesForProgrammers.Algorithms
                 {
                     if (Distances[neighbor] < Distances[current])
                     {
-                        breadcrumbs.SetValue(neighbor, Distances[neighbor].Value + 1);
+                        breadcrumbs.UpdateValue(neighbor, Distances[neighbor].Value + 1);
                         current = neighbor;
                         break;
                     }
@@ -64,7 +63,7 @@ namespace MazesForProgrammers.Algorithms
                     {
                         if (distances[linked] is null)
                         {
-                            distances.SetValue(linked, distances[cell].Value + 1);
+                            distances[linked] = distances[cell].Value + 1;
                             nextFrontier.Add(linked);
                         }
                     }

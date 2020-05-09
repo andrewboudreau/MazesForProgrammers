@@ -37,11 +37,12 @@ namespace MazesForProgrammers.DataStructures
 
                 return null;
             }
-            protected set
+            
+            set
             {
                 if (cells.ContainsKey(cell))
                 {
-                    throw new InvalidOperationException($"{cell} already has a distance '{cells[cell]}' set. Cannot reassign to '{value.GetValueOrDefault()}'.");
+                    throw new InvalidOperationException($"{cell} already has a distance '{this[cell]}' set. Cannot reassign to '{value.GetValueOrDefault()}'.");
                 }
 
                 if (!value.HasValue)
@@ -59,7 +60,7 @@ namespace MazesForProgrammers.DataStructures
 
         public CellDistance Max => max;
 
-        public void SetValue(Cell cell, int value)
+        public void UpdateValue(Cell cell, int value)
         {
             cells[cell] = value;
         }
@@ -76,9 +77,14 @@ namespace MazesForProgrammers.DataStructures
                 throw new ArgumentNullException(nameof(cell));
             }
 
-            var intesity = (max.Distance - this[cell].GetValueOrDefault()) / max.Distance;
-            var dark = (255 * intesity);
-            var bright = 128 + (127 * intesity);
+            if (max.Distance == 0)
+            {
+                return Color.Transparent;
+            }
+
+            var intesity = (max.Distance - this[cell].GetValueOrDefault()) / (float)max.Distance;
+            var dark = (int)(255 * intesity);
+            var bright = (int)(128 + (127 * intesity));
 
             return Color.FromArgb(255, dark, bright, dark);
         }

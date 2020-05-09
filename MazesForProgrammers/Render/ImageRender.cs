@@ -19,14 +19,11 @@ namespace MazesForProgrammers.Render
 
             var image = new Bitmap(width, height);
             using var graphics = Graphics.FromImage(image);
-            using var pen = new Pen(foreground);
+            using var pen = new Pen(foreground, 5);
             graphics.Clear(background);
 
             GraphicsContainer containerState = graphics.BeginContainer();
-
-            // Draw the map border, simplifies the wall render logic.
-            graphics.DrawRectangle(pen, 0, 0, width - 1, height - 1);
-
+            
             foreach (var cell in grid.EachCell())
             {
                 var x1 = cell.Column * pixelsPerCell;
@@ -34,7 +31,7 @@ namespace MazesForProgrammers.Render
                 var x2 = ((cell.Column + 1) * pixelsPerCell) - 1;
                 var y2 = ((cell.Row + 1) * pixelsPerCell) - 1;
 
-                graphics.FillRectangle(new Pen(distances.BackgroundColor(cell), 2f).Brush, x1, y1, pixelsPerCell - 1, pixelsPerCell - 1);
+                graphics.FillRectangle(new Pen(distances.BackgroundColor(cell)).Brush, x1, y1, pixelsPerCell, pixelsPerCell);
 
                 if (!cell.Linked(cell.East))
                 {
@@ -49,6 +46,8 @@ namespace MazesForProgrammers.Render
                 //cellRenderer.Invoke(cell);
             }
 
+            // Draw the map border, simplifies the wall render logic.
+            graphics.DrawRectangle(pen, 0, 0, width - 1, height - 1);
             graphics.EndContainer(containerState);
             graphics.Save();
 

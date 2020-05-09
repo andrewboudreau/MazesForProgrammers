@@ -17,7 +17,23 @@ namespace MazesForProgrammers
         static void Main(string[] args)
         {
             Grid.SetRandom();
-            var grid = new Grid(9);
+            var grid = new Grid(20);
+            var algorithm = new SideWinder();
+            algorithm.ApplyTo(grid);
+
+            var start = grid[grid.Rows / 2, grid.Columns / 2];
+
+            grid
+                //.RenderToConsole(start.Distances)
+                .RenderToImage($"output_{DateTime.Now.Ticks}.png", start.Distances);
+
+            Console.ReadKey();
+        }
+
+        static void Main_LongestPath(string[] args)
+        {
+            Grid.SetRandom();
+            var grid = new Grid(50);
             var algorithm = new SideWinder();
 
             algorithm.ApplyTo(grid);
@@ -32,7 +48,7 @@ namespace MazesForProgrammers
                 .RenderToConsole(start.PathTo(goal))
                 .RenderToImage($"output_{DateTime.Now.Ticks}.png", pass2.Distances);
 
-            Console.ReadKey();
+            //Console.ReadKey();
         }
 
         static void Main2(string[] args)
