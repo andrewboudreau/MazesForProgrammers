@@ -18,7 +18,7 @@ namespace MazesForProgrammers
         {
             Grid.SetRandom();
             var grid = new Grid(20);
-            var algorithm = new SideWinder();
+            var algorithm = new AldousBorder();
             algorithm.ApplyTo(grid);
 
             var start = grid[grid.Rows / 2, grid.Columns / 2];
