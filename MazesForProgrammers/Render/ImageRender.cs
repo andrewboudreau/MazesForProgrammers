@@ -38,8 +38,8 @@ namespace MazesForProgrammers.Render
             {
                 var x1 = cell.Column * pixelsPerCell;
                 var y1 = cell.Row * pixelsPerCell;
-                var x2 = ((cell.Column + 1) * pixelsPerCell) - 1;
-                var y2 = ((cell.Row + 1) * pixelsPerCell) - 1;
+                var x2 = ((cell.Column + 1) * pixelsPerCell);
+                var y2 = ((cell.Row + 1) * pixelsPerCell);
 
                 cellRenderer.Invoke(graphics, new Rectangle(x1, y1, pixelsPerCell, pixelsPerCell), cell);
 
