@@ -29,8 +29,7 @@ namespace MazesForProgrammers.Algorithms
         public Distances PathToGoal(Cell goal)
         {
             var current = goal;
-            var breadcrumbs = new Distances(goal);
-            breadcrumbs.UpdateValue(goal, Distances[goal].Value);
+            var breadcrumbs = new Distances(goal, Distances[goal].Value);
 
             do
             {
@@ -38,7 +37,7 @@ namespace MazesForProgrammers.Algorithms
                 {
                     if (Distances[neighbor] < Distances[current])
                     {
-                        breadcrumbs.UpdateValue(neighbor, Distances[neighbor].Value + 1);
+                        breadcrumbs[neighbor] = Distances[neighbor].Value + 1;
                         current = neighbor;
                         break;
                     }

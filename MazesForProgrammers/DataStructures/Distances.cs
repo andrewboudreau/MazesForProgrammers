@@ -11,11 +11,11 @@ namespace MazesForProgrammers.DataStructures
         private readonly Dictionary<Cell, int> cells;
         private CellDistance max;
 
-        public Distances(Cell start)
+        public Distances(Cell start, int value = 0)
         {
             cells = new Dictionary<Cell, int>
             {
-                { start, 0 }
+                { start, value }
             };
 
             max = new CellDistance(start, 0);
@@ -37,7 +37,7 @@ namespace MazesForProgrammers.DataStructures
 
                 return null;
             }
-            
+
             set
             {
                 if (cells.ContainsKey(cell))
@@ -59,11 +59,6 @@ namespace MazesForProgrammers.DataStructures
         }
 
         public CellDistance Max => max;
-
-        public void UpdateValue(Cell cell, int value)
-        {
-            cells[cell] = value;
-        }
 
         public IEnumerator<CellDistance> GetEnumerator()
         {
