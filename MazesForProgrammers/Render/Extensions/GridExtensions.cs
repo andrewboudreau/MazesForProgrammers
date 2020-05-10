@@ -50,10 +50,5 @@ namespace MazesForProgrammers.Render
 
             return grid;
         }
-
-        public static Color ColorForDistance()
-        {
-            return Color.IndianRed;
-        }
     }
 }

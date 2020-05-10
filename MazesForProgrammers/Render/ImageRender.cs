@@ -8,8 +8,18 @@ namespace MazesForProgrammers.Render
 {
     public class ImageRender
     {
+        public Image Render(Grid grid, Distances distances)
+        {
+            void draw(Graphics gfx, Rectangle rect, Cell cell)
+            {
+                var brush = new Pen(distances.BackgroundColor(cell)).Brush;
+                gfx.FillRectangle(brush, rect);
+            }
 
-        public Image Render(Grid grid, Distances distances, int pixelsPerCell = 100)
+            return Render(grid, draw, 100);
+        }
+
+        public Image Render(Grid grid, Action<Graphics, Rectangle, Cell> cellRenderer, int pixelsPerCell = 100)
         {
             var width = pixelsPerCell * grid.Columns;
             var height = pixelsPerCell * grid.Rows;
@@ -23,7 +33,7 @@ namespace MazesForProgrammers.Render
             graphics.Clear(background);
 
             GraphicsContainer containerState = graphics.BeginContainer();
-            
+
             foreach (var cell in grid.EachCell())
             {
                 var x1 = cell.Column * pixelsPerCell;
@@ -31,7 +41,7 @@ namespace MazesForProgrammers.Render
                 var x2 = ((cell.Column + 1) * pixelsPerCell) - 1;
                 var y2 = ((cell.Row + 1) * pixelsPerCell) - 1;
 
-                graphics.FillRectangle(new Pen(distances.BackgroundColor(cell)).Brush, x1, y1, pixelsPerCell, pixelsPerCell);
+                cellRenderer.Invoke(graphics, new Rectangle(x1, y1, pixelsPerCell, pixelsPerCell), cell);
 
                 if (!cell.Linked(cell.East))
                 {
@@ -42,8 +52,6 @@ namespace MazesForProgrammers.Render
                 {
                     graphics.DrawLine(pen, x1, y2, x2, y2);
                 }
-
-                //cellRenderer.Invoke(cell);
             }
 
             // Draw the map border, simplifies the wall render logic.
