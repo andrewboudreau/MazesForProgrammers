@@ -42,6 +42,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\MazesForProgrammers\Algorithms\AldousBroder.cs">
+      <Link>Algorithms\AldousBroder.cs</Link>
+    </Compile>
     <Compile Include="..\MazesForProgrammers\Algorithms\BinaryTree.cs">
       <Link>Algorithms\BinaryTree.cs</Link>
     </Compile>
