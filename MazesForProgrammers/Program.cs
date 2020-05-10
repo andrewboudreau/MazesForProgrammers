@@ -18,10 +18,11 @@ namespace MazesForProgrammers
         {
             Grid.SetRandom();
             var grid = new Grid(20);
-            var algorithm = new AldousBorder();
+            var algorithm = new AldousBroder();
             algorithm.ApplyTo(grid);
 
             var start = grid[grid.Rows / 2, grid.Columns / 2];
+            start = grid[0,0];
 
             grid
                 //.RenderToConsole(start.Distances)

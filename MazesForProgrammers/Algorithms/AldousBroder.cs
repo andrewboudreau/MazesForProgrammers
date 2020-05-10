@@ -4,7 +4,7 @@ using MazesForProgrammers.Extensions;
 
 namespace MazesForProgrammers.Mazes
 {
-    public class AldousBorder : IBuildMaze
+    public class AldousBroder : IBuildMaze
     {
         public Grid ApplyTo(Grid grid)
         {
