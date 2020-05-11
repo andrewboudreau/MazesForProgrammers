@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 
 namespace MazesForProgrammers.DataStructures
@@ -65,7 +64,7 @@ namespace MazesForProgrammers.DataStructures
             return cells.Select(ToCellDistance).GetEnumerator();
         }
 
-        public Color BackgroundColor(Cell cell)
+        public float Intensity(Cell cell)
         {
             if (cell is null)
             {
@@ -74,14 +73,10 @@ namespace MazesForProgrammers.DataStructures
 
             if (max.Distance == 0)
             {
-                return Color.Transparent;
+                return 0;
             }
 
-            var intesity = (max.Distance - this[cell].GetValueOrDefault()) / (float)max.Distance;
-            var dark = (int)(255 * intesity);
-            var bright = (int)(128 + (127 * intesity));
-
-            return Color.FromArgb(255, dark, bright, dark);
+            return (max.Distance - this[cell].GetValueOrDefault()) / (float)max.Distance;            
         }
 
         IEnumerator IEnumerable.GetEnumerator()

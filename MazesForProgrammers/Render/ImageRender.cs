@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 
 using MazesForProgrammers.DataStructures;
+using MazesForProgrammers.Render.Extensions;
 
 namespace MazesForProgrammers.Render
 {
@@ -12,7 +13,7 @@ namespace MazesForProgrammers.Render
         {
             void draw(Graphics gfx, Rectangle rect, Cell cell)
             {
-                var brush = new Pen(distances.BackgroundColor(cell)).Brush;
+                var brush = new Pen(distances.Color(cell)).Brush;
                 gfx.FillRectangle(brush, rect);
             }
 
