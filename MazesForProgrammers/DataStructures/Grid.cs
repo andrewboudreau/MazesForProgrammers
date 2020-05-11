@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using MazesForProgrammers.Configuration;
 
 namespace MazesForProgrammers.DataStructures
@@ -59,6 +60,8 @@ namespace MazesForProgrammers.DataStructures
         public int Size;
 
         public Cell RandomCell => this[Random.Next(0, Rows), Random.Next(0, Columns)];
+
+        public IEnumerable<Cell> DeadEnds => EachCell().Where(x => x.Links.Count() == 1);
 
         public Cell this[int row, int column]
         {

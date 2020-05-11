@@ -11,16 +11,16 @@ namespace MazesForProgrammers
         static void Main(string[] args)
         {
             Grid.SetRandom();
-            var grid = new Grid(20);
-            var algorithm = new Wilson();
+            var grid = new Grid(9);
+            var algorithm = new BinarySearch();
             algorithm.ApplyTo(grid);
 
-            // var middle = grid[grid.Rows / 2, grid.Columns / 2];
+            var middle = grid[grid.Rows / 2, grid.Columns / 2];
             var start = grid[0, 0];
 
             grid
                 .RenderToConsole(start.Distances)
-                .RenderToImage($"output_{DateTime.Now.Ticks}.png", start.Distances);
+                .RenderToImage($"output_{DateTime.Now.Ticks}.png", middle.Distances);
 
             Console.ReadKey();
         }

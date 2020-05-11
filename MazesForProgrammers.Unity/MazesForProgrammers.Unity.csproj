@@ -38,8 +38,8 @@
     <Compile Include="..\MazesForProgrammers\Algorithms\AldousBroder.cs">
       <Link>Algorithms\AldousBroder.cs</Link>
     </Compile>
-    <Compile Include="..\MazesForProgrammers\Algorithms\BinaryTree.cs">
-      <Link>Algorithms\BinaryTree.cs</Link>
+    <Compile Include="..\MazesForProgrammers\Algorithms\BinarySearch.cs">
+      <Link>Algorithms\BinarySearch.cs</Link>
     </Compile>
     <Compile Include="..\MazesForProgrammers\Algorithms\Dijkstra.cs">
       <Link>Dijkstra.cs</Link>

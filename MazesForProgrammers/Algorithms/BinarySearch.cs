@@ -6,7 +6,7 @@ using MazesForProgrammers.Extensions;
 
 namespace MazesForProgrammers.Mazes
 {
-    public class BinarySearchTree : IBuildMaze
+    public class BinarySearch : IBuildMaze
     {
         public Grid ApplyTo(Grid grid)
         {
