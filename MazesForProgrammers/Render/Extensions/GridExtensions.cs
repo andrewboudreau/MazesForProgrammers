@@ -1,8 +1,8 @@
 ﻿using MazesForProgrammers.DataStructures;
 using MazesForProgrammers.Extensions;
+
 using System;
 using System.Diagnostics;
-using System.Drawing;
 using System.Drawing.Imaging;
 
 namespace MazesForProgrammers.Render
