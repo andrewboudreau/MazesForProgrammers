@@ -79,7 +79,7 @@ namespace MazesForProgrammers.DataStructures
             return (row * Columns) + column;
         }
 
-        public static Mask FromFile(string path)
+        public static Mask FromTextFile(string path)
         {
             var lines = File.ReadAllLines(path);
             var rows = lines.First().Length;
