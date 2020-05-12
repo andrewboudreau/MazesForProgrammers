@@ -42,13 +42,16 @@
       <Link>Algorithms\BinarySearch.cs</Link>
     </Compile>
     <Compile Include="..\MazesForProgrammers\Algorithms\Dijkstra.cs">
-      <Link>Dijkstra.cs</Link>
+      <Link>Algorithms\Dijkstra.cs</Link>
     </Compile>
     <Compile Include="..\MazesForProgrammers\Algorithms\Interfaces\IBuildMaze.cs">
       <Link>Algorithms\IBuildMaze.cs</Link>
     </Compile>
     <Compile Include="..\MazesForProgrammers\Algorithms\Interfaces\ISovleMaze.cs">
       <Link>Algorithms\ISovleMaze.cs</Link>
+    </Compile>
+    <Compile Include="..\MazesForProgrammers\Algorithms\RecursiveBacktracker.cs">
+      <Link>Algorithms\RecursiveBacktracker.cs</Link>
     </Compile>
     <Compile Include="..\MazesForProgrammers\Algorithms\Sidewinder.cs">
       <Link>Algorithms\Sidewinder.cs</Link>

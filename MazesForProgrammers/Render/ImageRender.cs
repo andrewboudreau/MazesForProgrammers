@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 
 using MazesForProgrammers.DataStructures;
+using MazesForProgrammers.Extensions;
 using MazesForProgrammers.Render.Extensions;
 
 namespace MazesForProgrammers.Render
@@ -25,18 +26,23 @@ namespace MazesForProgrammers.Render
             var width = pixelsPerCell * grid.Columns;
             var height = pixelsPerCell * grid.Rows;
 
-            var background = Color.LightBlue;
+            var background = Color.White;
             var foreground = Color.Black;
 
             var image = new Bitmap(width, height);
             using var graphics = Graphics.FromImage(image);
-            using var pen = new Pen(foreground, 5);
+            using var pen = new Pen(foreground, 2);
             graphics.Clear(background);
 
             GraphicsContainer containerState = graphics.BeginContainer();
 
             foreach (var cell in grid.EachCell())
             {
+                if (cell is null)
+                {
+                    continue;
+                }
+
                 var x1 = cell.Column * pixelsPerCell;
                 var y1 = cell.Row * pixelsPerCell;
                 var x2 = ((cell.Column + 1) * pixelsPerCell);
@@ -53,10 +59,18 @@ namespace MazesForProgrammers.Render
                 {
                     graphics.DrawLine(pen, x1, y2, x2, y2);
                 }
+
+                if (!cell.Linked(cell.North))
+                {
+                    graphics.DrawLine(pen, x1, y1, x2, y1);
+                }
+
+                if (!cell.Linked(cell.West))
+                {
+                    graphics.DrawLine(pen, x1, y1, x1, y2);
+                }
             }
 
-            // Draw the map border, simplifies the wall render logic.
-            graphics.DrawRectangle(pen, 0, 0, width - 1, height - 1);
             graphics.EndContainer(containerState);
             graphics.Save();
 

@@ -6,6 +6,11 @@ namespace MazesForProgrammers.Configuration
     {
         public void ConfigureNeighbors(Cell cell, Grid grid)
         {
+            if (cell is null)
+            {
+                return;
+            }
+
             cell.North = grid[cell.Row - 1, cell.Column];
             cell.South = grid[cell.Row + 1, cell.Column];
 

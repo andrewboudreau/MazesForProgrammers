@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using MazesForProgrammers.Configuration;
+using MazesForProgrammers.Extensions;
 
 namespace MazesForProgrammers.DataStructures
 {
@@ -50,18 +51,19 @@ namespace MazesForProgrammers.DataStructures
 
             Rows = rows;
             Columns = columns;
-            Size = rows * columns;
+
             map = Prepare(create);
             ConfigureNeighbors(new SetNorthEastSouthWestNeighbors());
         }
 
         public int Rows;
         public int Columns;
-        public int Size;
 
-        public Cell RandomCell => this[Random.Next(0, Rows), Random.Next(0, Columns)];
+        public virtual int Size => Rows * Columns;
 
-        public IEnumerable<Cell> DeadEnds => EachCell().Where(x => x.Links.Count() == 1);
+        public virtual Cell RandomCell => this[Random.Next(0, Rows), Random.Next(0, Columns)];
+
+        public IEnumerable<Cell> DeadEnds => EachCell().RemoveNulls().Where(x => x.Links.Count() == 1);
 
         public Cell this[int row, int column]
         {

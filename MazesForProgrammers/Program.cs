@@ -11,16 +11,24 @@ namespace MazesForProgrammers
         static void Main(string[] args)
         {
             Grid.SetRandom();
-            var grid = new Grid(9);
-            var algorithm = new BinarySearch();
+            var mask = new Mask(6, 6);
+
+            mask[0, 0] = false;
+            mask[0, 3] = false;
+            mask[3, 3] = false;
+            mask[3, 0] = false;
+            mask[5, 0] = false;
+            mask[0, 5] = false;
+            mask[5, 5] = false;
+
+            var grid = new MaskedGrid(mask);
+            var algorithm = new RecursiveBacktracker();
             algorithm.ApplyTo(grid);
 
-            var middle = grid[grid.Rows / 2, grid.Columns / 2];
-            var start = grid[0, 0];
-
+            var start = grid.RandomCell;
             grid
                 .RenderToConsole(start.Distances)
-                .RenderToImage($"output_{DateTime.Now.Ticks}.png", middle.Distances);
+                .RenderToImage($"output_{DateTime.Now.Ticks}.png", start.Distances);
 
             Console.ReadKey();
         }

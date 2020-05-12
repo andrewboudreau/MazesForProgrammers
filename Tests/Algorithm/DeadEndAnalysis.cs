@@ -10,6 +10,7 @@ namespace MazesForProgrammers.Tests.Algorithm
     /// <remarks>
     /// Average dead-ends per 20 by 20 maze (400 cells):
     /// HuntAndKill   	 39  /400 	(9.8%)
+    /// RecursiveBacktr	 42  /400 	(10.4%)
     /// BinarySearch  	 102 /400 	(25.4%)
     /// SideWinder    	 110 /400 	(27.4%)
     /// AldousBroder  	 116 /400 	(29.0%)

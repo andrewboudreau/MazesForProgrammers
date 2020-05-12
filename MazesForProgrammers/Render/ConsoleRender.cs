@@ -32,7 +32,7 @@ namespace MazesForProgrammers.Render
                     var body = cellRender.Invoke(cell);
                     var east = "|";
 
-                    if (cell.Linked(cell.East))
+                    if (cell != null && cell.Linked(cell.East))
                     {
                         east = " ";
                     }
@@ -40,7 +40,7 @@ namespace MazesForProgrammers.Render
                     top += body + east;
 
                     var south = string.Concat(Enumerable.Repeat("-", 3));
-                    if (cell.Linked(cell.South))
+                    if (cell != null && cell.Linked(cell.South))
                     {
                         south = string.Concat(Enumerable.Repeat(" ", 3));
                     }
