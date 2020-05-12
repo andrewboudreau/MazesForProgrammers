@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Dynamic;
+using System.IO;
+using System.Linq;
 using System.Runtime.CompilerServices;
 
 namespace MazesForProgrammers.DataStructures
@@ -75,6 +77,27 @@ namespace MazesForProgrammers.DataStructures
         private int RowColumnToIndex(int row, int column)
         {
             return (row * Columns) + column;
+        }
+
+        public static Mask FromFile(string path)
+        {
+            var lines = File.ReadAllLines(path);
+            var rows = lines.First().Length;
+            var columns = lines.Length;
+            var mask = new Mask(rows, columns);
+
+            for (var row = 0; row < rows; row++)
+            {
+                for (var column = 0; column < columns; column++)
+                {
+                    if (lines[row][column] == 'X')
+                    {
+                        mask[row, column] = false;
+                    }
+                }
+            }
+
+            return mask;
         }
     }
 }

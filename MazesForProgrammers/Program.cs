@@ -11,15 +11,7 @@ namespace MazesForProgrammers
         static void Main(string[] args)
         {
             Grid.SetRandom();
-            var mask = new Mask(6, 6);
-
-            mask[0, 0] = false;
-            mask[0, 3] = false;
-            mask[3, 3] = false;
-            mask[3, 0] = false;
-            mask[5, 0] = false;
-            mask[0, 5] = false;
-            mask[5, 5] = false;
+            var mask = Mask.FromFile(@"Masks\mask.txt");
 
             var grid = new MaskedGrid(mask);
             var algorithm = new RecursiveBacktracker();
