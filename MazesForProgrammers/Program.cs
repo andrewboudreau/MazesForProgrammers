@@ -11,7 +11,7 @@ namespace MazesForProgrammers
         static void Main(string[] args)
         {
             Grid.SetRandom();
-            var mask = Mask.FromFile(@"Masks\mask.txt");
+            var mask = Mask.FromImage(@"Masks\circle.png");
 
             var grid = new MaskedGrid(mask);
             var algorithm = new RecursiveBacktracker();
@@ -19,8 +19,9 @@ namespace MazesForProgrammers
 
             var start = grid.RandomCell;
             grid
-                .RenderToConsole(start.Distances)
-                .RenderToImage($"output_{DateTime.Now.Ticks}.png", start.Distances);
+                //.RenderToConsole(start.Distances)
+                .RenderToImage($"path-output_{DateTime.Now.Ticks}.png", start.Distances)
+                .RenderToImage($"maze_{DateTime.Now.Ticks}.png");
 
             Console.ReadKey();
         }

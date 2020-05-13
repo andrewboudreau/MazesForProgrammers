@@ -2,7 +2,6 @@
 using System.Diagnostics;
 using System.Drawing.Imaging;
 using System.Linq;
-
 using MazesForProgrammers.DataStructures;
 using MazesForProgrammers.Extensions;
 
@@ -12,6 +11,7 @@ namespace MazesForProgrammers.Render
     {
         public static Grid RenderToConsole(this Grid grid, Distances distances)
         {
+
             return RenderToConsole(grid, cell => $" {Base36.Encode(distances[cell].GetValueOrDefault(-1))} ");
         }
 
@@ -42,6 +42,18 @@ namespace MazesForProgrammers.Render
         {
             var renderer = new ImageRender();
             using var bitmap = renderer.Render(grid, distances);
+            bitmap.Save(outputFile, ImageFormat.Png);
+
+            var path = System.IO.Path.GetFullPath(outputFile);
+            Process.Start(@"cmd.exe ", $@"/c {path}");
+
+            return grid;
+        }
+
+        public static Grid RenderToImage(this Grid grid, string outputFile, int pixelsPerCell = 100)
+        {
+            var renderer = new ImageRender();
+            using var bitmap = renderer.Render(grid, (gfx, rect, cell) => { }, pixelsPerCell);
             bitmap.Save(outputFile, ImageFormat.Png);
 
             var path = System.IO.Path.GetFullPath(outputFile);

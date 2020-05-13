@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
 using System.Dynamic;
 using System.IO;
 using System.Linq;
@@ -94,6 +95,24 @@ namespace MazesForProgrammers.DataStructures
                     {
                         mask[row, column] = false;
                     }
+                }
+            }
+
+            return mask;
+        }
+
+        public static Mask FromImage(string file)
+        {
+            var bitmap = new Bitmap(file);
+
+            var mask = new Mask(bitmap.Height, bitmap.Width);
+            for (var row = 0; row < mask.Rows; row++)
+            {
+                for (var column = 0; column < mask.Columns; column++)
+                {
+                    var color = bitmap.GetPixel(column, row);
+                    var isWhite = color.R == 255 && color.G == 255 && color.B == 255;
+                    mask[row, column] = isWhite;
                 }
             }
 

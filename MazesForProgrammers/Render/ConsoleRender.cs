@@ -20,6 +20,11 @@ namespace MazesForProgrammers.Render
 
         public string Render(Grid grid)
         {
+            if (grid.Rows > 20 || grid.Columns > 20)
+            {
+                Console.WriteLine($"Grid with {grid.Rows} rows and {grid.Columns} columns is too big for Console.Write.");
+            }
+
             var output = "+" + string.Concat(Enumerable.Repeat("---+", grid.Columns)) + Environment.NewLine;
 
             foreach (var row in grid.EachRow())

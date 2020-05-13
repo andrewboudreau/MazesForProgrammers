@@ -3,7 +3,6 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 
 using MazesForProgrammers.DataStructures;
-using MazesForProgrammers.Extensions;
 using MazesForProgrammers.Render.Extensions;
 
 namespace MazesForProgrammers.Render
@@ -21,7 +20,7 @@ namespace MazesForProgrammers.Render
             return Render(grid, draw, 100);
         }
 
-        public Image Render(Grid grid, Action<Graphics, Rectangle, Cell> cellRenderer, int pixelsPerCell = 100)
+        public Image Render(Grid grid, Action<Graphics, Rectangle, Cell> cellRenderer, int pixelsPerCell)
         {
             var width = pixelsPerCell * grid.Columns;
             var height = pixelsPerCell * grid.Rows;
