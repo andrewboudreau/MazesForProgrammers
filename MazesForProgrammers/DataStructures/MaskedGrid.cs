@@ -16,8 +16,8 @@ namespace MazesForProgrammers.DataStructures
         {
             get
             {
-                var (Row, Column) = mask.Random();
-                return this[Row, Column];
+                var rowColumn = mask.Random();
+                return this[rowColumn[0], rowColumn[1]];
             }
         }
 

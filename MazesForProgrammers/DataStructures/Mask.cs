@@ -55,11 +55,11 @@ namespace MazesForProgrammers.DataStructures
             return (Rows * Columns) - masked.Count;
         }
 
-        public (int Row, int Column) Random()
+        public int[] Random()
         {
             if (masked.Count >= Rows * Columns)
             {
-                throw new InvalidOperationException("Cannot select random cell when no cells exist.");
+                throw new InvalidOperationException("More than the max # of cells have been masked.");
             }
 
             int row, column;
@@ -70,7 +70,7 @@ namespace MazesForProgrammers.DataStructures
 
                 if (this[row, column])
                 {
-                    return (row, column);
+                    return new int[2] { row, column };
                 }
             }
         }
@@ -103,8 +103,14 @@ namespace MazesForProgrammers.DataStructures
 
         public static Mask FromImage(string file)
         {
-            var bitmap = new Bitmap(file);
+            using (var bitmap = new Bitmap(file))
+            {
+                return FromImage(bitmap);
+            }
+        }
 
+        public static Mask FromImage(Bitmap bitmap)
+        {
             var mask = new Mask(bitmap.Height, bitmap.Width);
             for (var row = 0; row < mask.Rows; row++)
             {
