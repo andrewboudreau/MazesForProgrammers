@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Drawing.Imaging;
+using System.Drawing;
 using System.Linq;
 using MazesForProgrammers.DataStructures;
+using MazesForProgrammers.DataStructures.Polar;
 using MazesForProgrammers.Extensions;
+using MazesForProgrammers.Render.Extensions;
 
 namespace MazesForProgrammers.Render
 {
@@ -38,28 +40,55 @@ namespace MazesForProgrammers.Render
             Console.WriteLine(renderer.Render(grid));
         }
 
-        public static Grid RenderToImage(this Grid grid, string outputFile, Distances distances)
+        public static IGrid RenderImageAndOpen(this Grid grid, int pixelsPerCell = 100)
+        {
+
+            var renderer = new ImageRender();
+            using var bitmap = renderer.Render(grid, pixelsPerCell);
+
+            bitmap.SaveAndOpen("maze_{0}");
+            return grid;
+        }
+
+        public static IGrid RenderImageAndOpen(this Grid grid, Distances distances)
         {
             var renderer = new ImageRender();
             using var bitmap = renderer.Render(grid, distances);
-            bitmap.Save(outputFile, ImageFormat.Png);
 
-            var path = System.IO.Path.GetFullPath(outputFile);
-            Process.Start(@"cmd.exe ", $@"/c {path}");
+            bitmap.SaveAndOpen("maze_{0}_path");
+            return grid;
+        }
+
+        public static IGrid RenderImageAndOpen(this Grid grid, string file, int pixelsPerCell)
+        {
+            var renderer = new ImageRender();
+            using var bitmap = renderer.Render(grid, pixelsPerCell);
+            bitmap.SaveAndOpen(file);
 
             return grid;
         }
 
-        public static Grid RenderToImage(this Grid grid, string outputFile, int pixelsPerCell = 100)
+        public static IGrid RenderImageAndOpen(this PolarGrid polarGrid, Distances distances)
         {
             var renderer = new ImageRender();
-            using var bitmap = renderer.Render(grid, (gfx, rect, cell) => { }, pixelsPerCell);
-            bitmap.Save(outputFile, ImageFormat.Png);
+            using var bitmap = renderer.Render(polarGrid, distances, 100);
+            bitmap.SaveAndOpen("maze_{0}_path");
 
-            var path = System.IO.Path.GetFullPath(outputFile);
-            Process.Start(@"cmd.exe ", $@"/c {path}");
+            return polarGrid;
+        }
 
-            return grid;
+        public static IGrid RenderImageAndOpen(this PolarGrid polarGrid, Action<Graphics, PointF[], Cell> cellRenderer)
+        {
+            if (cellRenderer is null)
+            {
+                throw new ArgumentNullException(nameof(cellRenderer));
+            }
+
+            var renderer = new ImageRender();
+            using var bitmap = renderer.Render(polarGrid, cellRenderer, 20);
+            bitmap.SaveAndOpen("maze_{0}_path");
+
+            return polarGrid;
         }
     }
 }

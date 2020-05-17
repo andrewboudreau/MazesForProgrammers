@@ -8,7 +8,7 @@ namespace MazesForProgrammers.Mazes
 {
     public class BinarySearch : IBuildMaze
     {
-        public Grid ApplyTo(Grid grid)
+        public IGrid ApplyTo(IGrid grid)
         {
             foreach (var cell in grid.EachCell())
             {

@@ -9,7 +9,7 @@ namespace MazesForProgrammers.Mazes
 {
     public class RecursiveBacktracker : IBuildMaze
     {
-        public Grid ApplyTo(Grid grid)
+        public IGrid ApplyTo(IGrid grid)
         {
             var current = grid.RandomCell;
             var stack = new Stack<Cell>();

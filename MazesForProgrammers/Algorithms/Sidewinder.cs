@@ -8,7 +8,7 @@ namespace MazesForProgrammers.Mazes
 {
     public class SideWinder : IBuildMaze
     {
-        public Grid ApplyTo(Grid grid)
+        public IGrid ApplyTo(IGrid grid)
         {
             var run = new List<Cell>();
             foreach (var cells in grid.EachRow())

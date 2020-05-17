@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using MazesForProgrammers.Configuration;
 using MazesForProgrammers.Extensions;
 
 namespace MazesForProgrammers.DataStructures
@@ -9,7 +8,7 @@ namespace MazesForProgrammers.DataStructures
     /// <summary>
     /// Manages a collection of <see cref="Cell"/>.
     /// </summary>
-    public class Grid
+    public class Grid : IGrid
     {
         public static Random Random = new Random(0);
 
@@ -53,11 +52,12 @@ namespace MazesForProgrammers.DataStructures
             Columns = columns;
 
             map = Prepare(create);
-            ConfigureNeighbors(new SetNorthEastSouthWestNeighbors());
+            ConfigureNeighbors();
         }
 
-        public int Rows;
-        public int Columns;
+        public int Rows { get; set; }
+
+        public int Columns { get; set; }
 
         public virtual int Size => Rows * Columns;
 
@@ -97,16 +97,20 @@ namespace MazesForProgrammers.DataStructures
             }
         }
 
-        protected void ConfigureNeighbors(IConfigureNeighbors configure)
+        protected virtual void ConfigureNeighbors()
         {
-            if (configure is null)
-            {
-                throw new ArgumentNullException(nameof(configure));
-            }
-
             foreach (var cell in EachCell())
             {
-                configure.ConfigureNeighbors(cell, this);
+                if (cell is null)
+                {
+                    return;
+                }
+
+                cell.North = this[cell.Row - 1, cell.Column];
+                cell.South = this[cell.Row + 1, cell.Column];
+
+                cell.East = this[cell.Row, cell.Column + 1];
+                cell.West = this[cell.Row, cell.Column - 1];
             }
         }
 

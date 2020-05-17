@@ -29,10 +29,10 @@ namespace MazesForProgrammers.Tests
             Thread.Sleep(500);
             Grid
                 .RenderToConsole(distances)
-                .RenderToImage($"distances_{DateTime.Now.Ticks}.png", distances);
+                .RenderImageAndOpen(distances);
 
             Thread.Sleep(500);
-                Grid.RenderToImage($"maze_{DateTime.Now.Ticks}.png");
+                Grid.RenderImageAndOpen($"maze_{DateTime.Now.Ticks}.png", 10);
         }
     }
 }

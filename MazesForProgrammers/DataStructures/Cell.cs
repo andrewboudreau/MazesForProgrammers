@@ -22,7 +22,7 @@ namespace MazesForProgrammers.DataStructures
         public int Row { get; }
 
         public IEnumerable<Cell> Links => links;
-        public IEnumerable<Cell> Neighbors => new Cell[] { North, East, South, West }.RemoveNulls();
+        public virtual IEnumerable<Cell> Neighbors => new Cell[] { North, East, South, West }.RemoveNulls();
 
         public Cell North;
         public Cell East;

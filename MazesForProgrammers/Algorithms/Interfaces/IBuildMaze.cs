@@ -7,7 +7,7 @@ namespace MazesForProgrammers.Algorithms
 {
     public interface IBuildMaze
     {
-        Grid ApplyTo(Grid grid);
+        IGrid ApplyTo(IGrid grid);
     }
 
     public static class IBuildMazeExtensions

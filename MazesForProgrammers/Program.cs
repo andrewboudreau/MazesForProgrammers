@@ -1,6 +1,7 @@
 ﻿using System;
 using MazesForProgrammers.Algorithms;
 using MazesForProgrammers.DataStructures;
+using MazesForProgrammers.DataStructures.Polar;
 using MazesForProgrammers.Mazes;
 using MazesForProgrammers.Render;
 
@@ -11,6 +12,19 @@ namespace MazesForProgrammers
         static void Main(string[] args)
         {
             Grid.SetRandom();
+
+            var grid = new PolarGrid(10);
+            var algorithm = new RecursiveBacktracker();
+            algorithm.ApplyTo(grid);
+
+            grid.RenderImageAndOpen(grid.RandomCell.Distances);
+
+            Console.ReadKey();
+        }
+
+        static void Masks()
+        {
+            Grid.SetRandom();
             var mask = Mask.FromImage(@"Masks\circle.png");
 
             var grid = new MaskedGrid(mask);
@@ -18,10 +32,10 @@ namespace MazesForProgrammers
             algorithm.ApplyTo(grid);
 
             var start = grid.RandomCell;
-            grid
-                //.RenderToConsole(start.Distances)
-                .RenderToImage($"path-output_{DateTime.Now.Ticks}.png", start.Distances)
-                .RenderToImage($"maze_{DateTime.Now.Ticks}.png");
+            //grid
+            //    //.RenderToConsole(start.Distances)
+            //    .RenderImageAndOpen(start.Distances)
+            //    .RenderImageAndOpen($"maze_{DateTime.Now.Ticks}.png");
 
             Console.ReadKey();
         }
@@ -42,7 +56,7 @@ namespace MazesForProgrammers
 
             grid
                 .RenderToConsole(start.PathTo(goal))
-                .RenderToImage($"output_{DateTime.Now.Ticks}.png", pass2.Distances);
+                .RenderImageAndOpen(pass2.Distances);
         }
     }
 }

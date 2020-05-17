@@ -7,8 +7,15 @@ using MazesForProgrammers.Render.Extensions;
 
 namespace MazesForProgrammers.Render
 {
-    public class ImageRender
+    public partial class ImageRender
     {
+        private static readonly Action<Graphics, Rectangle, Cell> nodraw = (x, y, z) => { };
+
+        public Image Render(Grid grid, int pixelsPerCell)
+        {
+            return Render(grid, nodraw, pixelsPerCell);
+        }
+
         public Image Render(Grid grid, Distances distances)
         {
             void draw(Graphics gfx, Rectangle rect, Cell cell)
