@@ -57,17 +57,24 @@ namespace MazesForProgrammers.Render
                 var thetaCcw = cell.Column * theta;
                 var thetaCw = (cell.Column + 1) * theta;
 
-                var ax = (int)(center + (inner * Math.Cos(thetaCcw)));
-                var ay = (int)(center + (inner * Math.Sin(thetaCcw)));
+                // When cos/sin get really close to zero the C# `int` cast will cause x/y coordinates to render a pixel away.
+                var cos_thetaCcw = Math.Abs(Math.Cos(thetaCcw)) < 0.0001 ? 0 : Math.Cos(thetaCcw);
+                var sin_thetaCcw = Math.Abs(Math.Sin(thetaCcw)) < 0.0001 ? 0 : Math.Sin(thetaCcw);
 
-                var bx = (int)(center + (outer * Math.Cos(thetaCcw)));
-                var by = (int)(center + (outer * Math.Sin(thetaCcw)));
+                var cos_thetaCw = Math.Abs(Math.Cos(thetaCw)) < 0.0001 ? 0 : Math.Cos(thetaCw);
+                var sin_thetaCw = Math.Abs(Math.Sin(thetaCw)) < 0.0001 ? 0 : Math.Sin(thetaCw);
 
-                var cx = (int)(center + (inner * Math.Cos(thetaCw)));
-                var cy = (int)(center + (inner * Math.Sin(thetaCw)));
+                var ax = (int)(center + (inner * cos_thetaCcw));
+                var ay = (int)(center + (inner * sin_thetaCcw));
 
-                var dx = (int)(center + (outer * Math.Cos(thetaCw)));
-                var dy = (int)Math.Round(center + (outer * Math.Sin(thetaCw)));
+                var bx = (int)(center + (outer * cos_thetaCcw));
+                var by = (int)(center + (outer * sin_thetaCcw));
+
+                var cx = (int)(center + (inner * cos_thetaCw));
+                var cy = (int)(center + (inner * sin_thetaCw));
+
+                var dx = (int)(center + (outer * cos_thetaCw));
+                var dy = (int)(center + (outer * sin_thetaCw));
 
                 var poly = new List<PointF>()
                 {
@@ -75,6 +82,7 @@ namespace MazesForProgrammers.Render
                     new PointF(bx, by)
                 };
 
+                // build up the poly points for any outward subdivisions.
                 var subdivisions = cell.Outward.Count;
                 for (var subdivision = 1; subdivision <= subdivisions; subdivision++)
                 {
@@ -89,8 +97,10 @@ namespace MazesForProgrammers.Render
                 poly.Add(new PointF(cx, cy));
                 poly.Add(new PointF(ax, ay));
 
+                // external render now gets all the data it needs
                 cellRenderer.Invoke(graphics, poly.ToArray(), cell);
 
+                // render the boundaries
                 if (!cell.Linked(cell.Inward))
                 {
                     graphics.DrawLine(pen, ax, ay, cx, cy);
