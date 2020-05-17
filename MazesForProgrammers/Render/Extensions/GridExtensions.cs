@@ -71,7 +71,7 @@ namespace MazesForProgrammers.Render
         public static IGrid RenderImageAndOpen(this PolarGrid polarGrid, Distances distances)
         {
             var renderer = new ImageRender();
-            using var bitmap = renderer.Render(polarGrid, distances, 100);
+            using var bitmap = renderer.Render(polarGrid, distances, 50);
             bitmap.SaveAndOpen("maze_{0}_path");
 
             return polarGrid;

@@ -23,7 +23,7 @@ namespace MazesForProgrammers.Render
         {
             void draw(Graphics gfx, PointF[] quad, Cell cell)
             {
-                var brush = new Pen(distances.Color(cell)).Brush;
+                var brush = new Pen(distances.Color(cell), 1).Brush;
                 gfx.FillPolygon(brush, quad);
             }
 
@@ -46,7 +46,7 @@ namespace MazesForProgrammers.Render
             GraphicsContainer containerState = graphics.BeginContainer();
             graphics.DrawArc(pen, 0, 0, imageSize, imageSize, 0, 360);
 
-            foreach (var baseCell in grid.EachCell().Skip(1))
+            foreach (var baseCell in grid.EachCell())
             {
                 var cell = baseCell as PolarCell;
                 var length = grid.EachRow().Skip(cell.Row).First().Count();
@@ -67,7 +67,7 @@ namespace MazesForProgrammers.Render
                 var cy = (int)(center + (inner * Math.Sin(thetaCw)));
 
                 var dx = (int)(center + (outer * Math.Cos(thetaCw)));
-                var dy = (int)(center + (outer * Math.Sin(thetaCw)));
+                var dy = (int)Math.Round(center + (outer * Math.Sin(thetaCw)));
 
                 var poly = new List<PointF>()
                 {
@@ -99,11 +99,6 @@ namespace MazesForProgrammers.Render
                 if (!cell.Linked(cell.Clockwise))
                 {
                     graphics.DrawLine(pen, cx, cy, dx, dy);
-                }
-
-                if (cell.Outward.Count > 1)
-                {
-                    //Console.WriteLine($"THERE ARE MORE THAN 1 NEIGHBOR: ax:{ax} ay:{ay}, bx:{bx} by:{by}, cx:{cx} cy:{cy}, dx:{dx} dy:{dy}");
                 }
 
                 if (!cell.Linked(cell.CounterClockwise))

@@ -11,9 +11,9 @@ namespace MazesForProgrammers
     {
         static void Main(string[] args)
         {
-            Grid.SetRandom();
+            Grid.SetRandom(1);
 
-            var grid = new PolarGrid(10);
+            var grid = new PolarGrid(50);
             var algorithm = new RecursiveBacktracker();
             algorithm.ApplyTo(grid);
 
