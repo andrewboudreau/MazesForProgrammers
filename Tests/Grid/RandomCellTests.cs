@@ -12,7 +12,7 @@ namespace MazesForProgrammers.Tests.DataStructures
         public void ReturnsCell()
         {
             var seen = new HashSet<Cell>();
-            var grid = new Grid(2);
+            var grid = new RectangleGrid(2);
 
             for (var i = 0; i < 100_000; i++)
             {

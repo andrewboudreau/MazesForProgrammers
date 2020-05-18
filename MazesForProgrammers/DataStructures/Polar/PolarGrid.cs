@@ -2,54 +2,21 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using MazesForProgrammers.Extensions;
-
 namespace MazesForProgrammers.DataStructures.Polar
 {
-    public class PolarGrid : IGrid
+    public class PolarGrid : AbstractGrid<PolarCell>
     {
-        public static Random Random = new Random(0);
-
-        public static void SetRandom(int? seed = null)
-        {
-            if (seed.HasValue)
-            {
-                Random = new Random(seed.Value);
-            }
-            else
-            {
-                Random = new Random();
-            }
-        }
-
-        private List<PolarCell>[] rows;
-
         public PolarGrid(int rows = 6)
             : this(rows, (row, col) => new PolarCell(row, col))
         {
         }
 
         public PolarGrid(int rows, Func<int, int, PolarCell> create)
+            : base(rows, 0, create)
         {
-            if (create is null)
-            {
-                throw new ArgumentNullException(nameof(create));
-            }
-
-            if (rows < 2)
-            {
-                throw new ArgumentOutOfRangeException("Polar Grid must contain 2 or more rows.");
-            }
-
-            Rows = rows;
-
-            this.rows = Prepare(create);
-            ConfigureNeighbors();
         }
 
-        public int Rows { get; protected set; }
-
-        public int Columns
+        public new int Columns
         {
             get
             {
@@ -57,20 +24,9 @@ namespace MazesForProgrammers.DataStructures.Polar
             }
         }
 
-        public int Size => EachRow().Sum(x => x.Count());
+        public override int Size => EachRow().Sum(x => x.Count());
 
-        public IEnumerable<Cell> DeadEnds => EachCell().RemoveNulls().Where(x => x.Links.Count() == 1);
-
-        public virtual Cell RandomCell
-        {
-            get
-            {
-                var row = Random.Next(0, Rows);
-                return this[row, Random.Next(0, rows[row].Count)];
-            }
-        }
-
-        public PolarCell this[int row, int column]
+        public override PolarCell this[int row, int column]
         {
             get
             {
@@ -81,50 +37,31 @@ namespace MazesForProgrammers.DataStructures.Polar
 
                 if (column < 0)
                 {
-                    column = rows[row].Count - (Math.Abs(column) % rows[row].Count);
+                    column = rows.ElementAt(row).Count() - (Math.Abs(column) % rows.ElementAt(row).Count());
                 }
 
-                return rows[row][column % rows[row].Count];
+                return rows.ElementAt(row).ElementAt(column % rows.ElementAt(row).Count());
             }
         }
 
-        public IEnumerable<Cell> EachCell()
+        protected override void ConfigureNeighbors()
         {
-            for (var row = 0; row < Rows; row++)
-            {
-                foreach (var cell in IterateRow(row))
-                {
-                    yield return cell;
-                }
-            }
-        }
-
-        public IEnumerable<IEnumerable<Cell>> EachRow()
-        {
-            for (var row = 0; row < rows.Length; row++)
-            {
-                yield return IterateRow(row);
-            }
-        }
-
-        protected virtual void ConfigureNeighbors()
-        {
-            foreach (var cell in EachCell().Cast<PolarCell>())
+            foreach (var cell in EachCell())
             {
                 if (cell.Row > 0)
                 {
                     cell.Clockwise = this[cell.Row, cell.Column + 1];
                     cell.CounterClockwise = this[cell.Row, cell.Column - 1];
-                    var ratio = rows[cell.Row].Count / rows[cell.Row - 1].Count;
+                    var ratio = rows.ElementAt(cell.Row).Count() / rows.ElementAt(cell.Row - 1).Count();
 
-                    var parent = rows[cell.Row - 1][cell.Column / ratio];
+                    var parent = rows.ElementAt(cell.Row - 1).ElementAt(cell.Column / ratio);
                     parent.Outward.Add(cell);
                     cell.Inward = parent;
                 }
             }
         }
 
-        protected virtual List<PolarCell>[] Prepare(Func<int, int, PolarCell> create)
+        protected override IEnumerable<IEnumerable<PolarCell>> Prepare(Func<int, int, PolarCell> create)
         {
             if (create is null)
             {
@@ -132,51 +69,29 @@ namespace MazesForProgrammers.DataStructures.Polar
             }
 
             var rowHeight = 1.0 / Rows;
-            rows = new List<PolarCell>[Rows];
-            rows[0] = new List<PolarCell> { new PolarCell(0, 0) };
+            var map = new List<PolarCell>[Rows];
 
-            for (var row = 1; row < rows.Length; row++)
+            map[0] = new List<PolarCell> { new PolarCell(0, 0) };
+
+            for (var row = 1; row < Rows; row++)
             {
-                rows[row] = new List<PolarCell>();
+                map[row] = new List<PolarCell>();
                 var radius = row / (float)Rows;
                 var circumference = 2 * Math.PI * radius;
 
-                var previous = rows[row - 1].Count;
+                var previous = map[row - 1].Count;
                 var estimatedCellWidth = circumference / previous;
                 var ratio = (int)(estimatedCellWidth / rowHeight);
                 var cells = previous * ratio;
 
-                rows[row] = new List<PolarCell>(cells);
+                map[row] = new List<PolarCell>(cells);
                 for (var col = 0; col < cells; col++)
                 {
-                    rows[row].Add(create.Invoke(row, col));
+                    map[row].Add(create.Invoke(row, col));
                 }
             }
 
-            return rows;
-        }
-
-        private IEnumerable<PolarCell> IterateRow(int row)
-        {
-            for (var col = 0; col < rows[row].Count; col++)
-            {
-                yield return this[row, col];
-            }
-        }
-
-        private bool IsOutOfBounds(int row, int column)
-        {
-            if (row < 0 || row >= Rows)
-            {
-                return true;
-            }
-
-            if (column < 0 || column >= rows[row].Count)
-            {
-                return true;
-            }
-
-            return false;
+            return map;
         }
     }
 }

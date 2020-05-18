@@ -12,7 +12,7 @@ namespace MazesForProgrammers
     {
         static void Main(string[] args)
         {
-            Grid.SetRandom();
+            //RandomSource.SetRandom(1);
 
             var grid = new PolarGrid(20);
             var algorithm = new RecursiveBacktracker();
@@ -28,10 +28,9 @@ namespace MazesForProgrammers
 
         static void Masks()
         {
-            Grid.SetRandom();
             var mask = Mask.FromImage(@"Masks\circle.png");
 
-            var grid = new MaskedGrid(mask);
+            var grid = new MaskedRectangleGrid(mask);
             var algorithm = new RecursiveBacktracker();
             algorithm.ApplyTo(grid);
 
@@ -46,8 +45,7 @@ namespace MazesForProgrammers
 
         private static void LongestPathDemo()
         {
-            Grid.SetRandom();
-            var grid = new Grid(50);
+            var grid = new RectangleGrid(50);
             var algorithm = new SideWinder();
 
             algorithm.ApplyTo(grid);

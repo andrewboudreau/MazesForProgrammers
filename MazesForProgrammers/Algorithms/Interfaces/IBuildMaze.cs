@@ -8,7 +8,12 @@ namespace MazesForProgrammers.Algorithms
 {
     public interface IBuildMaze
     {
-        IGrid ApplyTo(IGrid grid);
+        IGrid<Cell> ApplyTo(IGrid<Cell> grid);
+    }
+
+    public interface IBuildRectangleMaze
+    {
+        RectangleGrid ApplyTo(RectangleGrid grid);
     }
 
     public static class IBuildMazeExtensions

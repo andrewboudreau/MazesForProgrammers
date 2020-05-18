@@ -8,7 +8,7 @@ namespace MazesForProgrammers.Mazes
 {
     public class HuntAndKill : IBuildMaze
     {
-        public IGrid ApplyTo(IGrid grid)
+        public IGrid<Cell> ApplyTo(IGrid<Cell> grid)
         {
             var current = grid.RandomCell;
 

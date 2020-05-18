@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using MazesForProgrammers.Algorithms;
-using MazesForProgrammers.Extensions;
 
 namespace MazesForProgrammers.DataStructures
 {
@@ -36,12 +36,7 @@ namespace MazesForProgrammers.DataStructures
         /// <summary>
         /// Gets the cells which share a border with this cell.
         /// </summary>
-        public virtual IEnumerable<Cell> Neighbors => new Cell[] { North, East, South, West }.RemoveNulls();
-
-        public Cell North;
-        public Cell East;
-        public Cell South;
-        public Cell West;
+        public virtual IEnumerable<Cell> Neighbors => Enumerable.Empty<Cell>();
 
         /// <summary>
         /// Gets the distances to each other cell from this cell.

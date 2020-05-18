@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
-using System.Dynamic;
 using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
 
 namespace MazesForProgrammers.DataStructures
 {
@@ -65,8 +62,8 @@ namespace MazesForProgrammers.DataStructures
             int row, column;
             while (true)
             {
-                row = Grid.Random.Next(0, Rows);
-                column = Grid.Random.Next(0, Columns);
+                row = RandomSource.Random.Next(0, Rows);
+                column = RandomSource.Random.Next(0, Columns);
 
                 if (this[row, column])
                 {
@@ -83,8 +80,8 @@ namespace MazesForProgrammers.DataStructures
         public static Mask FromTextFile(string path)
         {
             var lines = File.ReadAllLines(path);
-            var rows = lines.First().Length;
-            var columns = lines.Length;
+            var columns = lines.First().Length;
+            var rows = lines.Length;
             var mask = new Mask(rows, columns);
 
             for (var row = 0; row < rows; row++)

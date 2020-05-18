@@ -6,11 +6,11 @@ using MazesForProgrammers.Extensions;
 
 namespace MazesForProgrammers.Mazes
 {
-    public class SideWinder : IBuildMaze
+    public class SideWinder : IBuildRectangleMaze
     {
-        public IGrid ApplyTo(IGrid grid)
+        public RectangleGrid ApplyTo(RectangleGrid grid)
         {
-            var run = new List<Cell>();
+            var run = new List<RectangleCell>();
             foreach (var cells in grid.EachRow())
             {
                 run.Clear();
@@ -20,7 +20,7 @@ namespace MazesForProgrammers.Mazes
                     var isNorthernBoundary = cell.North is null;
                     var isEasternBoundary = cell.East is null;
 
-                    var rand = Grid.Random.Next(2) == 0;
+                    var rand = RandomSource.Random.Next(2) == 0;
                     var shouldCloseRun = isEasternBoundary || (!isNorthernBoundary && rand);
                     //// System.Console.WriteLine($"Cell:{cell} - {(isNorthernBoundary ? "North Boundary, " : "")} {(isEasternBoundary ? "East Boundary, " : "")} {(shouldCloseRun ? "Close Run" : "")}");
 

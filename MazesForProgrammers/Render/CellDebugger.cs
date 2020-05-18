@@ -7,7 +7,7 @@ namespace MazesForProgrammers.Render
 {
     public class CellDebugger
     {
-        public string Render(Grid grid)
+        public string Render(RectangleGrid grid)
         {
             var output = new StringBuilder();
             foreach (var row in grid.EachRow().Reverse())

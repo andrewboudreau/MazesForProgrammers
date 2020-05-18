@@ -8,7 +8,7 @@ namespace MazesForProgrammers.Mazes
 {
     public class Wilson : IBuildMaze
     {
-        public IGrid ApplyTo(IGrid grid)
+        public IGrid<Cell> ApplyTo(IGrid<Cell> grid)
         {
             var unvisited = grid.EachCell().ToList();
 

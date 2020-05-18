@@ -34,7 +34,7 @@ namespace MazesForProgrammers.Tests.Algorithm
                 var deadends = new List<int>();
                 for (var i = 0; i < tries; i++)
                 {
-                    var grid = new Grid(size);
+                    var grid = new RectangleGrid(size);
                     algorithm.ApplyTo(grid);
                     deadends.Add(grid.DeadEnds.Count());
                 }

@@ -28,7 +28,7 @@ X........X";
             File.WriteAllText(file, maskText);
             var mask = Mask.FromTextFile(file);
 
-            Grid = new MaskedGrid(mask);
+            Grid = new MaskedRectangleGrid(mask);
             Algorithm.ApplyTo(Grid);
 
             File.Delete(file);
@@ -69,7 +69,7 @@ X........X";
             File.WriteAllText(file, maskText);
             var mask = Mask.FromTextFile(file);
 
-            Grid = new MaskedGrid(mask);
+            Grid = new MaskedRectangleGrid(mask);
             Algorithm.ApplyTo(Grid);
 
             File.Delete(file);

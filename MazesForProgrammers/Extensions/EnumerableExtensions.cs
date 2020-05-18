@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace MazesForProgrammers.Extensions
@@ -21,10 +20,9 @@ namespace MazesForProgrammers.Extensions
             return enumerable.Any() == false;
         }
 
-
         public static T Sample<T>(this IEnumerable<T> collection)
         {
-            return collection.ElementAt(DataStructures.Grid.Random.Next(collection.Count()));
+            return collection.ElementAt(RandomSource.Random.Next(collection.Count()));
         }
 
         public static IEnumerable<T> RemoveNulls<T>(this IEnumerable<T> items)

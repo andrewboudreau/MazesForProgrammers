@@ -10,14 +10,14 @@ namespace MazesForProgrammers.Tests
     [TestClass]
     public class OutputGridTest
     {
-        public Grid Grid { get; protected set; }
+        public RectangleGrid Grid { get; protected set; }
 
         public RecursiveBacktracker Algorithm { get; protected set; }
 
         [TestInitialize]
         public void Setup()
         {
-            Grid = new Grid();
+            Grid = new RectangleGrid();
             Algorithm = new RecursiveBacktracker();
         }
 
@@ -28,7 +28,7 @@ namespace MazesForProgrammers.Tests
 
             Thread.Sleep(500);
             Grid
-                .RenderToConsole(distances)
+                //.RenderToConsole(distances)
                 .RenderImageAndOpen(distances);
 
             Thread.Sleep(500);

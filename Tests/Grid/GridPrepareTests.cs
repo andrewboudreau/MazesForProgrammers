@@ -12,13 +12,13 @@ namespace MazesForProgrammers.Tests.DataStructures
         public void ProvidesRowAndColumnInputs()
         {
             var seen = new List<(int, int)>();
-            Cell create(int row, int col)
+            RectangleCell create(int row, int col)
             {
                 seen.Add((row, col));
-                return new Cell(row, col);
+                return new RectangleCell(row, col);
             }
 
-            var grid = new Grid(2, 2, create);
+            var grid = new RectangleGrid(2, 2, create);
 
             Assert.AreEqual(4, seen.Count);
             Assert.AreEqual(seen[0], (0, 0));
@@ -31,15 +31,15 @@ namespace MazesForProgrammers.Tests.DataStructures
         public void UsesProvidedCells()
         {
             var seen = new List<Cell>();
-            Cell create(int row, int col)
+            RectangleCell create(int row, int col)
             {
-                var cell = new Cell(row, col);
+                var cell = new RectangleCell(row, col);
 
                 seen.Add(cell);
                 return cell;
             }
 
-            var grid = new Grid(2, 2, create);
+            var grid = new RectangleGrid(2, 2, create);
 
             Assert.AreEqual(4, seen.Count);
 

@@ -11,7 +11,7 @@ namespace MazesForProgrammers.Tests.DataStructures
         [TestMethod]
         public void ForEachCell_IteratesRowsThenColumns()
         {
-            var grid = new Grid(2);
+            var grid = new RectangleGrid(2);
             var seen = new List<Cell>(4);
             foreach (var cell in grid.EachCell())
             {
@@ -36,13 +36,13 @@ namespace MazesForProgrammers.Tests.DataStructures
         [TestMethod]
         public void ForEachRow_IteratesRowsThenColumns()
         {
-            var grid = new Grid(2);
+            var grid = new RectangleGrid(2);
             var seen = new List<(int Row, List<Cell> Cells)>(4);
-            
+
             var row = 0;
             foreach (var cells in grid.EachRow())
             {
-                seen.Add((row, cells.ToList()));
+                seen.Add((row, cells.Cast<Cell>().ToList()));
                 row++;
             }
 

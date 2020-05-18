@@ -6,9 +6,9 @@ using MazesForProgrammers.Extensions;
 
 namespace MazesForProgrammers.Mazes
 {
-    public class BinarySearch : IBuildMaze
+    public class BinarySearch : IBuildRectangleMaze
     {
-        public IGrid ApplyTo(IGrid grid)
+        public RectangleGrid ApplyTo(RectangleGrid grid)
         {
             foreach (var cell in grid.EachCell())
             {

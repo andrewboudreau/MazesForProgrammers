@@ -10,7 +10,7 @@ namespace MazesForProgrammers.Tests.Configuration
         [TestMethod]
         public void AllNeighborsAreDefined()
         {
-            var grid = new Grid(3);
+            var grid = new RectangleGrid(3);
 
             Assert.AreEqual(2, grid[0, 0].Neighbors.Count());
             Assert.AreEqual(3, grid[0, 1].Neighbors.Count());

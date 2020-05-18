@@ -18,7 +18,7 @@ namespace MazesForProgrammers.Render
             this.cellRender = cellRender;
         }
 
-        public string Render(Grid grid)
+        public string Render(RectangleGrid grid)
         {
             if (grid.Rows > 20 || grid.Columns > 20)
             {

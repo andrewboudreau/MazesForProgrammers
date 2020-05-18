@@ -2,17 +2,17 @@
 
 namespace MazesForProgrammers.DataStructures
 {
-    public class MaskedGrid : Grid
+    public class MaskedRectangleGrid : RectangleGrid
     {
         private readonly Mask mask;
 
-        public MaskedGrid(Mask mask)
+        public MaskedRectangleGrid(Mask mask)
             : base(mask.Rows, mask.Columns, MaskedCellFactory(mask))
         {
             this.mask = mask;
         }
 
-        public override Cell RandomCell
+        public override RectangleCell RandomCell
         {
             get
             {
@@ -23,11 +23,11 @@ namespace MazesForProgrammers.DataStructures
 
         public override int Size => mask.Count();
 
-        public static Func<int, int, Cell> MaskedCellFactory(Mask mask)
+        public static Func<int, int, RectangleCell> MaskedCellFactory(Mask mask)
         {
             return (row, column) =>
             {
-                return mask[row, column] ? new Cell(row, column) : null;
+                return mask[row, column] ? new RectangleCell(row, column) : null;
             };
         }
     }

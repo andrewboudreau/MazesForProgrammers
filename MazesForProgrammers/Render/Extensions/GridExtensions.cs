@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using MazesForProgrammers.DataStructures;
@@ -11,13 +10,12 @@ namespace MazesForProgrammers.Render
 {
     public static class GridExtensions
     {
-        public static Grid RenderToConsole(this Grid grid, Distances distances)
+        public static RectangleGrid RenderToConsole(this RectangleGrid grid, Distances distances)
         {
-
             return RenderToConsole(grid, cell => $" {Base36.Encode(distances[cell].GetValueOrDefault(-1))} ");
         }
 
-        public static Grid RenderToConsole(this Grid grid, Func<Cell, string> cellRender = null)
+        public static RectangleGrid RenderToConsole(this RectangleGrid grid, Func<Cell, string> cellRender = null)
         {
             ConsoleRender renderer;
             if (cellRender is null)
@@ -34,15 +32,14 @@ namespace MazesForProgrammers.Render
             return grid;
         }
 
-        public static void DebugToConsole(this Grid grid)
+        public static void DebugToConsole(this RectangleGrid grid)
         {
             var renderer = new CellDebugger();
             Console.WriteLine(renderer.Render(grid));
         }
 
-        public static IGrid RenderImageAndOpen(this Grid grid, int pixelsPerCell = 100)
+        public static RectangleGrid RenderImageAndOpen(this RectangleGrid grid, int pixelsPerCell = 100)
         {
-
             var renderer = new ImageRender();
             using var bitmap = renderer.Render(grid, pixelsPerCell);
 
@@ -50,7 +47,7 @@ namespace MazesForProgrammers.Render
             return grid;
         }
 
-        public static IGrid RenderImageAndOpen(this Grid grid, Distances distances)
+        public static RectangleGrid RenderImageAndOpen(this RectangleGrid grid, Distances distances)
         {
             var renderer = new ImageRender();
             using var bitmap = renderer.Render(grid, distances);
@@ -59,7 +56,7 @@ namespace MazesForProgrammers.Render
             return grid;
         }
 
-        public static IGrid RenderImageAndOpen(this Grid grid, string file, int pixelsPerCell)
+        public static RectangleGrid RenderImageAndOpen(this RectangleGrid grid, string file, int pixelsPerCell)
         {
             var renderer = new ImageRender();
             using var bitmap = renderer.Render(grid, pixelsPerCell);
@@ -68,7 +65,7 @@ namespace MazesForProgrammers.Render
             return grid;
         }
 
-        public static IGrid RenderImageAndOpen(this PolarGrid polarGrid, Distances distances)
+        public static PolarGrid RenderImageAndOpen(this PolarGrid polarGrid, Distances distances)
         {
             var renderer = new ImageRender();
             using var bitmap = renderer.Render(polarGrid, distances, 50);
@@ -77,7 +74,7 @@ namespace MazesForProgrammers.Render
             return polarGrid;
         }
 
-        public static IGrid RenderImageAndOpen(this PolarGrid polarGrid, Action<Graphics, PointF[], Cell> cellRenderer)
+        public static PolarGrid RenderImageAndOpen(this PolarGrid polarGrid, Action<Graphics, PointF[], Cell> cellRenderer)
         {
             if (cellRenderer is null)
             {
