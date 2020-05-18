@@ -10,6 +10,8 @@ namespace MazesForProgrammers.Render
 {
     public static class GridExtensions
     {
+        private static readonly Action<Graphics, PointF[], Cell> nodrawP = (x, y, z) => { };
+
         public static RectangleGrid RenderToConsole(this RectangleGrid grid, Distances distances)
         {
             return RenderToConsole(grid, cell => $" {Base36.Encode(distances[cell].GetValueOrDefault(-1))} ");
@@ -64,6 +66,15 @@ namespace MazesForProgrammers.Render
 
             return grid;
         }
+        
+        public static PolarGrid RenderImageAndOpen(this PolarGrid polarGrid)
+        {
+            var renderer = new ImageRender();
+            using var bitmap = renderer.Render(polarGrid, nodrawP, 20);
+            bitmap.SaveAndOpen("maze_{0}_path");
+
+            return polarGrid;
+        }
 
         public static PolarGrid RenderImageAndOpen(this PolarGrid polarGrid, Distances distances)
         {
@@ -72,20 +83,6 @@ namespace MazesForProgrammers.Render
             bitmap.SaveAndOpen("maze_{0}_path");
 
             return polarGrid;
-        }
-
-        public static PolarGrid RenderImageAndOpen(this PolarGrid polarGrid, Action<Graphics, PointF[], Cell> cellRenderer)
-        {
-            if (cellRenderer is null)
-            {
-                throw new ArgumentNullException(nameof(cellRenderer));
-            }
-
-            var renderer = new ImageRender();
-            using var bitmap = renderer.Render(polarGrid, cellRenderer, 20);
-            bitmap.SaveAndOpen("maze_{0}_path");
-
-            return polarGrid;
-        }
+        }        
     }
 }

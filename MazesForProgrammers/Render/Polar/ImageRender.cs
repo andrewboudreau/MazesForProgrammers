@@ -12,13 +12,6 @@ namespace MazesForProgrammers.Render
 {
     public partial class ImageRender
     {
-        private static readonly Action<Graphics, PointF[], Cell> nodrawP = (x, y, z) => { };
-
-        public Image Render(PolarGrid grid, int pixelsPerCell)
-        {
-            return Render(grid, nodrawP, pixelsPerCell);
-        }
-
         public Image Render(PolarGrid grid, Distances distances, int pixelsPerCell)
         {
             void draw(Graphics gfx, PointF[] quad, Cell cell)
