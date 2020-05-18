@@ -16,6 +16,9 @@ namespace MazesForProgrammers.Algorithms
             distanceFactory = new Lazy<Distances>(GenerateDistances);
         }
 
+        /// <summary>
+        /// Gets the distances to each cell from the root cell.
+        /// </summary>
         public Distances Distances
         {
             get
@@ -24,8 +27,16 @@ namespace MazesForProgrammers.Algorithms
             }
         }
 
+        /// <summary>
+        /// Gets the farthest cell and distance.
+        /// </summary>
         public CellDistance Max => Distances.Max;
 
+        /// <summary>
+        /// Gets the path from a <paramref name="goal"/> to the root cell.
+        /// </summary>
+        /// <param name="goal">The goal.</param>
+        /// <returns>The distances from the root cell to every cell along a single path to the goal cell.</returns>
         public Distances PathToGoal(Cell goal)
         {
             var current = goal;

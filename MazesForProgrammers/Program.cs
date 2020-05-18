@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using MazesForProgrammers.Algorithms;
 using MazesForProgrammers.DataStructures;
 using MazesForProgrammers.DataStructures.Polar;
@@ -11,13 +12,16 @@ namespace MazesForProgrammers
     {
         static void Main(string[] args)
         {
-            Grid.SetRandom(1);
+            Grid.SetRandom();
 
             var grid = new PolarGrid(20);
             var algorithm = new RecursiveBacktracker();
             algorithm.ApplyTo(grid);
 
-            grid.RenderImageAndOpen(grid.RandomCell.Distances);
+            var center = new Dijkstra(grid[0, 0]);
+            var exit = center.Distances.Last(x => x.Cell.Row == grid.Rows - 1);
+            grid.RenderImageAndOpen(center.PathToGoal(exit.Cell));
+            Console.WriteLine($"Find the path from {grid[0, 0]} to {exit.Cell} ({exit.Distance} moves)");
 
             Console.ReadKey();
         }

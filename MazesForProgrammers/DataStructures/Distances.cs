@@ -8,7 +8,6 @@ namespace MazesForProgrammers.DataStructures
     public class Distances : IEnumerable<CellDistance>
     {
         private readonly Dictionary<Cell, int> cells;
-        private CellDistance max;
 
         public Distances(Cell start, int value = 0)
         {
@@ -17,7 +16,7 @@ namespace MazesForProgrammers.DataStructures
                 { start, value }
             };
 
-            max = new CellDistance(start, 0);
+            Max = new CellDistance(start, 0);
         }
 
         public int? this[Cell cell]
@@ -50,14 +49,14 @@ namespace MazesForProgrammers.DataStructures
                 }
 
                 cells.Add(cell, value.Value);
-                if (value.Value > max.Distance)
+                if (value.Value > Max.Distance)
                 {
-                    max = new CellDistance(cell, value.Value);
+                    Max = new CellDistance(cell, value.Value);
                 }
             }
         }
 
-        public CellDistance Max => max;
+        public CellDistance Max { get; private set; }
 
         public IEnumerator<CellDistance> GetEnumerator()
         {
@@ -71,12 +70,12 @@ namespace MazesForProgrammers.DataStructures
                 throw new ArgumentNullException(nameof(cell));
             }
 
-            if (max.Distance == 0)
+            if (Max.Distance == 0)
             {
                 return 0;
             }
 
-            return (max.Distance - this[cell].GetValueOrDefault()) / (float)max.Distance;            
+            return (Max.Distance - this[cell].GetValueOrDefault()) / (float)Max.Distance;            
         }
 
         IEnumerator IEnumerable.GetEnumerator()

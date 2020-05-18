@@ -44,7 +44,6 @@ namespace MazesForProgrammers.Render
             graphics.Clear(background);
 
             GraphicsContainer containerState = graphics.BeginContainer();
-            graphics.DrawArc(pen, 0, 0, imageSize, imageSize, 0, 360);
 
             foreach (var baseCell in grid.EachCell())
             {
@@ -97,8 +96,14 @@ namespace MazesForProgrammers.Render
                 poly.Add(new PointF(cx, cy));
                 poly.Add(new PointF(ax, ay));
 
-                // external render now gets all the data it needs
+                // external renders now now have all the data, and run before walls being drawn.
                 cellRenderer.Invoke(graphics, poly.ToArray(), cell);
+
+                // skip wall rendering on center cell.
+                if (cell.Row == 0)
+                {
+                    continue;
+                }
 
                 // render the boundaries
                 if (!cell.Linked(cell.Inward))
@@ -119,6 +124,7 @@ namespace MazesForProgrammers.Render
                 //// Console.WriteLine($"ax:{ax} ay:{ay}, bx:{bx} by:{by}, cx:{cx} cy:{cy}, dx:{dx} dy:{dy}");
             }
 
+            graphics.DrawArc(pen, 0, 0, imageSize, imageSize, 0, 360);
             graphics.EndContainer(containerState);
             graphics.Save();
 

@@ -1,7 +1,8 @@
-﻿using MazesForProgrammers.DataStructures;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+
+using MazesForProgrammers.DataStructures;
 
 namespace MazesForProgrammers.Algorithms
 {
