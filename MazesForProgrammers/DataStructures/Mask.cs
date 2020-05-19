@@ -6,6 +6,9 @@ using System.Linq;
 
 namespace MazesForProgrammers.DataStructures
 {
+    /// <summary>
+    /// A 2-dimensional grid which can be used to define a single boolean properties for each cell in another 2-dimensional grid.
+    /// </summary>
     public class Mask
     {
         private readonly HashSet<int> masked = new HashSet<int>();

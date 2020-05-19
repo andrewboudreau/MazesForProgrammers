@@ -5,6 +5,9 @@ using MazesForProgrammers.DataStructures;
 
 namespace MazesForProgrammers.Algorithms
 {
+    /// <summary>
+    /// An algorithm for finding the shortest paths between nodes in a graph.
+    /// </summary>
     public class Dijkstra : ISolveMaze
     {
         private readonly Cell root;

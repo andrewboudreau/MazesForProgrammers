@@ -5,6 +5,9 @@ using MazesForProgrammers.Algorithms;
 
 namespace MazesForProgrammers.DataStructures
 {
+    /// <summary>
+    /// A node in the maze.
+    /// </summary>
     public class Cell
     {
         private readonly HashSet<Cell> links;

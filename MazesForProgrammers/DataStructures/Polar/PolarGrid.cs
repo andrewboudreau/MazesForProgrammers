@@ -4,6 +4,9 @@ using System.Linq;
 
 namespace MazesForProgrammers.DataStructures.Polar
 {
+    /// <summary>
+    /// A polar grid used to make ciruclar mazes.
+    /// </summary>
     public class PolarGrid : AbstractGrid<PolarCell>
     {
         public PolarGrid(int rows = 6)
