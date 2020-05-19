@@ -16,7 +16,7 @@ namespace MazesForProgrammers.Render
             return Render(grid, nodraw, pixelsPerCell);
         }
 
-        public Image Render(RectangleGrid grid, Distances distances)
+        public Image Render(RectangleGrid grid, Distances distances, int pixelsPerCell)
         {
             void draw(Graphics gfx, Rectangle rect, Cell cell)
             {
@@ -24,7 +24,7 @@ namespace MazesForProgrammers.Render
                 gfx.FillRectangle(brush, rect);
             }
 
-            return Render(grid, draw, 100);
+            return Render(grid, draw, pixelsPerCell);
         }
 
         public Image Render(RectangleGrid grid, Action<Graphics, Rectangle, RectangleCell> cellRenderer, int pixelsPerCell)

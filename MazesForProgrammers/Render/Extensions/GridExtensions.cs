@@ -52,7 +52,7 @@ namespace MazesForProgrammers.Render
         public static RectangleGrid RenderImageAndOpen(this RectangleGrid grid, Distances distances)
         {
             var renderer = new ImageRender();
-            using var bitmap = renderer.Render(grid, distances);
+            using var bitmap = renderer.Render(grid, distances, 30);
 
             bitmap.SaveAndOpen("maze_{0}_path");
             return grid;

@@ -8,7 +8,7 @@ using MazesForProgrammers.Extensions;
 
 namespace MazesForProgrammers.Mazes
 {
-    public class SideWinder : ISolveMaze
+    public class SideWinder : IBuildMaze
     {
         public IGrid<Cell> ApplyTo(IGrid<Cell> grid)
         {
@@ -19,8 +19,8 @@ namespace MazesForProgrammers.Mazes
                 foreach (var cell in cells)
                 {
                     run.Add(cell);
-                    var isNorthernBoundary = grid[cell.Row, cell.Column - 1] is null;
-                    var isEasternBoundary = grid[cell.Row + 1, cell.Column] is null;
+                    var isNorthernBoundary = grid[cell.Row - 1, cell.Column] is null;
+                    var isEasternBoundary = grid[cell.Row, cell.Column + 1] is null;
 
                     var rand = RandomSource.Random.Next(2) == 0;
                     var shouldCloseRun = isEasternBoundary || (!isNorthernBoundary && rand);
@@ -29,7 +29,7 @@ namespace MazesForProgrammers.Mazes
                     if (shouldCloseRun)
                     {
                         var passage = run.Sample();
-                        var north = grid[passage.Row, passage.Column - 1];
+                        var north = grid[passage.Row - 1, passage.Column];
                         if (north is Cell)
                         {
                             //// System.Console.WriteLine($"\t Adding North Passage Link to {north}");
@@ -39,7 +39,7 @@ namespace MazesForProgrammers.Mazes
                     }
                     else
                     {
-                        var east = grid[cell.Row + 1, cell.Column];
+                        var east = grid[cell.Row, cell.Column + 1];
                         cell.AddLink(east);
                         //// System.Console.WriteLine($"\t Extending east to {east}");
                     }
