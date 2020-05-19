@@ -72,14 +72,8 @@
     <Compile Include="..\MazesForProgrammers\DataStructures\Distances.cs">
       <Link>DataStructures\Distances.cs</Link>
     </Compile>
-    <Compile Include="..\MazesForProgrammers\DataStructures\Grid.cs">
-      <Link>DataStructures\Grid.cs</Link>
-    </Compile>
     <Compile Include="..\MazesForProgrammers\DataStructures\Mask.cs">
       <Link>DataStructures\Mask.cs</Link>
-    </Compile>
-    <Compile Include="..\MazesForProgrammers\DataStructures\MaskedGrid.cs">
-      <Link>DataStructures\MaskedGrid.cs</Link>
     </Compile>
     <Compile Include="..\MazesForProgrammers\Extensions\EnumerableExtensions.cs">
       <Link>Extensions\EnumerableExtensions.cs</Link>

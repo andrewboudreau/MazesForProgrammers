@@ -6,13 +6,16 @@ using MazesForProgrammers.Extensions;
 
 namespace MazesForProgrammers.Mazes
 {
-    public class BinarySearch : IBuildRectangleMaze
+    public class BinarySearch : IBuildMaze
     {
-        public RectangleGrid ApplyTo(RectangleGrid grid)
+        public IGrid<Cell> ApplyTo(IGrid<Cell> grid)
         {
             foreach (var cell in grid.EachCell())
             {
-                var options = new Cell[] { cell.North, cell.East }.RemoveNulls();
+                var north = grid[cell.Row, cell.Column - 1];
+                var east = grid[cell.Row + 1, cell.Column];
+
+                var options = new Cell[] { north, east }.RemoveNulls();
                 if (options.Any())
                 {
                     cell.AddLink(options.Sample());

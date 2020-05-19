@@ -1,12 +1,10 @@
 ﻿using System.Collections.Generic;
-
 using MazesForProgrammers.Extensions;
 
 namespace MazesForProgrammers.DataStructures
 {
     public class RectangleCell : Cell
     {
-
         public RectangleCell(int row, int column)
             : base(row, column)
         {

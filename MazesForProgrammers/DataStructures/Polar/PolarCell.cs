@@ -1,5 +1,6 @@
-﻿using MazesForProgrammers.Extensions;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+
+using MazesForProgrammers.Extensions;
 
 namespace MazesForProgrammers.DataStructures.Polar
 {
@@ -10,6 +11,11 @@ namespace MazesForProgrammers.DataStructures.Polar
         {
             Outward = new List<Cell>();
         }
+
+        public Cell Clockwise;
+        public Cell CounterClockwise;
+        public Cell Inward;
+        public List<Cell> Outward;
 
         public override IEnumerable<Cell> Neighbors
         {
@@ -26,10 +32,5 @@ namespace MazesForProgrammers.DataStructures.Polar
                 return neighbors.RemoveNulls();
             }
         }
-
-        public Cell Clockwise;
-        public Cell CounterClockwise;
-        public Cell Inward;
-        public List<Cell> Outward;
     }
 }

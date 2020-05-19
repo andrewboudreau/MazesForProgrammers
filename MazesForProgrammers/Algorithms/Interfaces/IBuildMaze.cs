@@ -11,11 +11,6 @@ namespace MazesForProgrammers.Algorithms
         IGrid<Cell> ApplyTo(IGrid<Cell> grid);
     }
 
-    public interface IBuildRectangleMaze
-    {
-        RectangleGrid ApplyTo(RectangleGrid grid);
-    }
-
     public static class IBuildMazeExtensions
     {
         public static IEnumerable<IBuildMaze> MazeBuilders()

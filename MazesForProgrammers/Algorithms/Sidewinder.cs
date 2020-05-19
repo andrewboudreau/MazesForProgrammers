@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 using MazesForProgrammers.Algorithms;
 using MazesForProgrammers.DataStructures;
@@ -6,19 +8,19 @@ using MazesForProgrammers.Extensions;
 
 namespace MazesForProgrammers.Mazes
 {
-    public class SideWinder : IBuildRectangleMaze
+    public class SideWinder : ISolveMaze
     {
-        public RectangleGrid ApplyTo(RectangleGrid grid)
+        public IGrid<Cell> ApplyTo(IGrid<Cell> grid)
         {
-            var run = new List<RectangleCell>();
+            var run = new List<Cell>();
             foreach (var cells in grid.EachRow())
             {
                 run.Clear();
                 foreach (var cell in cells)
                 {
                     run.Add(cell);
-                    var isNorthernBoundary = cell.North is null;
-                    var isEasternBoundary = cell.East is null;
+                    var isNorthernBoundary = grid[cell.Row, cell.Column - 1] is null;
+                    var isEasternBoundary = grid[cell.Row + 1, cell.Column] is null;
 
                     var rand = RandomSource.Random.Next(2) == 0;
                     var shouldCloseRun = isEasternBoundary || (!isNorthernBoundary && rand);
@@ -27,17 +29,19 @@ namespace MazesForProgrammers.Mazes
                     if (shouldCloseRun)
                     {
                         var passage = run.Sample();
-                        if (passage.North is Cell)
+                        var north = grid[passage.Row, passage.Column - 1];
+                        if (north is Cell)
                         {
-                            //// System.Console.WriteLine($"\t Adding North Passage Link to {passage.North}");
-                            passage.AddLink(passage.North);
+                            //// System.Console.WriteLine($"\t Adding North Passage Link to {north}");
+                            passage.AddLink(north);
                             run.Clear();
                         }
                     }
                     else
                     {
-                        //// System.Console.WriteLine($"\t Extending east to {cell.East}");
-                        cell.AddLink(cell.East);
+                        var east = grid[cell.Row + 1, cell.Column];
+                        cell.AddLink(east);
+                        //// System.Console.WriteLine($"\t Extending east to {east}");
                     }
                 }
             }

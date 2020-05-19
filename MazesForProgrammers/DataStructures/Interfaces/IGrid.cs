@@ -28,6 +28,14 @@ namespace MazesForProgrammers.DataStructures
         T RandomCell { get; }
 
         /// <summary>
+        /// Gets the Cell at given Row and Column.
+        /// </summary>
+        /// <param name="row">The 0-based row index.</param>
+        /// <param name="column">The 0-based column index.</param>
+        /// <returns>Returns null if the the coorindates are out of bounds.</returns>
+        T this[int row, int column] { get; }
+
+        /// <summary>
         /// Gets the number of <see cref="Cell"/> with only 1 linked neighbor.
         /// </summary>
         IEnumerable<T> DeadEnds { get; }

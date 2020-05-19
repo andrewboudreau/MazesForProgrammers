@@ -12,14 +12,18 @@ namespace MazesForProgrammers
     {
         static void Main(string[] args)
         {
-            //RandomSource.SetRandom(1);
+            RandomSource.SetRandom();
 
             var grid = new PolarGrid(20);
             var algorithm = new RecursiveBacktracker();
             algorithm.ApplyTo(grid);
 
             var center = new Dijkstra(grid[0, 0]);
-            var exit = center.Distances.Last(x => x.Cell.Row == grid.Rows - 1);
+
+            var exit = center.Distances
+                .OrderBy(x => x.Distance)
+                .Last(x => x.Cell.Row == grid.Rows - 1);
+
             grid.RenderImageAndOpen(center.PathToGoal(exit.Cell));
             Console.WriteLine($"Find the path from {grid[0, 0]} to {exit.Cell} ({exit.Distance} moves)");
 
