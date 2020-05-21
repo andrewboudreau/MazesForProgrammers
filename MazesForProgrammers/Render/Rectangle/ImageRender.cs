@@ -41,7 +41,7 @@ namespace MazesForProgrammers.Render
             graphics.Clear(background);
 
             GraphicsContainer containerState = graphics.BeginContainer();
-
+            
             foreach (var baseCell in grid.EachCell())
             {
                 if (baseCell is null)

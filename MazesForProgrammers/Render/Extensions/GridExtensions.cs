@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Linq;
 using MazesForProgrammers.DataStructures;
+using MazesForProgrammers.DataStructures.Hex;
 using MazesForProgrammers.DataStructures.Polar;
 using MazesForProgrammers.Extensions;
 using MazesForProgrammers.Render.Extensions;
@@ -83,6 +84,42 @@ namespace MazesForProgrammers.Render
             bitmap.SaveAndOpen("maze_{0}_path");
 
             return polarGrid;
-        }        
+        }
+
+        public static HexGrid RenderImageAndOpen(this HexGrid grid)
+        {
+            var renderer = new ImageRender();
+            using var bitmap = renderer.Render(grid, nodrawP, 20);
+            bitmap.SaveAndOpen("maze_{0}_path");
+
+            return grid;
+        }
+
+        public static HexGrid RenderImageAndOpen(this HexGrid grid, Distances distances)
+        {
+            var renderer = new ImageRender();
+            using var bitmap = renderer.Render(grid, distances, 50);
+            bitmap.SaveAndOpen("maze_{0}_path");
+
+            return grid;
+        }
+
+        public static TriangleGrid RenderImageAndOpen(this TriangleGrid grid)
+        {
+            var renderer = new ImageRender();
+            using var bitmap = renderer.Render(grid, nodrawP, 20);
+            bitmap.SaveAndOpen("maze_{0}_path");
+
+            return grid;
+        }
+
+        public static TriangleGrid RenderImageAndOpen(this TriangleGrid grid, Distances distances)
+        {
+            var renderer = new ImageRender();
+            using var bitmap = renderer.Render(grid, distances, 50);
+            bitmap.SaveAndOpen("maze_{0}_path");
+
+            return grid;
+        }
     }
 }

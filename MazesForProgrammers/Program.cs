@@ -2,6 +2,7 @@
 using System.Linq;
 using MazesForProgrammers.Algorithms;
 using MazesForProgrammers.DataStructures;
+using MazesForProgrammers.DataStructures.Hex;
 using MazesForProgrammers.DataStructures.Polar;
 using MazesForProgrammers.Mazes;
 using MazesForProgrammers.Render;
@@ -14,7 +15,7 @@ namespace MazesForProgrammers
         {
             RandomSource.SetRandom();
 
-            var grid = new PolarGrid(20);
+            var grid = new TriangleGrid(15, 18);
             var algorithm = new RecursiveBacktracker();
             algorithm.ApplyTo(grid);
 
@@ -25,6 +26,7 @@ namespace MazesForProgrammers
                 .Last(x => x.Cell.Row == grid.Rows - 1);
 
             grid.RenderImageAndOpen(center.PathToGoal(exit.Cell));
+            grid.RenderImageAndOpen();
             Console.WriteLine($"Find the path from {grid[0, 0]} to {exit.Cell} ({exit.Distance} moves)");
 
             Console.ReadKey();
