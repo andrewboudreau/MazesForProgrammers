@@ -27,7 +27,8 @@ namespace MazesForProgrammers.Algorithms
 
                     if (neighbhors.Count() == 0)
                     {
-                        throw new ArgumentNullException(nameof(neighbhors));
+                        continue;
+                        // throw new ArgumentNullException(nameof(neighbhors));
                     }
 
                     // Prefer to connect to another deadend.

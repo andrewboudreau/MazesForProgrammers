@@ -17,7 +17,6 @@ namespace MazesForProgrammers.Render
                 var brush = new Pen(distances.Color(cell), 1).Brush;
 
                 gfx.FillPolygon(brush, quad);
-                gfx.DrawPolygon(new Pen(Color.Black, 1), quad);
             }
 
             return Render(grid, draw, pixelsPerCell);
@@ -27,7 +26,7 @@ namespace MazesForProgrammers.Render
         {
             void draw(Graphics gfx, PointF[] quad, Cell cell)
             {
-                gfx.DrawPolygon(new Pen(Color.Black, 1), quad);
+                //gfx.DrawPolygon(new Pen(Color.Black, 1), quad);
             }
 
             cellRenderer = cellRenderer ?? draw;
@@ -84,6 +83,45 @@ namespace MazesForProgrammers.Render
 
                 // external renders now now have all the data, and run before walls being drawn.
                 cellRenderer.Invoke(graphics, poly.ToArray(), cell);
+            }
+
+            foreach (var cell in grid.EachCell())
+            {
+                var cx = halfWidth + cell.Column * halfWidth;
+                var cy = halfHeight + cell.Row * height;
+
+                var west = (int)(cx - halfWidth);
+                var middle = (int)(cx);
+                var east = (int)(cx + halfWidth);
+
+                int apex, @base;
+                if (cell.Upright)
+                {
+                    apex = (int)(cy - halfHeight);
+                    @base = (int)(cy + halfHeight);
+                }
+                else
+                {
+                    apex = (int)(cy + halfHeight);
+                    @base = (int)(cy - halfHeight);
+                }
+
+                if (cell.West is null)
+                {
+                    graphics.DrawLine(pen, west, @base, middle, apex);
+                }
+
+                if (!cell.Linked(cell.East))
+                {
+                    graphics.DrawLine(pen, east, @base, middle, apex);
+                }
+
+                var noSouth = cell.Upright && cell.South == null;
+                var notLinked = !cell.Upright && !cell.Linked(cell.North);
+                if (noSouth | notLinked)
+                {
+                    graphics.DrawLine(pen, east, @base, west, @base);
+                }
             }
 
             graphics.EndContainer(containerState);
