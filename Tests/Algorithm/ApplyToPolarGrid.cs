@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Threading;
+
 using MazesForProgrammers.Algorithms;
 using MazesForProgrammers.DataStructures;
 using MazesForProgrammers.DataStructures.Polar;

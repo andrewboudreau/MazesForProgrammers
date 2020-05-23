@@ -11,12 +11,12 @@ namespace MazesForProgrammers.Render
     {
         private static readonly Action<Graphics, Rectangle, Cell> nodraw = (x, y, z) => { };
 
-        public Image Render(RectangleGrid grid, int pixelsPerCell)
+        public Image Render(IGrid<RectangleCell> grid, int pixelsPerCell)
         {
             return Render(grid, nodraw, pixelsPerCell);
         }
 
-        public Image Render(RectangleGrid grid, Distances distances, int pixelsPerCell)
+        public Image Render(IGrid<RectangleCell> grid, Distances distances, int pixelsPerCell)
         {
             void draw(Graphics gfx, Rectangle rect, Cell cell)
             {
@@ -27,7 +27,7 @@ namespace MazesForProgrammers.Render
             return Render(grid, draw, pixelsPerCell);
         }
 
-        public Image Render(RectangleGrid grid, Action<Graphics, Rectangle, RectangleCell> cellRenderer, int pixelsPerCell)
+        public Image Render(IGrid<RectangleCell> grid, Action<Graphics, Rectangle, RectangleCell> cellRenderer, int pixelsPerCell)
         {
             var width = pixelsPerCell * grid.Columns;
             var height = pixelsPerCell * grid.Rows;

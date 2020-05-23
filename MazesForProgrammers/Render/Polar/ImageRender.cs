@@ -12,7 +12,7 @@ namespace MazesForProgrammers.Render
 {
     public partial class ImageRender
     {
-        public Image Render(PolarGrid grid, Distances distances, int pixelsPerCell)
+        public Image Render(IGrid<PolarCell> grid, Distances distances, int pixelsPerCell)
         {
             void draw(Graphics gfx, PointF[] quad, Cell cell)
             {
@@ -23,7 +23,7 @@ namespace MazesForProgrammers.Render
             return Render(grid, draw, pixelsPerCell);
         }
 
-        public Image Render(PolarGrid grid, Action<Graphics, PointF[], Cell> cellRenderer, int pixelsPerCell)
+        public Image Render(IGrid<PolarCell> grid, Action<Graphics, PointF[], Cell> cellRenderer, int pixelsPerCell)
         {
             var imageSize = 2 * grid.Rows * pixelsPerCell;
             var center = imageSize / 2;
@@ -38,9 +38,8 @@ namespace MazesForProgrammers.Render
 
             GraphicsContainer containerState = graphics.BeginContainer();
 
-            foreach (var baseCell in grid.EachCell())
+            foreach (var cell in grid.EachCell())
             {
-                var cell = baseCell as PolarCell;
                 var length = grid.EachRow().Skip(cell.Row).First().Count();
                 var theta = 2 * Math.PI / length;
 
