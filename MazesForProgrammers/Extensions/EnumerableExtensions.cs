@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace MazesForProgrammers.Extensions
@@ -22,12 +23,22 @@ namespace MazesForProgrammers.Extensions
 
         public static T Sample<T>(this IEnumerable<T> collection)
         {
+            if(collection is null)
+            {
+                throw new ArgumentNullException(nameof(collection));
+            }
+
             return collection.ElementAt(RandomSource.Random.Next(collection.Count()));
         }
 
         public static IEnumerable<T> RemoveNulls<T>(this IEnumerable<T> items)
         {
             return items.Where(x => x != null);
+        }
+
+        public static IEnumerable<T> Shuffle<T>(this IEnumerable<T> items)
+        {
+            return items.OrderBy(x => Guid.NewGuid());
         }
     }
 }

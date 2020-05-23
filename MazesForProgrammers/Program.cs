@@ -15,19 +15,22 @@ namespace MazesForProgrammers
         {
             RandomSource.SetRandom();
 
-            var grid = new TriangleGrid(15, 18);
+            var grid = new HexGrid(16);
             var algorithm = new RecursiveBacktracker();
+            var braid = new Braid(50);
+
             algorithm.ApplyTo(grid);
+            braid.ApplyTo(grid);
 
-            var center = new Dijkstra(grid[0, 0]);
-
-            var exit = center.Distances
-                .OrderBy(x => x.Distance)
-                .Last(x => x.Cell.Row == grid.Rows - 1);
-
-            grid.RenderImageAndOpen(center.PathToGoal(exit.Cell));
             grid.RenderImageAndOpen();
-            Console.WriteLine($"Find the path from {grid[0, 0]} to {exit.Cell} ({exit.Distance} moves)");
+            //var center = new Dijkstra(grid[0, 0]);
+
+            //var exit = center.Distances
+            //    .OrderBy(x => x.Distance)
+            //    .Last(x => x.Cell.Row == grid.Rows - 1);
+
+            grid.RenderImageAndOpen(grid[0, 0].Distances);
+            //Console.WriteLine($"Find the path from {grid[0, 0]} to {exit.Cell} ({exit.Distance} moves)");
 
             Console.ReadKey();
         }

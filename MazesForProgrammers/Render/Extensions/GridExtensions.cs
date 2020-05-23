@@ -72,7 +72,7 @@ namespace MazesForProgrammers.Render
         {
             var renderer = new ImageRender();
             using var bitmap = renderer.Render(polarGrid, nodrawP, 20);
-            bitmap.SaveAndOpen("maze_{0}_path");
+            bitmap.SaveAndOpen("maze_{0}");
 
             return polarGrid;
         }
@@ -90,7 +90,7 @@ namespace MazesForProgrammers.Render
         {
             var renderer = new ImageRender();
             using var bitmap = renderer.Render(grid, nodrawP, 20);
-            bitmap.SaveAndOpen("maze_{0}_path");
+            bitmap.SaveAndOpen("maze_{0}");
 
             return grid;
         }
@@ -108,7 +108,7 @@ namespace MazesForProgrammers.Render
         {
             var renderer = new ImageRender();
             using var bitmap = renderer.Render(grid, nodrawP, 20);
-            bitmap.SaveAndOpen("maze_{0}_path");
+            bitmap.SaveAndOpen("maze_{0}");
 
             return grid;
         }

@@ -2,6 +2,11 @@
 {
     public class HexGrid : AbstractGrid<HexCell>
     {
+        public HexGrid(int rows)
+            : this(rows, rows)
+        {
+        }
+
         public HexGrid(int rows, int columns)
             : base(rows, columns, (row, column) => new HexCell(row, column))
         {
