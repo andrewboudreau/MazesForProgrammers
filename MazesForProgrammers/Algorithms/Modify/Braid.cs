@@ -28,7 +28,7 @@ namespace MazesForProgrammers.Algorithms
         /// </summary>
         /// <param name="grid">The grid to braid.</param>
         /// <returns>The braided grid.</returns>
-        public IGrid<Cell> ApplyTo(IGrid<Cell> grid)
+        public IGrid ApplyTo(IGrid grid)
         {
             // Shuffle all the deadends
             foreach (var cell in grid.DeadEnds.Shuffle().ToList())

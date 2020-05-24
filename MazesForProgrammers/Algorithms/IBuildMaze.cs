@@ -16,7 +16,7 @@ namespace MazesForProgrammers.Algorithms
         /// </summary>
         /// <param name="grid">A The grid to recieve the maze building algorithm.</param>
         /// <returns>The grid with a maze defined.</returns>
-        IGrid<Cell> ApplyTo(IGrid<Cell> grid);
+        IGrid ApplyTo(IGrid grid);
     }
 
     public static class IBuildMazeExtensions

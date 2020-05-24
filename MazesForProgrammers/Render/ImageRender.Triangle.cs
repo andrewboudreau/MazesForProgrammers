@@ -83,35 +83,13 @@ namespace MazesForProgrammers.Render
 
                 // external renders now now have all the data, and run before walls being drawn.
                 cellRenderer.Invoke(graphics, poly.ToArray(), cell);
-            }
 
-            foreach (var cell in grid.EachCell())
-            {
-                var cx = halfWidth + cell.Column * halfWidth;
-                var cy = halfHeight + cell.Row * height;
-
-                var west = (int)(cx - halfWidth);
-                var middle = (int)(cx);
-                var east = (int)(cx + halfWidth);
-
-                int apex, @base;
-                if (cell.Upright)
-                {
-                    apex = (int)(cy - halfHeight);
-                    @base = (int)(cy + halfHeight);
-                }
-                else
-                {
-                    apex = (int)(cy + halfHeight);
-                    @base = (int)(cy - halfHeight);
-                }
-
-                if (cell.West is null)
+                if (cell.West is null || !cell.Linked(cell.West))
                 {
                     graphics.DrawLine(pen, west, @base, middle, apex);
                 }
 
-                if (!cell.Linked(cell.East))
+                if (cell.East is null || !cell.Linked(cell.East))
                 {
                     graphics.DrawLine(pen, east, @base, middle, apex);
                 }

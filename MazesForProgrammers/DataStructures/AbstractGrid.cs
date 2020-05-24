@@ -9,7 +9,7 @@ namespace MazesForProgrammers.DataStructures
     /// <summary>
     /// Basic functionality for working with a collection of <see cref="Cell"/>.
     /// </summary>
-    public abstract class AbstractGrid<T> : IGrid<T> where T : Cell
+    public abstract partial class AbstractGrid<T> : IGrid<T> where T : Cell
     {
         protected IEnumerable<IEnumerable<T>> rows;
 

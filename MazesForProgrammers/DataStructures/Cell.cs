@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using MazesForProgrammers.Algorithms;
 
 namespace MazesForProgrammers.DataStructures
@@ -39,13 +38,13 @@ namespace MazesForProgrammers.DataStructures
         /// <summary>
         /// Gets the cells which share a border with this cell.
         /// </summary>
-        public virtual IEnumerable<Cell> Neighbors => Enumerable.Empty<Cell>();
+        public virtual IEnumerable<Cell> Neighbors => throw new NotImplementedException();
 
         /// <summary>
         /// Gets the distances to each other cell from this cell.
         /// </summary>
         /// <remarks>These distances are lazily generated upon first request.</remarks>
-        public Distances Distances
+        public virtual Distances Distances
         {
             get
             {

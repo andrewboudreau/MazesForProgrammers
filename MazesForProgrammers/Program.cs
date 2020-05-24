@@ -15,7 +15,7 @@ namespace MazesForProgrammers
         {
             RandomSource.SetRandom();
 
-            var grid = new RectangleGrid(16);
+            var grid = new PolarGrid(16);
             var algorithm = new RecursiveBacktracker();
             var braid = new Braid(50);
 

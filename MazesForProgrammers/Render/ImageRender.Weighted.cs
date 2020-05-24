@@ -9,25 +9,35 @@ namespace MazesForProgrammers.Render
 {
     public partial class ImageRender
     {
-        private static readonly Action<Graphics, Rectangle, Cell> nodraw = (x, y, z) => { };
-
-        public Image Render(IGrid<RectangleCell> grid, int pixelsPerCell)
+        public Image Render(IGrid<WeightedCell> grid, int pixelsPerCell)
         {
-            return Render(grid, nodraw, pixelsPerCell);
+            return Render(grid, (a, b, c) => { }, pixelsPerCell);
         }
 
-        public Image Render(IGrid<RectangleCell> grid, Distances distances, int pixelsPerCell)
+        public Image Render(IGrid<WeightedCell> grid, Distances distances, int pixelsPerCell)
         {
-            void draw(Graphics gfx, Rectangle rect, Cell cell)
+            Font drawFont = new Font("Arial", 10);
+            using var pen = new Pen(Color.Black, 2);
+
+            void draw(Graphics gfx, Rectangle rect, WeightedCell cell)
             {
                 var brush = new Pen(distances.Color(cell)).Brush;
+                if (grid[cell.Row, cell.Column].Weight > 1)
+                {
+                    brush = new Pen(Color.IndianRed).Brush;
+                }
+
                 gfx.FillRectangle(brush, rect);
+                if (distances[cell].GetValueOrDefault() != 0)
+                {
+                    gfx.DrawString(distances[cell].GetValueOrDefault().ToString(), drawFont, pen.Brush, rect);
+                }
             }
 
             return Render(grid, draw, pixelsPerCell);
         }
 
-        public Image Render(IGrid<RectangleCell> grid, Action<Graphics, Rectangle, RectangleCell> cellRenderer, int pixelsPerCell)
+        public Image Render(IGrid<WeightedCell> grid, Action<Graphics, Rectangle, WeightedCell> cellRenderer, int pixelsPerCell)
         {
             var width = pixelsPerCell * grid.Columns;
             var height = pixelsPerCell * grid.Rows;
@@ -41,15 +51,9 @@ namespace MazesForProgrammers.Render
             graphics.Clear(background);
 
             GraphicsContainer containerState = graphics.BeginContainer();
-            
-            foreach (var baseCell in grid.EachCell())
-            {
-                if (baseCell is null)
-                {
-                    continue;
-                }
 
-                var cell = (RectangleCell)baseCell;
+            foreach (var cell in grid.EachCell())
+            {
                 var x1 = cell.Column * pixelsPerCell;
                 var y1 = cell.Row * pixelsPerCell;
                 var x2 = ((cell.Column + 1) * pixelsPerCell);

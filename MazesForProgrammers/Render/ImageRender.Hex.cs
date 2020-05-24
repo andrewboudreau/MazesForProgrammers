@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+
 using MazesForProgrammers.DataStructures;
 using MazesForProgrammers.DataStructures.Hex;
 using MazesForProgrammers.Render.Extensions;
@@ -65,18 +65,6 @@ namespace MazesForProgrammers.Render
                 var middle = (int)cy;
                 var south = (int)(cy + bSize);
 
-                var poly = new List<PointF>()
-                {
-                    new PointF(farWest, middle),
-                    new PointF(nearWest, north),
-                    new PointF(nearEast, north),
-                    new PointF(farEast, middle),
-                    new PointF(nearEast, south),
-                    new PointF(nearWest, south)
-                };
-
-                // external renders now now have all the data, and run before walls being drawn.
-                cellRenderer.Invoke(graphics, poly.ToArray(), cell);
             }
 
             foreach (var cell in grid.EachCell())
@@ -98,17 +86,31 @@ namespace MazesForProgrammers.Render
                 var middle = (int)cy;
                 var south = (int)(cy + bSize);
 
-                if (cell.SouthWest is null)
+                var poly = new PointF[]
+                {
+                    new PointF(farWest, middle),
+                    new PointF(nearWest, north),
+                    new PointF(nearEast, north),
+                    new PointF(farEast, middle),
+                    new PointF(nearEast, south),
+                    new PointF(nearWest, south)
+                };
+
+                // external renders now now have all the data, and run before walls being drawn.
+                cellRenderer.Invoke(graphics, poly, cell);
+
+                // draw cell walls
+                if (cell.SouthWest is null || !cell.Linked(cell.SouthWest))
                 {
                     graphics.DrawLine(pen, farWest, middle, nearWest, south);
                 }
 
-                if (cell.NorthWest is null)
+                if (cell.NorthWest is null || !cell.Linked(cell.NorthWest))
                 {
                     graphics.DrawLine(pen, farWest, middle, nearWest, north);
                 }
 
-                if (cell.North is null)
+                if (cell.North is null || !cell.Linked(cell.North))
                 {
                     graphics.DrawLine(pen, nearWest, north, nearEast, north);
                 }

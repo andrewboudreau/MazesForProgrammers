@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 
 using MazesForProgrammers.Algorithms;
 using MazesForProgrammers.DataStructures;
@@ -10,7 +8,7 @@ namespace MazesForProgrammers.Mazes
 {
     public class SideWinder : IBuildMaze
     {
-        public IGrid<Cell> ApplyTo(IGrid<Cell> grid)
+        public IGrid ApplyTo(IGrid grid)
         {
             var run = new List<Cell>();
             foreach (var cells in grid.EachRow())

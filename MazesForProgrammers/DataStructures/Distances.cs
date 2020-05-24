@@ -38,9 +38,9 @@ namespace MazesForProgrammers.DataStructures
 
             set
             {
-                if (cells.ContainsKey(cell))
+                if (cells.ContainsKey(cell) && value.GetValueOrDefault() > this[cell])
                 {
-                    throw new InvalidOperationException($"{cell} already has a distance '{this[cell]}' set. Cannot reassign to '{value.GetValueOrDefault()}'.");
+                    throw new InvalidOperationException($"{cell} already has a distance '{this[cell]}' set. Cannot reassign to a higher '{value.GetValueOrDefault()}'.");
                 }
 
                 if (!value.HasValue)
@@ -48,7 +48,15 @@ namespace MazesForProgrammers.DataStructures
                     throw new InvalidOperationException($"{cell} distance cannot be set to `null`.");
                 }
 
-                cells.Add(cell, value.Value);
+                if (cells.ContainsKey(cell))
+                {
+                    cells[cell] = value.Value;
+                }
+                else
+                {
+                    cells.Add(cell, value.Value);
+                }
+                
                 if (value.Value > Max.Distance)
                 {
                     Max = new CellDistance(cell, value.Value);
@@ -75,7 +83,7 @@ namespace MazesForProgrammers.DataStructures
                 return 0;
             }
 
-            return (Max.Distance - this[cell].GetValueOrDefault()) / (float)Max.Distance;            
+            return (Max.Distance - this[cell].GetValueOrDefault()) / (float)Max.Distance;
         }
 
         IEnumerator IEnumerable.GetEnumerator()

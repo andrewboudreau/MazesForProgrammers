@@ -31,14 +31,14 @@ namespace MazesForProgrammers.Render
             }
 
             Console.WriteLine(renderer.Render(grid));
-            Console.WriteLine($"Found {grid.DeadEnds.Count():N0} deadends.");
+            Console.WriteLine($"Found {grid.DeadEnds.Count():N0} dead ends.");
             return grid;
         }
 
         public static void DebugToConsole(this RectangleGrid grid)
         {
-            var renderer = new CellDebugger();
-            Console.WriteLine(renderer.Render(grid));
+            var renderer = new ConsoleRender();
+            Console.WriteLine(renderer.Debug(grid));
         }
 
         public static IGrid<RectangleCell> RenderImageAndOpen(this IGrid<RectangleCell> grid, int pixelsPerCell = 100)

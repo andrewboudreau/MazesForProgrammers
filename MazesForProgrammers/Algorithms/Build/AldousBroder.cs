@@ -6,7 +6,7 @@ namespace MazesForProgrammers.Mazes
 {
     public class AldousBroder : IBuildMaze
     {
-        public IGrid<Cell> ApplyTo(IGrid<Cell> grid)
+        public IGrid ApplyTo(IGrid grid)
         {
             var current = grid.RandomCell;
             var unvisited = grid.Size - 1;

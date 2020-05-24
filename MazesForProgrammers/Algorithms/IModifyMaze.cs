@@ -4,6 +4,6 @@ namespace MazesForProgrammers.Algorithms.Interfaces
 {
     public interface IModifyMaze
     {
-        IGrid<Cell> ApplyTo(IGrid<Cell> grid);
+        IGrid ApplyTo(IGrid grid);
     }
 }

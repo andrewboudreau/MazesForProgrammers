@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -21,7 +20,8 @@ namespace MazesForProgrammers.Render.Extensions
             image.Save(outputFile, ImageFormat.Png);
 
             var path = Path.GetFullPath(outputFile);
-            Process.Start(@"cmd.exe ", $@"/c {path}");
+            using var proc = Process.Start(@"cmd.exe ", $@"/c {path}");
+            proc.WaitForExit(1_000);
         }
     }
 }
