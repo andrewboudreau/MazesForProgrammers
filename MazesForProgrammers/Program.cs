@@ -6,6 +6,7 @@ using MazesForProgrammers.DataStructures.Hex;
 using MazesForProgrammers.DataStructures.Polar;
 using MazesForProgrammers.Mazes;
 using MazesForProgrammers.Render;
+using MazesForProgrammers.Render.Extensions;
 
 namespace MazesForProgrammers
 {
@@ -13,9 +14,9 @@ namespace MazesForProgrammers
     {
         static void Main(string[] args)
         {
-            RandomSource.SetRandom();
+            RandomSource.SetRandom(6);
 
-            var grid = new PolarGrid(16);
+            var grid = new RectangleGrid(10);
             var algorithm = new RecursiveBacktracker();
             var braid = new Braid(50);
 
@@ -28,8 +29,8 @@ namespace MazesForProgrammers
             //var exit = center.Distances
             //    .OrderBy(x => x.Distance)
             //    .Last(x => x.Cell.Row == grid.Rows - 1);
-
-            grid.RenderImageAndOpen(grid[0, 0].Distances);
+           
+            grid.RenderImageAndOpen(grid.RandomCell.Distances);
             //Console.WriteLine($"Find the path from {grid[0, 0]} to {exit.Cell} ({exit.Distance} moves)");
 
             Console.ReadKey();
@@ -37,17 +38,18 @@ namespace MazesForProgrammers
 
         static void Masks()
         {
-            var mask = Mask.FromImage(@"Masks\circle.png");
+            var mask = Mask.FromImage(@"Masks\vader.bmp");
 
             var grid = new MaskedRectangleGrid(mask);
             var algorithm = new RecursiveBacktracker();
+            var braid = new Braid(50);
+
             algorithm.ApplyTo(grid);
+            braid.ApplyTo(grid);
 
             var start = grid.RandomCell;
-            //grid
-            //    //.RenderToConsole(start.Distances)
-            //    .RenderImageAndOpen(start.Distances)
-            //    .RenderImageAndOpen($"maze_{DateTime.Now.Ticks}.png");
+            grid.RenderImageAndOpen(start.Distances);
+            //.RenderImageAndOpen($"maze_{DateTime.Now.Ticks}.png");
 
             Console.ReadKey();
         }
