@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using MazesForProgrammers.DataStructures;
 using MazesForProgrammers.DataStructures.Hex;
+using MazesForProgrammers.DataStructures.Triangle;
 using MazesForProgrammers.Render.Extensions;
 
 namespace MazesForProgrammers.Render

@@ -4,6 +4,7 @@ using System.Linq;
 using MazesForProgrammers.DataStructures;
 using MazesForProgrammers.DataStructures.Hex;
 using MazesForProgrammers.DataStructures.Polar;
+using MazesForProgrammers.DataStructures.Triangle;
 using MazesForProgrammers.Extensions;
 using MazesForProgrammers.Render.Extensions;
 

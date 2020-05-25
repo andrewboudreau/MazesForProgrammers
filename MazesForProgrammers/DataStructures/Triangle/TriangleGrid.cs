@@ -1,4 +1,4 @@
-﻿namespace MazesForProgrammers.DataStructures.Hex
+﻿namespace MazesForProgrammers.DataStructures.Triangle
 {
     public class TriangleGrid : AbstractGrid<TriangleCell>
     {

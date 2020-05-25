@@ -2,7 +2,7 @@
 
 using MazesForProgrammers.Extensions;
 
-namespace MazesForProgrammers.DataStructures.Hex
+namespace MazesForProgrammers.DataStructures.Triangle
 {
     public class TriangleCell : Cell
     {
