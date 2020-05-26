@@ -72,7 +72,7 @@ namespace MazesForProgrammers.DataStructures
             return links.Contains(cell);
         }
 
-        public void AddLink(Cell cell, bool bidirectional = true)
+        public virtual void AddLink(Cell cell, bool bidirectional = true)
         {
             if (cell is null)
             {

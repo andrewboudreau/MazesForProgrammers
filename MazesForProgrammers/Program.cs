@@ -4,6 +4,7 @@ using MazesForProgrammers.Algorithms;
 using MazesForProgrammers.DataStructures;
 using MazesForProgrammers.DataStructures.Hex;
 using MazesForProgrammers.DataStructures.Polar;
+using MazesForProgrammers.DataStructures.Weave;
 using MazesForProgrammers.Mazes;
 using MazesForProgrammers.Render;
 using MazesForProgrammers.Render.Extensions;
@@ -16,12 +17,12 @@ namespace MazesForProgrammers
         {
             RandomSource.SetRandom(6);
 
-            var grid = new RectangleGrid(10);
+            var grid = new WeaveGrid(10);
             var algorithm = new RecursiveBacktracker();
-            var braid = new Braid(50);
+            //var braid = new Braid(50);
 
             algorithm.ApplyTo(grid);
-            braid.ApplyTo(grid);
+            //braid.ApplyTo(grid);
 
             grid.RenderImageAndOpen();
             //var center = new Dijkstra(grid[0, 0]);
@@ -30,7 +31,7 @@ namespace MazesForProgrammers
             //    .OrderBy(x => x.Distance)
             //    .Last(x => x.Cell.Row == grid.Rows - 1);
            
-            grid.RenderImageAndOpen(grid.RandomCell.Distances);
+            //grid.RenderImageAndOpen(grid.RandomCell.Distances);
             //Console.WriteLine($"Find the path from {grid[0, 0]} to {exit.Cell} ({exit.Distance} moves)");
 
             Console.ReadKey();
